@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SaafPunjab</title>
+    <%= csrf_meta_tags %>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+  </head>
+
+  <body>
+    <%= render :partial => "layouts/header" %>
+    <div class="page-container row">
+      <div class="page-sidebar" id="main-menu">
+        <div class="page-sidebar-wrapper scrollbar-dynamic" id="main-menu-wrapper">
+          <div class="user-info-wrapper">
+            <div class="user-info">
+              <div class="greeting">Welcome</div>
+              <div class="username"><%= current_user.name %></span></div>
+            </div>
+          </div>
+          <ul>
+            <li class="start">
+              <a href="/dashboards" class="active">
+                <i class="icon-custom-home"></i>
+                <span class="title">Dashboard</span>
+                <span class="selected"></span>
+              </a>
+            </li>
+            <li class="">
+              <a href="/users">
+                <i class="fa fa-th"></i>
+                <span class="title">Users</span>
+              </a>
+            </li>
+            <li class="">
+              <a href="/companies">
+                <i class="fa fa-bookmark"></i>
+                <span class="title">Companies</span>
+              </a>
+            </li>
+            <li class="">
+              <a href="/areas">
+                <i class="fa fa-camera"></i>
+                <span class="title">Area</span>
+              </a>
+            </li>
+            <li class="">
+              <a href="/vehicles">
+                <i class="fa fa-truck"></i>
+                <span class="title">Vehicles</span>
+              </a>
+            </li>
+            <li class="">
+              <a href="/vehicles/assignment">
+                <i class="fa fa-truck"></i>
+                <span class="title">Assign vehicles</span>
+              </a>
+            </li>
+            <li class="">
+              <a href="/branches">
+                <i class="fa fa-building-o"></i>
+                <span class="title">Branches</span>
+              </a>
+            </li>
+            <li class="">
+              <a href="/vehicles/assign_branches">
+                <i class="fa fa-building-o"></i>
+                <span class="title">Assign branches</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-widget">
+        <div class="progress transparent progress-small no-radius no-margin">
+        </div>
+      </div>
+      <%= yield %>
+    </div>
+  </body>
+</html>

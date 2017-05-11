@@ -1,0 +1,82 @@
+<div class="page-content">
+  <div id="portlet-config" class="modal hide">
+    <div class="modal-header">
+      <button data-dismiss="modal" class="close" type="button"></button>
+      <h3>Widget Settings</h3>
+    </div>
+    <div class="modal-body">Widget settings form goes here</div>
+  </div>
+  <div class="clearfix"></div>
+  <div class="content">
+    <ul class="breadcrumb">
+      <li>
+        <p>YOU ARE HERE</p>
+      </li>
+      <li><a href="#" class="active">User Posts</a>
+
+      </li>
+    </ul>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="grid simple ">
+          <div class="grid-body no-border">
+            <table class="table no-more-tables" id="example12">
+              <thead>
+              <tr>
+                <th></th>
+                <th>Created By</th>
+                <th>Likes count</th>
+                <th>Comments count</th>
+                <th>Actions</th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @posts.each do |post| %>
+                  <tr>
+                    <td><i class="fa fa-plus-circle" style="margin-right:10px;"></i></td>
+                    <td class="v-align-middle"><%= post[:member_profile][:user][:username] %></td>
+                    <td class="v-align-middle"><%= post[:likes_count] %></td>
+                    <td class="v-align-middle"><%= post[:comments_count] %></td>
+                    <td class="v-align-middle">
+                      <% if post.is_deleted %>
+                          <%= link_to 'Undo',   delete_undo_post_path(post.id, {is_block: false}), class: 'btn btn-warning btn-mini', data: { confirm: 'Are you sure to undo this post?' }, method: 'delete' %>
+                      <% else %>
+                          <%= link_to 'delete', delete_undo_post_path(post.id, {is_block: true}), class: 'btn btn-danger btn-mini', data: { confirm: 'Are you sure to delete this post?' }, method: 'delete' %>
+                      <% end %>
+                    </td>
+                  </tr>
+                  <tr class="hidden"><%= render :partial => "shared/post_detail", locals:{post: post, event_id: post.event_id} %></tr>
+              <% end %>
+              </tbody>
+            </table>
+            <%= render :partial => "shared/pagination" %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% if @event_id.present? %>
+      <%= link_to 'Go back', events_path, class:'btn btn-default btn-mini' %>
+    <% else %>
+        <%= link_to 'Go back', users_path, class:'btn btn-default btn-mini' %>
+    <% end %>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#example12 tbody td i').live('click', function () {
+      var row = $(this).closest('tr').next('tr');
+      if ($(this).hasClass('fa fa-plus-circle'))
+      {
+        $(this).removeClass("fa fa-plus-circle");
+        $(this).addClass("fa fa-minus-circle");
+        var tr = row.removeClass('hidden');
+      }else{
+        $(this).removeClass("fa fa-minus-circle");
+        $(this).addClass("fa fa-plus-circle");
+        var tr = row.addClass('hidden');
+      }
+    });
+  })
+</script>

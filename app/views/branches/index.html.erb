@@ -1,0 +1,58 @@
+<div class="page-content">
+  <div id="portlet-config" class="modal hide">
+    <div class="modal-header">
+      <button data-dismiss="modal" class="close" type="button"></button>
+      <h3>Widget Settings</h3>
+    </div>
+    <div class="modal-body">Widget settings form goes here</div>
+  </div>
+  <div class="clearfix"></div>
+  <div class="content">
+    <ul class="breadcrumb">
+      <li><p>YOU ARE HERE</p></li>
+      <li><a href="#" class="active">Branches</a></li>
+      <li><%= link_to 'New Branch', new_branch_path, class:'btn btn-mini btn-primary' %></li>
+    </ul>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="grid simple ">
+          <div class="grid-body no-border">
+            <table class="table table-striped list-data-table">
+              <thead>
+              <tr>
+                <th>Area</th>
+                <th>Branch name</th>
+                <th>Branch code</th>
+                <th>Cont. Name</th>
+                <th>Cont. phone</th>
+                <th>Outlets</th>
+                <th>Oil used</th>
+                <th>Actions</th>
+              </tr>
+              </thead>
+
+              <tbody>
+              <% @branches.each do |branch| %>
+                  <tr>
+                    <td><%= branch.area.name %></td>
+                    <td><%= branch.branch_name %></td>
+                    <td><%= branch.branch_code %></td>
+                    <td><%= branch.contact_name %></td>
+                    <td><%= branch.contact_phone %></td>
+                    <td><%= branch.number_of_outlets %></td>
+                    <td><%= branch.monthly_oil_used %></td>
+                    <td>
+                      <%= link_to '', branch, class:'fa fa-eye' %>
+                      <%= link_to '', edit_branch_path(branch), class: 'fa fa-edit' %>
+                      <%= link_to '', branch, method: :delete, class: 'fa fa-trash', data: { confirm: 'Are you sure?' } %>
+                    </td>
+                  </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

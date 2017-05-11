@@ -1,0 +1,114 @@
+<%= simple_form_for(@branch) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-text_fields">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Branch Info
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-3 form-group">
+            <%= f.label 'Company' %>
+            <%= f.select :company_id, options_for_select(Company.all.collect {|p| [ p[:company_name], p[:id] ] }), class: 'form-control' %>
+          </div>
+          <div class="col-md-3">
+            <%= f.label 'Branch code' %>
+            <%= f.text_field :branch_code, class: 'form-control', placeholder: 'code' %>
+          </div>
+          <div class="col-md-3">
+            <%= f.label 'Branch name' %>
+            <%= f.text_field :branch_name, class: 'form-control', placeholder: 'branch name' %>
+          </div>
+          <div class="col-md-3">
+            <%= f.label 'Area' %>
+            <%= f.select :area_id, options_for_select(Area.all.collect {|p| [ p[:name], p[:id] ] }), class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Contact Info
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-3 form-group">
+            <%= f.label 'Contact name' %>
+            <%= f.text_field :contact_name, class: 'form-control', placeholder: 'cont. name' %>
+          </div>
+
+          <div class="col-md-3">
+            <%= f.label 'Contact email' %>
+            <%= f.text_field :contact_email, class: 'form-control', placeholder: 'cont. email' %>
+          </div>
+
+          <div class="col-md-3">
+            <%= f.label 'Contact phone' %>
+            <%= f.number_field :contact_phone, class: 'form-control', placeholder: 'cont. phone' %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Misc Info
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-3 form-group">
+            <%= f.label '#of outlets' %>
+            <%= f.number_field :number_of_outlets, class: 'form-control', placeholder: '1234' %>
+          </div>
+
+          <div class="col-md-3">
+            <%= f.label 'Type of establishment' %>
+            <%= f.text_field :type_of_establishment, class: 'form-control', placeholder: 'establishment type' %>
+          </div>
+
+          <div class="col-md-3">
+            <%= f.label 'Monthly oil used (kg)' %>
+            <%= f.text_field :monthly_oil_used, class: 'form-control', placeholder: 'oil used (kg)' %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3 form-group">
+            <%= f.label 'Storage type' %>
+            <%= select_tag(:storage_type, options_for_select([['Drums', 'drum'], ['Tank', 'tank'], ['Tins', 'tins']] )) %>
+            <%#= f.text_field :storage_type, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row panel panel-default">
+      <div class="panel-heading">
+        Address Info
+      </div>
+      <div class="panel-body">
+        <div class="col-md-3">
+          <%= f.label 'Street' %>
+          <%= f.text_field :street, placeholder: 'street' %>
+        </div>
+
+        <div class="col-md-3">
+          <%= f.label 'City' %>
+          <%= f.text_field :city, placeholder: 'city' %>
+        </div>
+
+        <div class="col-md-3">
+          <%= f.label 'State' %>
+          <%= f.text_field :state, placeholder: 'state' %>
+        </div>
+        <div class="col-md-3">
+          <%= f.label 'Zip' %>
+          <%= f.text_field :zip, placeholder: 'zip' %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= link_to 'Back', branches_path , class:'btn btn-mini btn-default'%>
+    <%= f.button :submit, class:'btn btn-mini btn-primary' %>
+  </div>
+<% end %>

@@ -1,0 +1,66 @@
+<td class="details" colspan="12" style="background-color: lavender;">
+  <div class="row">
+    <div class="col-md-6">
+      <table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;" class="inner-table">
+        <tbody>
+        <tr>
+          <td><b>Created By:</b></td>
+          <td><%= post[:member_profile][:user][:username] %></td>
+        </tr>
+        <tr>
+          <td><b>Post Members:</b></td>
+          <td>
+            <% post[:post_members] && post[:post_members].each do |member| %>
+              <span>
+                <%= member[:member_profile][:user][:username] %>
+              </span>
+            <% end %>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-6">
+      <% if post[:likes_count] > 0 || post[:comments_count] > 0%>
+        <table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;" class="inner-table table table-striped">
+          <tbody>
+          <tr>
+            <td>
+              <% if post[:likes_count] > 0 %>
+                <%= link_to 'View Likes', get_likes_post_path(post.id) %>
+              <% end %>
+            </td>
+            <td>
+              <% if post[:comments_count] > 0 %>
+                <%= link_to 'View Comments', get_comments_post_path(post.id) %>
+              <% end %>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      <% end %>
+      <% if post[:post_attachments].present? %>
+          <table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;" class="inner-table table table-striped">
+            <thead>
+            <th>Attachment Type</th>
+            <th>Action</th>
+            </thead>
+            <tbody>
+            <% post[:post_attachments].each do |attachment| %>
+                <tr>
+                  <td><%= attachment[:attachment_type] %></td>
+                  <td>
+                    <% if attachment[:thumbnail_url].present? %>
+                        <%= link_to image_tag(attachment[:thumbnail_url], width: 50, height: 50), attachment[:attachment_url], target: '_blank' %>
+                    <% else %>
+                        <%= link_to 'View Attachment', attachment[:attachment_url], target: '_blank'%>
+                    <% end %>
+                  </td>
+                </tr>
+            <% end %>
+            </tbody>
+          </table>
+      <% end %>
+    </div>
+  </div>
+</td>

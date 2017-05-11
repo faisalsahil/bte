@@ -1,0 +1,78 @@
+<script>
+
+  $(document).ready(function() {
+    html = '';
+    path_name = window.location.pathname;
+    var page        = parseInt($("#page").text());
+    var total_pages = parseInt($("#total_pages").text());
+    if (page >= 1 && page <= 10)
+    {
+      html += '<span> << previous</span>';
+      html += ' ';
+      for(i=1;i<=10;i++)
+      {
+
+        if (i == page)
+        {
+          html += '<span>' + i + '</span>';
+          html += ' ';
+        }
+        else if (i <= total_pages)
+        {
+          html += '<a href='+ path_name +'?page=' + i + '>' + i + '</a>';
+          html += ' ';
+        }
+
+      }
+      if (total_pages > 10 )
+      {
+        html += '<a href='+ path_name +'?page=' + i + '> Next >> </a>';
+      }
+      else
+      {
+        html += '<span> Next >> </span>';
+      }
+    }
+    else
+    {
+      start_page    = page - 5;
+      end_page      = page + 5;
+      previous_page = start_page - 1;
+      html += '<a href='+ path_name +'?page=' + previous_page + '> << previous</a>';
+      html += ' ';
+
+      for (i=start_page;i<= end_page; i++)
+      {
+        if (i == page)
+        {
+          html += '<span>' + i + '</span>';
+          html += ' ';
+        }
+        else if (i <= total_pages)
+        {
+          html += '<a href='+ path_name +'?page=' + i + '>' + i + '</a>';
+          html += ' ';
+        }
+      }
+      if (total_pages > end_page )
+      {
+        html += '<a href='+ path_name +'?page=' + i + '> Next >> </a>';
+      }
+      else
+      {
+        html += '<span> Next >> </span>';
+      }
+    }
+
+    $("#pagination").append(html);
+  });
+
+</script>
+<div id="pagination" class='pull-right'>
+  <span class="hidden" id="page">
+    <%= "#{@paging_data[:page]}" %>
+  </span>
+  <span class="hidden" id="total_pages">
+    <%= "#{@paging_data[:total_pages]}" %>
+  </span>
+</div>

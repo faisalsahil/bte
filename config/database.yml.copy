@@ -1,0 +1,15 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 25
+  username: postgres
+  password: password
+  host: localhost
+
+development:
+  <<: *default
+  database: bte_dev
+
+production:
+  <<: *default
+  database: bte_dev

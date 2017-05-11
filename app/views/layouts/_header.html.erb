@@ -1,0 +1,62 @@
+<div class="header navbar navbar-inverse">
+  <!-- BEGIN TOP NAVIGATION BAR -->
+  <div class="navbar-inner">
+    <div class="header-seperation">
+      <ul class="nav pull-left notifcation-center" id="main-menu-toggle-wrapper" style="display:none">
+        <li class="dropdown"> <a id="main-menu-toggle" href="#main-menu"  class="" >
+          <div class="iconset top-menu-toggle-white"></div>
+        </a> </li>
+      </ul>
+      <!-- BEGIN LOGO -->
+      <a>
+        <h3 style="margin-left: 20%;font-size: 65px;margin-top: 16px;font-weight: 900;">BTE</h3>
+        <%#= image_tag("time_logo.jpg", :alt => "Logo", style: "width: 54%;height: 68%;margin-top: 11px;") %>
+      </a>
+      <!--END LOGO -->
+      <ul class="nav pull-right notifcation-center">
+        <li class="dropdown" id="header_task_bar"> <a href="/" class="dropdown-toggle active" data-toggle="">
+          <div class="iconset top-home"></div>
+        </a> </li>
+      </ul>
+    </div>
+    <!-- END RESPONSIVE MENU TOGGLER -->
+    <div class="header-quick-nav" >
+      <!-- BEGIN TOP NAVIGATION MENU -->
+      <div class="pull-left">
+        <ul class="nav quick-section">
+          <li class="quicklinks"> <a href="javascript:void(0)" class="" id="layout-condensed-toggle" >
+            <div class="iconset top-menu-toggle-dark"></div>
+          </a> </li>
+        </ul>
+      </div>
+      <div class="pull-right">
+        <div class="chat-toggler">
+          <a href="#" class="dropdown-toggle" id="my-task-list" data-placement="bottom"  data-content='' data-toggle="dropdown" data-original-title="Notifications">
+            <div class="user-details" style="margin-right: 14px;">
+              <div class="username"><%= current_user.name %></div>
+            </div>
+          </a>
+        </div>
+        <ul class="nav quick-section ">
+          <li class="quicklinks"> <a data-toggle="dropdown" class="dropdown-toggle  pull-right " href="#" id="user-options">
+            <div class="iconset top-settings-dark "></div>
+          </a>
+            <ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options">
+              <li class="divider"></li>
+              <li>
+                <%= link_to 'Edit account', edit_user_registration_path, class:'fa fa-edit' %>
+              </li>
+              <li>
+
+                <%= link_to 'Sign out', destroy_user_session_path, class:'fa fa-power-off', :method=>'delete' %>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <!-- END CHAT TOGGLER -->
+    </div>
+    <!-- END TOP NAVIGATION MENU -->
+  </div>
+  <!-- END TOP NAVIGATION BAR -->
+</div>

@@ -1,0 +1,55 @@
+<td class="details" colspan="12" style="background-color: lavender;">
+  <div class="row">
+    <div class="col-md-6">
+      <table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;" class="inner-table">
+        <tbody>
+          <tr>
+            <td><b>Event Members:</b></td>
+            <td>
+              <% event[:event_members] && event[:event_members].each do |member| %>
+                  <span><%= member[:member_profile][:user][:username] %></span>
+              <% end %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-6">
+      <% if event[:post_count] > 0 %>
+        <table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;" class="inner-table table table-striped">
+          <tbody>
+            <tr>
+              <td></td>
+              <td></td>
+              <td>
+                <%= link_to 'View Posts', event_path(event[:id]) %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      <% end %>
+      <% if event[:event_attachments].present? %>
+        <table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;" class="inner-table table table-striped">
+          <thead>
+            <th>Attachment Type</th>
+            <th>Action</th>
+          </thead>
+          <tbody>
+            <% event[:event_attachments].each do |attachment| %>
+              <tr>
+                <td><%= attachment[:attachment_type] %></td>
+                <td>
+                  <% if attachment[:thumbnail_url].present? %>
+                      <%= link_to image_tag(attachment[:thumbnail_url], width: 50, height: 50), attachment[:attachment_url], target: '_blank' %>
+                  <% else %>
+                      <%= link_to 'View Attachment', attachment[:attachment_url], target: '_blank'%>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+    </div>
+  </div>
+</td>

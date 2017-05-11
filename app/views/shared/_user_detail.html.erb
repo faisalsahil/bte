@@ -1,0 +1,38 @@
+<td class="details" colspan="6" style="background-color: lavender;">
+  <div class="row">
+    <div class="col-md-6">
+      <table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;" class="inner-table">
+        <tbody>
+        <tr>
+          <td><b>Profile Photo:</b></td>
+          <td>
+            <%= image_tag(member_profile[:photo], width: 100, height: 100) || 'Not Entered'%>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-6">
+      <% if member_profile[:posts_count] > 0 || member_profile[:followers_count] > 0 %>
+        <table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;" class="inner-table table table-striped">
+          <tbody>
+          <tr>
+            <td></td>
+            <td>
+              <%if member_profile[:posts_count] > 0 %>
+                <%= link_to 'View Posts',  user_posts_user_path(member_profile[:id]) %>
+              <% end %>
+            </td>
+            <td></td>
+            <td>
+              <%if member_profile[:followers_count] > 0 %>
+                <%= link_to 'View followers',  user_followers_user_path(member_profile[:id]) %>
+              <% end %>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      <% end %>
+    </div>
+  </div>
+</td>

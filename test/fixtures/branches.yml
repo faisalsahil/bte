@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  company_id: 1
+  branch_name: MyString
+  contact_name: MyString
+  contact_email: MyString
+  contact_phone: MyString
+  number_of_outlets: 1
+  type_of_establishment: MyString
+  monthly_oil_used: 1.5
+  storage_type: MyString
+  full_address: MyText
+
+two:
+  company_id: 1
+  branch_name: MyString
+  contact_name: MyString
+  contact_email: MyString
+  contact_phone: MyString
+  number_of_outlets: 1
+  type_of_establishment: MyString
+  monthly_oil_used: 1.5
+  storage_type: MyString
+  full_address: MyText
