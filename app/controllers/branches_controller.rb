@@ -55,6 +55,6 @@ class BranchesController < ApplicationController
     end
 
     def branch_params
-      params.require(:branch).permit(:company_id, :branch_name, :branch_code, :area, :contact_name, :contact_email, :contact_phone, :number_of_outlets, :type_of_establishment, :monthly_oil_used, :storage_type, :street, :state, :zip, :latitude, :longitude)
+      params.require(:branch).permit(:company_id, :branch_name, :branch_code, :area_id, :contact_name, :contact_email, :contact_phone, :number_of_outlets, :type_of_establishment, :monthly_oil_used, :storage_type, :city, :street, :state, :zip, :latitude, :longitude)
     end
 end
