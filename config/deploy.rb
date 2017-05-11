@@ -13,10 +13,6 @@ set :branch, ask('Enter Git Branch:', 'master')
 
 # Default value for :linked_files is []
 set :linked_files, fetch(:linked_files, []).push('config/database.yml',
-                                                 '.env.development',
-                                                 '.env.production',
-                                                 '.env.staging',
-                                                 'config/cable.yml',
                                                  'config/schedule.rb',
                                                  'config/environments/development.rb',
                                                  'config/environments/staging.rb',
