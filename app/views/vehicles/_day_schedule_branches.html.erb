@@ -1,0 +1,2 @@
+<% schedules  = schedule_branches.where(schedule_day: day) %>
+<span><%= schedules.try(:count) || 0 %></span>

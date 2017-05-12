@@ -7,7 +7,6 @@ class Branch < ApplicationRecord
   after_validation :reverse_geocode
 
   has_many :schedule_branches
-  has_many :schedules, through: :schedule_branches
   belongs_to :area
 
   def address

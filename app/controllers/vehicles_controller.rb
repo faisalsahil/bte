@@ -99,17 +99,13 @@ class VehiclesController < ApplicationController
   end
   
   def branches_assignment
-    schedule = Schedule.find_by_scheduled_date(params[:start_date])
-    if !schedule.present?
-      schedule = Schedule.new(scheduled_at: params[:start_date])
-      schedule.save!
-    end
-
     params[:branches] && params[:branches].each do |branch_id|
-      obj = schedule.schedule_branches.build(branch_id: branch_id, vehicle_id: params[:vehicle_id])
-      obj.save
+      schedule_branch = ScheduleBranch.find_by_schedule_day_and_vehicle_id_and_branch_id(params[:day], params[:vehicle_id], branch_id)
+      if schedule_branch.blank?
+        obj = ScheduleBranch.new(branch_id: branch_id, vehicle_id: params[:vehicle_id], schedule_day: params[:day])
+        obj.save!
+      end
     end
-    
     redirect_to assign_branches_vehicles_path
   end
 

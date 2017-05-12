@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class ScgeduleBranchTest < ActiveSupport::TestCase
+class ScheduleBranchTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

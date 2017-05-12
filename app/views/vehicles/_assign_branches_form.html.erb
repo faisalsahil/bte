@@ -3,7 +3,6 @@
       <div class="form-group">
         <label>Select date</label>
         <%= select_tag(:day, options_for_select([['Monday', 'monday'], ['Tuesday', 'tuesday'], ['Wednesday', 'wednesday'], ['Thursday', 'thursday'], ['Friday', 'friday'], ['Saturday', 'saturday'], ['Sunday', 'sunday']] )) %>
-        <%#= text_field_tag :start_date, Date.today.strftime('%d/%m/%Y'), class: 'datepicker', placeholder: 'From'%>
       </div>
 
       <div class="form-group">
@@ -13,22 +12,67 @@
 
       <div  class="ScrollRef form-group">
         <label>Select branches</label>
-        <%= select_tag 'branches[]', options_for_select(Branch.all.collect {|p| [ p[:branch_name], p[:id] ] }), id: 'example-post', multiple: 'multiple' %>
+        <%#= select_tag 'branches[]', options_for_select(Branch.all.collect {|p| [ p[:branch_name], p[:id] ] }), id: 'example-post', multiple: 'multiple' %>
+        <select name='branches[]' id="example-post" multiple='multiple'>
+          <% Area.all.each do |area| %>
+            <% branches = area.branches %>
+            <% if branches.present? %>
+                <optgroup label='<%= "#{area.name}" %>'>
+                  <% branches&.each do |branch| %>
+                      <option value='<%= "#{branch.id}" %>'><%= branch.branch_name%></option>
+                  <% end %>
+                </optgroup>
+            <% end %>
+          <% end %>
+        </select>
       </div>
       <%= submit_tag 'Go', class:'btn btn-primary disabled', style: 'margin-top:3%;', id: 'submit_button' %>
 
 
   <% end %>
 </div>
-<div id='selected_clients' class="emailslistspan" style="width: 100%; margin: 10px 0 0 0; overflow-y: auto;"></div>
 
 <div class="col-md-12">
-<table class="table table-striped">
+<table class="table" id="assignment_table">
   <thead>
-
+    <th></th>
+    <th>Monday</th>
+    <th>Tuesday</th>
+    <th>Wednesday</th>
+    <th>Thursday</th>
+    <th>Friday</th>
+    <th>Saturday</th>
+    <th>Sunday</th>
   </thead>
   <tbody>
-
+    <% @vehicles.each do |vehicle| %>
+        <tr>
+          <td><i class="fa fa-plus-circle" style="margin-right:10px;"></i><%= vehicle.vehicle_number %></td>
+          <% schedule_branches = vehicle.schedule_branches %>
+          <td>
+            <%= render 'day_schedule_branches', schedule_branches: schedule_branches, day: 'monday' %>
+          </td>
+          <td>
+            <%= render 'day_schedule_branches', schedule_branches: schedule_branches, day: 'tuesday' %>
+          </td>
+          <td>
+            <%= render 'day_schedule_branches', schedule_branches: schedule_branches, day: 'wednesday' %>
+          </td>
+          <td>
+            <%= render 'day_schedule_branches', schedule_branches: schedule_branches, day: 'thursday' %>
+          </td>
+          <td>
+            <%= render 'day_schedule_branches', schedule_branches: schedule_branches, day: 'friday' %>
+          </td>
+          <td>
+            <%= render 'day_schedule_branches', schedule_branches: schedule_branches, day: 'saturday' %>
+          </td>
+          <td>
+            <%= render 'day_schedule_branches', schedule_branches: schedule_branches, day: 'sunday' %>
+          </td>
+        </tr>
+        <tr class="hidden"><%= render :partial => "table_row", vehicle_id: vehicle.id %></tr>
+    <% end %>
   </tbody>
 </table>
 </div>
@@ -41,54 +85,37 @@
 
 
 
-<style type="text/css">
-  .ScrollRef .multiselect-container{
-    max-height: 350px;
-    overflow-y: auto;
-  }
 
-</style>
 
 <script type="text/javascript">
     $(document).ready(function() {
       $('#example-post').multiselect({
-            includeSelectAllOption: true,
-            enableFiltering: true,
-            onChange: function(option, checked, select) {
-                var client = $(option).val();
-                if ( checked ){
-                    var html = "<span style='margin-right: 5px;' class='badge' id="+ client + ">" + $(option).text() + "</span>";
-                    $('#selected_clients').append(html);
-                    $('#sent_email_button').attr('disabled', false);
-                }else{
-                    $('#'+  client + '').remove();
-                    if( $('#selected_clients').is(':empty') ){
-                        $('#sent_email_button').attr('disabled', true);
-                    }
-                }
-            },
-            onSelectAll: function() {
-                $('#selected_clients').html('');
-                $("#example-post option").each(function()
-                {
-                    var client = $(this).val();
-                    var html   = "<span class='badge' id="+ client + ">" + $(this).text() + "</span>";
-                    $('#selected_clients').append(html);
-                });
-                $('#sent_email_button').attr('disabled', false);
-            },
-            onDeselectAll: function() {
-                $('#selected_clients').html('');
-                $('#sent_email_button').attr('disabled', true);
-            }
-    });
+        includeSelectAllOption: true,
+        enableFiltering: true,
+        enableClickableOptGroups: true,
+        maxHeight: 200,
+        buttonWidth: '250px'
+      });
       $("#vehicle_id").change(function(){
-          var vehicle_id = $("#vehicle_id").val();
-          if (vehicle_id.length > 0 )
+        var vehicle_id = $("#vehicle_id").val();
+        if (vehicle_id.length > 0 )
+        {
+            $('#submit_button').removeClass('disabled');
+        }else{
+            $('#submit_button').addClass('disabled');
+        }
+      });
+      $('#assignment_table tbody td i').live('click', function () {
+          var row = $(this).closest('tr').next('tr');
+          if ($(this).hasClass('fa fa-plus-circle'))
           {
-              $('#submit_button').removeClass('disabled');
+              $(this).removeClass("fa fa-plus-circle");
+              $(this).addClass("fa fa-minus-circle");
+              var tr = row.removeClass('hidden');
           }else{
-              $('#submit_button').addClass('disabled');
+              $(this).removeClass("fa fa-minus-circle");
+              $(this).addClass("fa fa-plus-circle");
+              var tr = row.addClass('hidden');
           }
       });
     });
