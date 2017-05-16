@@ -10,29 +10,35 @@
   <div class="content">
     <ul class="breadcrumb">
       <li><p>YOU ARE HERE</p></li>
-      <li><a href="#" class="active">Schedules</a></li>
-      <li><%= link_to 'Assignments', new_schedule_path, class:'btn btn-mini btn-primary' %></li>
+      <li><a href="#" class="active">Billings</a></li>
     </ul>
     <div class="row">
       <div class="col-md-12">
         <div class="grid simple ">
           <div class="grid-body no-border">
-            <table class="table table-striped">
+            <table class="table table-striped list-data-table">
               <thead>
               <tr>
-                <th>Scheduled at</th>
-                <th>Vehicle #</th>
+                <th>Branch</th>
+                <th>Total</th>
+                <th>Paid</th>
+                <th>Balance</th>
+                <th>Actions</th>
               </tr>
               </thead>
 
               <tbody>
-              <% @schedules.each do |schedule| %>
+              <% @billings.each do |billing| %>
                   <tr>
-                    <td><%= schedule.scheduled_at %></td>
-                    <td><%= schedule.scheduled_at %></td>
+                    <td><%= billing.branch.branch_code   %></td>
+                    <td><%= billing.total %></td>
+                    <td><%= billing.paid %></td>
+                    <td><%= billing.balance %></td>
                     <td>
-                      <%= link_to '', edit_company_path(company), class:'fa fa-edit' %>
-                      <%= link_to '', company, method: :delete, class:'fa fa-trash',data: { confirm: 'Are you sure?' } %>
+                      <%= link_to 'history', billing %> |
+                      <%= link_to 'pay', payment_billing_transactions_path(billing) %>
+                      <%#= link_to '', edit_billing_path(billing), class: 'fa fa-edit' %>
+
                     </td>
                   </tr>
               <% end %>

@@ -62,6 +62,10 @@ gem 'whenever', :require => false
 
 gem 'will_paginate'
 
+gem 'wkhtmltopdf-binary'
+
+gem 'wicked_pdf'
+
 group :development do
   gem 'annotate'
   gem 'awesome_print'

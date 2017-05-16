@@ -1,0 +1,30 @@
+<% if @scheduled_branches.present? %>
+    <h3><%= @day %></h3>
+    <%#= link_to '', schedules_schedule_branches_path({vehicle_id: @vehicle.id, day: @day, format: :pdf}) , class: 'btn btn-primary fa fa-download'%>
+    <table class="table">
+      <thead>
+      <th>#</th>
+      <th>Area</th>
+      <th>Br.code</th>
+      <th>Br. name</th>
+      <th>Address</th>
+      <th>Qnty</th>
+      <th>Actions</th>
+      </thead>
+      <tbody>
+      <% @scheduled_branches.each_with_index do |sche_branch, index| %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><%= sche_branch.branch.area.name %></td>
+            <td><%= sche_branch.branch.branch_code %></td>
+            <td><%= sche_branch.branch.branch_name %></td>
+            <td><%= sche_branch.branch.address  %></td>
+            <td><%= 0  %></td>
+            <td></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+<% else %>
+    <h3>Oops! No Schedule found.</h3>
+<% end %>

@@ -14,7 +14,6 @@ class VehiclesController < ApplicationController
 
   def create
     @vehicle = Vehicle.new(vehicle_params)
-
     respond_to do |format|
       if @vehicle.save
         format.html { redirect_to vehicles_path }
@@ -47,8 +46,7 @@ class VehiclesController < ApplicationController
   end
   
   def assignment
-    @vehicles = Vehicle.all
-    
+    @user_vehicles = UserVehicle.includes(:user, :vehicle).order('vehicle_id ASC')
   end
   
   def get_users
@@ -65,37 +63,45 @@ class VehiclesController < ApplicationController
   end
   
   def assign_vehicle
-    existing_user_vehicle    = UserVehicle.where(end_date: nil, vehicle_id: params[:vehicle_id], is_deleted: false).try(:first)
-    is_othr_vehicle_assigned = UserVehicle.where('end_date IS NULL AND vehicle_id != ? AND user_id = ? AND DATE(assigned_date) <= DATE(?)', params[:vehicle_id], params[:user_id], params[:start_date].to_date.strftime('%Y-%m-%d')).try(:first)
+    start_date = params[:start_date]
+    vehicle_id = params[:vehicle_id]
+    user_id    = params[:user_id]
+    existing_user_vehicle    = UserVehicle.where(end_date: nil, vehicle_id: vehicle_id, is_deleted: false).try(:first)
+    is_othr_vehicle_assigned = UserVehicle.where('end_date IS NULL AND vehicle_id != ? AND user_id = ? AND DATE(assigned_date) <= DATE(?)', vehicle_id, user_id, start_date.to_date.strftime('%Y-%m-%d')).try(:first)
     if existing_user_vehicle.present?
-      if existing_user_vehicle.assigned_date.strftime('%d/%m/%Y') == params[:start_date]
-        existing_user_vehicle.user_id  = params[:user_id]
-        is_exist = true
-      elsif !is_othr_vehicle_assigned.present?
-        existing_user_vehicle.end_date = params[:start_date]
-        is_exist = false
+      if existing_user_vehicle.assigned_date.strftime('%d/%m/%Y') == start_date
+        existing_user_vehicle.user_id  = user_id
+      elsif is_othr_vehicle_assigned.present?
+        existing_user_vehicle.end_date    = start_date
+        is_othr_vehicle_assigned.end_date = start_date
+        is_othr_vehicle_assigned.save!
+        user_vehicle = UserVehicle.new(assigned_date: start_date, vehicle_id: vehicle_id, user_id: user_id)
+        user_vehicle.save!
+      elsif is_othr_vehicle_assigned.blank?
+        existing_user_vehicle.end_date = start_date
+        user_vehicle = UserVehicle.new(assigned_date: start_date, vehicle_id: vehicle_id, user_id: user_id)
+        user_vehicle.save!
       end
       existing_user_vehicle.save!
-    end
-    if !is_exist && !is_othr_vehicle_assigned.present?
-      user_vehicle = UserVehicle.new(assigned_date: params[:start_date], vehicle_id: params[:vehicle_id], user_id: params[:user_id])
+    else
+      user_vehicle = UserVehicle.new(assigned_date: start_date, vehicle_id: vehicle_id, user_id: user_id)
       user_vehicle.save!
     end
     redirect_to assignment_vehicles_path
   end
   
-  # def unassigned_vehicle
-  #   @user_vehicle = UserVehicle.find_by_id(params[:id])
-  #   @user_vehicle.is_deleted = true
-  #   @user_vehicle.save!
-  #   respond_to do |format|
-  #     format.html { redirect_to vehicles_url, notice: 'Vehicle was successfully destroyed.' }
-  #     format.json { head :no_content }
-  #   end
-  # end
+  def unassigned_branch
+    @schedule_branch = ScheduleBranch.find_by_id(params[:id])
+    @schedule_branch.destroy if @schedule_branch.present?
+    respond_to do |format|
+      format.html { redirect_to assign_branches_vehicles_path, notice: 'Branch successfully unassigned  .' }
+      format.json { head :no_content }
+    end
+  end
   
   def assign_branches
-    @vehicles = Vehicle.all
+    @vehicles = Vehicle.includes(:schedule_branches)
+    @areas    = Area.all
   end
   
   def branches_assignment

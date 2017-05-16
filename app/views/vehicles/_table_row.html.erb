@@ -1,18 +1,93 @@
+<%
+ monday_schedules     = schedule_branches.where(schedule_day: 'monday').includes(:branch)
+ tuesday_schedules    = schedule_branches.where(schedule_day: 'tuesday').includes(:branch)
+ wednesday_schedules  = schedule_branches.where(schedule_day: 'wednesday').includes(:branch)
+ thursday_schedules   = schedule_branches.where(schedule_day: 'thursday').includes(:branch)
+ friday_schedules     = schedule_branches.where(schedule_day: 'friday').includes(:branch)
+ saturday_schedules   = schedule_branches.where(schedule_day: 'saturday').includes(:branch)
+ sunday_schedules     = schedule_branches.where(schedule_day: 'sunday').includes(:branch)
+%>
+
 <td class="details" colspan="12" style="background-color: lavender;">
   <div class="row">
-    <div class="col-md-12">
-      <table  class="table table-striped">
-        <thead>
-          <th></th>
-          <th></th>
-        </thead>
-        <tbody>
-          <tr>
-            <td><b>Profile Photo:</b></td>
-            <td><b>Profile Photo:</b></td>
-          </tr>
-        </tbody>
-      </table>
+
+    <div class="col-md-1">
+    </div>
+
+    <div class="col-md-1" style="margin-left: 6%;width:10%;">
+      <% monday_schedules&.each do |m_sche| %>
+        <span class="badge" style="padding-bottom: 1px;">
+          <%= m_sche.try(:branch).try(:branch_code) %>-<%= m_sche.try(:branch).try(:branch_name) %>
+          <%= link_to '', unassigned_branch_vehicles_path({id: m_sche}), method: :delete, class: 'fa fa-trash',data: { confirm: 'Are you sure?' } %>
+        </span>
+        <br/>
+      <% end %>
+    </div>
+
+    <!--Tuesday-->
+    <div class="col-md-1" style="margin-left: 2%;width:10%;">
+      <% tuesday_schedules&.each do |tues_sche| %>
+          <span class="badge" style="padding-bottom: 1px;">
+            <%= tues_sche.try(:branch).try(:branch_code) %>-<%= tues_sche.try(:branch).try(:branch_name) %>
+            <%= link_to '', unassigned_branch_vehicles_path({id: tues_sche}), method: :delete, class: 'fa fa-trash',data: { confirm: 'Are you sure?' } %>
+          </span>
+          <br/>
+      <% end %>
+    </div>
+
+    <!--Wednesday-->
+    <div class="col-md-1" style="margin-left: 2%;width:10%;">
+      <% wednesday_schedules&.each do |wed_sche| %>
+          <span class="badge" style="padding-bottom: 1px;">
+            <%= wed_sche.try(:branch).try(:branch_code) %>-<%= wed_sche.try(:branch).try(:branch_name) %>
+            <%= link_to '', unassigned_branch_vehicles_path({id: wed_sche}), method: :delete, class: 'fa fa-trash',data: { confirm: 'Are you sure?' } %>
+          </span>
+          <br/>
+      <% end %>
+    </div>
+
+    <!--Thursday-->
+    <div class="col-md-1" style="margin-left: 2%;width:10%;">
+      <% thursday_schedules&.each do |thur_sche| %>
+          <span class="badge" style="padding-bottom: 1px;">
+            <%= thur_sche.try(:branch).try(:branch_code) %>-<%= thur_sche.try(:branch).try(:branch_name) %>
+            <%= link_to '', unassigned_branch_vehicles_path({id: thur_sche}), method: :delete, class: 'fa fa-trash',data: { confirm: 'Are you sure?' } %>
+          </span>
+          <br/>
+      <% end %>
+    </div>
+
+    <!--Friday-->
+    <div class="col-md-1" style="margin-left: 2%;width:10%;">
+      <% friday_schedules&.each do |fri_sche| %>
+          <span class="badge" style="padding-bottom: 1px;">
+            <%= fri_sche.try(:branch).try(:branch_code) %>-<%= fri_sche.try(:branch).try(:branch_name) %>
+            <%= link_to '', unassigned_branch_vehicles_path({id: fri_sche}), method: :delete, class: 'fa fa-trash',data: { confirm: 'Are you sure?' } %>
+          </span>
+          <br/>
+      <% end %>
+    </div>
+
+    <!--Saturday-->
+    <div class="col-md-1" style="margin-left: 2%;width:10%;">
+      <% saturday_schedules&.each do |sat_sche| %>
+          <span class="badge" style="padding-bottom: 1px;">
+            <%= sat_sche.try(:branch).try(:branch_code) %>-<%= sat_sche.try(:branch).try(:branch_name) %>
+            <%= link_to '', unassigned_branch_vehicles_path({id: sat_sche}), method: :delete, class: 'fa fa-trash',data: { confirm: 'Are you sure?' } %>
+          </span>
+          <br/>
+      <% end %>
+    </div>
+
+    <!--Sunday-->
+    <div class="col-md-1" style="margin-left: 2%;width:10%;">
+      <% sunday_schedules&.each do |sun_sche| %>
+          <span class="badge" style="padding-bottom: 1px;">
+            <%= sun_sche.try(:branch).try(:branch_code) %>-<%= sun_sche.try(:branch).try(:branch_name) %>
+            <%= link_to '', unassigned_branch_vehicles_path({id: sun_sche}), method: :delete, class: 'fa fa-trash',data: { confirm: 'Are you sure?' }%>
+          </span>
+          <br/>
+      <% end %>
     </div>
   </div>
 </td>

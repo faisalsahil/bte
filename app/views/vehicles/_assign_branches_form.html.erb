@@ -7,14 +7,14 @@
 
       <div class="form-group">
         <label>Select Vehicle</label>
-        <%= select_tag :vehicle_id, options_for_select(Vehicle.all.collect {|p| [ p[:vehicle_number], p[:id] ]}), :include_blank => true  %>
+        <%= select_tag :vehicle_id, options_for_select(@vehicles.collect {|p| [ p[:vehicle_number], p[:id] ]}), :include_blank => true  %>
       </div>
 
       <div  class="ScrollRef form-group">
         <label>Select branches</label>
         <%#= select_tag 'branches[]', options_for_select(Branch.all.collect {|p| [ p[:branch_name], p[:id] ] }), id: 'example-post', multiple: 'multiple' %>
         <select name='branches[]' id="example-post" multiple='multiple'>
-          <% Area.all.each do |area| %>
+          <% @areas.each do |area| %>
             <% branches = area.branches %>
             <% if branches.present? %>
                 <optgroup label='<%= "#{area.name}" %>'>
@@ -27,8 +27,6 @@
         </select>
       </div>
       <%= submit_tag 'Go', class:'btn btn-primary disabled', style: 'margin-top:3%;', id: 'submit_button' %>
-
-
   <% end %>
 </div>
 
@@ -71,13 +69,11 @@
             <%= render 'day_schedule_branches', schedule_branches: schedule_branches, day: 'sunday' %>
           </td>
         </tr>
-        <tr class="hidden"><%= render :partial => "table_row", vehicle_id: vehicle.id %></tr>
+        <tr class="hidden"><%= render "table_row", schedule_branches: schedule_branches %></tr>
     <% end %>
   </tbody>
 </table>
 </div>
-
-
 
 
 

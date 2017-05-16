@@ -45,9 +45,9 @@
               <strong>Number of outlets:</strong>
               <%= @branch.number_of_outlets %>
             </p>
-            <p>
+            <p>A
               <strong>Type of establishment:</strong>
-              <%= @branch.type_of_establishment %>
+              <%= @branch.food_type.name %>
             </p>
 
             <p>
@@ -57,7 +57,7 @@
 
             <p>
               <strong>Storage type:</strong>
-              <%= @branch.storage_type %>
+              <%= @branch.storage_type.name %>
             </p>
 
             <p>

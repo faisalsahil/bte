@@ -7,7 +7,6 @@
 
       <div class="form-group">
         <label>Select Vehicle</label>
-        <%#= select_tag :vehicle_id, options_for_select(Vehicle.all.collect {|p| [ p[:vehicle_number], p[:id] ] }, :include_blank => true) %>
         <%= select_tag :vehicle_id, options_for_select(Vehicle.all.collect {|p| [ p[:vehicle_number], p[:id] ]}), :include_blank => true  %>
         <select name="user_id" id="user_id" class="hidden"></select>
       </div>
@@ -19,58 +18,35 @@
 <div class="col-md-12">
   <table class="table table-striped">
     <thead>
-    <th></th>
-    <th><%= Date.today.strftime('%d/%m/%Y') %></th>
-    <th><%= (Date.today + 1.day).strftime('%d/%m/%Y') %></th>
-    <th><%= (Date.today + 2.day).strftime('%d/%m/%Y') %></th>
-    <th><%= (Date.today + 3.day).strftime('%d/%m/%Y') %></th>
-    <th><%= (Date.today + 4.day).strftime('%d/%m/%Y') %></th>
-    <th><%= (Date.today + 5.day).strftime('%d/%m/%Y') %></th>
-    <th><%= (Date.today + 6.day).strftime('%d/%m/%Y') %></th>
-    <th><%= (Date.today + 7.day).strftime('%d/%m/%Y') %></th>
+    <th>Vehicle#</th>
+    <th>User Name</th>
+    <th>From date</th>
+    <th>To date</th>
+
     </thead>
     <tbody>
-    <% @vehicles.each do |vehicle| %>
-        <% user_vehicles = vehicle.user_vehicles.where('end_date <= ? OR end_date IS NULL', Date.today + 7.day)
-            date = Date.today
-        %>
+    <% @user_vehicles.each do |user_vehicle| %>
         <tr>
-          <td><%= vehicle.vehicle_number %></td>
-          <% if user_vehicles.length > 1 %>
-              <% user_vehicles.each do |uv| %>
-                <% if uv.end_date.present? %>
-                  <% loop do %>
-                    <td>
-                      <%= uv.user.name %>
-                    </td>
-                    <% date = date + 1.day %>
-                  <% break if date == uv.end_date.to_date %>
-                  <% end %>
-                <% else %>
-                  <% loop do %>
-                      <td>
-                        <%= uv.user.name %>
-                      </td>
-                      <% date = date + 1.day %>
-                      <% break if date == Date.today + 8.day %>
-                  <% end %>
-                <% end %>
-              <% end %>
-          <% elsif user_vehicles.length == 1 %>
-            <% uv = user_vehicles.first %>
-            <% loop do %>
-                <td>
-                  <%= uv.user.name %>
-                </td>
-                <% date = date + 1.day %>
-                <% break if date == Date.today + 8.day %>
-            <% end %>
-          <% end %>
+          <td><%= user_vehicle.vehicle.vehicle_number %></td>
+          <td><%= user_vehicle.user.name %></td>
+          <td><%= user_vehicle.assigned_date.to_date %></td>
+          <td><%= user_vehicle.end_date %></td>
         </tr>
     <% end %>
     </tbody>
   </table>
 </div>
+
+
+
+
+
+
+
+
+
+
+
 
 <script type="text/javascript">
     $(document).ready(function(){

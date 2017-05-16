@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta content="" name="description" />
     <meta content="" name="author" />
-
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
   </head>
@@ -32,48 +31,71 @@
                 <span class="selected"></span>
               </a>
             </li>
+            <li class=""><a href="javascript:;"> <i class="fa fa fa-adjust"></i> <span class="title">Settings</span> <span class="arrow open"></span> </a>
+              <ul class="sub-menu">
+                <li > <a href="/storage_types"> <i class="fa fa-wrench"></i><span class="title">Storage types</span></a> </li>
+                <li > <a href="/food_types"><i class="fa fa-spoon"></i><span class="title">Food types</span></a> </li>
+                <li class="">
+                  <a href="/companies">
+                    <i class="fa fa-bookmark"></i>
+                    <span class="title">Companies</span>
+                  </a>
+                </li>
+                <li class="">
+                  <a href="/areas">
+                    <i class="fa fa-camera"></i>
+                    <span class="title">Area</span>
+                  </a>
+                </li>
+                <li class="">
+                  <a href="/vehicles">
+                    <i class="fa fa-truck"></i>
+                    <span class="title">Vehicles</span>
+                  </a>
+                </li>
+                <li class="">
+                  <a href="/branches">
+                    <i class="fa fa-building-o"></i>
+                    <span class="title">Branches</span>
+                  </a>
+                </li>
+                <li class="">
+                  <a href="/billings">
+                    <i class="fa fa-google-wallet"></i>
+                    <span class="title">Billings</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+
             <li class="">
               <a href="/users">
                 <i class="fa fa-th"></i>
                 <span class="title">Users</span>
               </a>
             </li>
-            <li class="">
-              <a href="/companies">
-                <i class="fa fa-bookmark"></i>
-                <span class="title">Companies</span>
-              </a>
-            </li>
-            <li class="">
-              <a href="/areas">
-                <i class="fa fa-camera"></i>
-                <span class="title">Area</span>
-              </a>
-            </li>
-            <li class="">
-              <a href="/vehicles">
-                <i class="fa fa-truck"></i>
-                <span class="title">Vehicles</span>
-              </a>
-            </li>
+
             <li class="">
               <a href="/vehicles/assignment">
                 <i class="fa fa-truck"></i>
                 <span class="title">Assign vehicles</span>
               </a>
             </li>
-            <li class="">
-              <a href="/branches">
-                <i class="fa fa-building-o"></i>
-                <span class="title">Branches</span>
-              </a>
-            </li>
+
             <li class="">
               <a href="/vehicles/assign_branches">
                 <i class="fa fa-building-o"></i>
                 <span class="title">Assign branches</span>
               </a>
             </li>
+
+            <li class="">
+              <a href="/schedule_branches/schedules">
+                <i class="fa fa-building-o"></i>
+                <span class="title">Schedules(for driver)</span>
+              </a>
+            </li>
+
           </ul>
         </div>
       </div>
@@ -81,6 +103,7 @@
         <div class="progress transparent progress-small no-radius no-margin">
         </div>
       </div>
+      <%= render :partial => "layouts/messages" %>
       <%= yield %>
     </div>
   </body>

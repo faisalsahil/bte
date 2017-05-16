@@ -1,0 +1,25 @@
+<div class="page-content">
+  <div id="portlet-config" class="modal hide">
+    <div class="modal-header">
+      <button data-dismiss="modal" class="close" type="button"></button>
+      <h3>Widget Settings</h3>
+    </div>
+    <div class="modal-body">Widget settings form goes here</div>
+  </div>
+  <div class="clearfix"></div>
+  <div class="content">
+    <ul class="breadcrumb">
+      <li><p>YOU ARE HERE</p></li>
+      <li><a href="#" class="active">Editing Vehicle</a></li>
+    </ul>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="grid simple ">
+          <div class="grid-body no-border">
+            <%= render 'form', storage_type: @storage_type %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

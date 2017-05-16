@@ -1,0 +1,58 @@
+<div class="page-content">
+  <div id="portlet-config" class="modal hide">
+    <div class="modal-header">
+      <button data-dismiss="modal" class="close" type="button"></button>
+      <h3>Widget Settings</h3>
+    </div>
+    <div class="modal-body">Widget settings form goes here</div>
+  </div>
+  <div class="clearfix"></div>
+  <div class="content">
+    <ul class="breadcrumb">
+      <li><p>YOU ARE HERE</p></li>
+      <li><a href="#" class="active">Scheduled branches</a></li>
+    </ul>
+    <p id="error-message" class="hidden alert alert-warning"></p>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="grid simple ">
+          <div class="grid-body no-border">
+            <%= form_tag('/schedule_branches/schedules', method: :get, remote: true,  class: 'form-inline')  do %>
+                <div class="form-group">
+                  <label>Select date</label>
+                  <%= text_field_tag :date, Date.today.strftime('%d/%m/%Y'), class: 'datepicker', placeholder: 'From', id:'remove_div_list' %>
+                </div>
+
+
+                <div class="form-group">
+                  <label>Select Vehicle</label>
+                  <%= select_tag :vehicle_id, options_for_select(@vehicles.collect {|p| [ p[:vehicle_number], p[:id], selected: @vehicle ]}), :include_blank => true  %>
+                </div>
+                <%= submit_tag 'Go', class:'btn btn-primary disabled', style: 'margin-top:3%;', id: 'submit_button' %>
+            <% end %>
+            <div class="col-md-12" id="show">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+      $('#remove_div_list').change(function(){
+          $('#show').html('');
+      });
+
+      $("#vehicle_id").change(function(){
+          var vehicle_id = $("#vehicle_id").val();
+          if (vehicle_id.length > 0 )
+          {
+              $('#submit_button').removeClass('disabled');
+          }else{
+              $('#submit_button').addClass('disabled');
+          }
+      });
+  });
+</script>
