@@ -7,8 +7,8 @@ class BranchesController < ApplicationController
         @branches = Branch.where(branch_status: 'visit')
       elsif params[:type] == 'lead'
         @branches = Branch.where(branch_status: 'lead')
-      elsif params[:type] == 'contract'
-        @branches = Branch.where(branch_status: 'contract')
+      elsif params[:type] == 'contracted'
+        @branches = Branch.where(branch_status: 'contracted')
       else
         @branches = Branch.all
       end
