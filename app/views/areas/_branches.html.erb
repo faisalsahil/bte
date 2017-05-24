@@ -7,7 +7,8 @@
         <th></th>
         </thead>
         <tbody>
-        <% area.branches.where(brach_status: 'contracted')&.each do |branch| %>
+        <% branches = area.branches.where(branch_status: 'contracted') %>
+        <% branches&.each do |branch| %>
             <tr>
               <td><%= branch.branch_code + "|" + branch.branch_name%></td>
               <td><%= check_box_tag 'route[branches][]', branch.id, false, class: "check_box_input" %></td>
