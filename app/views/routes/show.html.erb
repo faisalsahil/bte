@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>State:</strong>
+  <%= @route.state_id %>
+</p>
+
+<p>
+  <strong>City:</strong>
+  <%= @route.city_id %>
+</p>
+
+<p>
+  <strong>Area:</strong>
+  <%= @route.area_id %>
+</p>
+
+<%= link_to 'Edit', edit_route_path(@route) %> |
+<%= link_to 'Back', routes_path %>

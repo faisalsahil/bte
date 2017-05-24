@@ -31,9 +31,17 @@
                 <span class="selected"></span>
               </a>
             </li>
-            <li class=""><a href="javascript:;"> <i class="fa fa fa-adjust"></i> <span class="title">Settings</span> <span class="arrow open"></span> </a>
+
+            <li class="">
+              <a href="/users">
+                <i class="fa fa-th"></i>
+                <span class="title">Users</span>
+              </a>
+            </li>
+
+            <li class=""><a href="javascript:;"> <i class="fa fa fa-cogs"></i> <span class="title">Settings</span> <span class="arrow open"></span> </a>
               <ul class="sub-menu">
-                <li > <a href="/storage_types"> <i class="fa fa-wrench"></i><span class="title">Storage types</span></a> </li>
+                <li > <a href="/storage_types"> <i class="fa fa-hourglass-o"></i><span class="title">Storage types</span></a> </li>
                 <li > <a href="/food_types"><i class="fa fa-spoon"></i><span class="title">Food types</span></a> </li>
                 <li class="">
                   <a href="/companies">
@@ -41,12 +49,28 @@
                     <span class="title">Companies</span>
                   </a>
                 </li>
+
                 <li class="">
-                  <a href="/areas">
-                    <i class="fa fa-camera"></i>
-                    <span class="title">Area</span>
+                  <a href="/states">
+                    <i class="fa fa-tasks"></i>
+                    <span class="title">States</span>
                   </a>
                 </li>
+
+                <li class="">
+                  <a href="/cities">
+                    <i class="fa fa-tasks"></i>
+                    <span class="title">Cities</span>
+                  </a>
+                </li>
+
+                <li class="">
+                  <a href="/areas">
+                    <i class="fa fa-building"></i>
+                    <span class="title">Areas</span>
+                  </a>
+                </li>
+
                 <li class="">
                   <a href="/vehicles">
                     <i class="fa fa-truck"></i>
@@ -54,9 +78,9 @@
                   </a>
                 </li>
                 <li class="">
-                  <a href="/branches">
-                    <i class="fa fa-building-o"></i>
-                    <span class="title">Branches</span>
+                  <a href="/roles">
+                    <i class="fa fa-users"></i>
+                    <span class="title">Roles</span>
                   </a>
                 </li>
                 <li class="">
@@ -68,33 +92,52 @@
               </ul>
             </li>
 
-            <li class="">
-              <a href="/users">
-                <i class="fa fa-th"></i>
-                <span class="title">Users</span>
-              </a>
+            <li class=""><a href="javascript:;"> <i class="fa fa-building-o"></i> <span class="title">Branches</span> <span class="arrow open"></span> </a>
+              <ul class="sub-menu">
+                <li > <a href="/branches/new"> <i class="fa fa-wrench"></i><span class="title">New branch</span></a></li>
+                <li > <a href="/branches?type=visit"> <i class="fa fa-wrench"></i><span class="title">Visits</span></a></li>
+                <li > <a href="/branches?type=lead"><i class="fa fa-spoon"></i><span class="title">Leads</span></a></li>
+                <li > <a href="/branches?type=contract"><i class="fa fa-spoon"></i><span class="title">Contracts</span></a></li>
+              </ul>
+            </li>
+
+            <li class=""><a href="javascript:;"> <i class="fa fa-send"></i> <span class="title">Routes</span> <span class="arrow open"></span> </a>
+              <ul class="sub-menu">
+                <li > <a href="/routes/new"> <i class="fa fa-send-o"></i><span class="title">New route</span></a></li>
+                <li > <a href="/routes?type=active"><i class="fa fa-clock-o"></i><span class="title">Active routes</span></a></li>
+                <li > <a href="/routes?type=completed"><i class="fa fa-check"></i><span class="title">Completed routes</span></a></li>
+              </ul>
+            </li>
+
+            <li class=""><a href="javascript:;"> <i class="fa fa-share"></i> <span class="title">Assignments</span> <span class="arrow open"></span> </a>
+              <ul class="sub-menu">
+                <li > <a href="/assignments/new"> <i class="fa fa-share-square-o"></i><span class="title">New assignment</span></a></li>
+                <li > <a href="/assignments?type=active"><i class="fa fa-clock-o"></i><span class="title">Active assignments</span></a></li>
+                <li > <a href="/assignments?type=active"><i class="fa fa-building-o"></i><span class="title">Factory assignments</span></a></li>
+                <li > <a href="/assignments?type=completed"><i class="fa fa-check"></i><span class="title">Completed assignments</span></a></li>
+              </ul>
             </li>
 
             <li class="">
-              <a href="/vehicles/assignment">
-                <i class="fa fa-truck"></i>
-                <span class="title">Assign vehicles</span>
+              <a href="#">
+                <i class="fa fa-file-pdf-o"></i>
+                <span class="title">Reports</span>
               </a>
             </li>
 
-            <li class="">
-              <a href="/vehicles/assign_branches">
-                <i class="fa fa-building-o"></i>
-                <span class="title">Assign branches</span>
-              </a>
-            </li>
+            <!--<li class="">-->
+              <!--<a href="/vehicles/assign_branches">-->
+                <!--<i class="fa fa-building-o"></i>-->
+                <!--<span class="title">Assign branches</span>-->
+              <!--</a>-->
+            <!--</li>-->
 
-            <li class="">
-              <a href="/schedule_branches/schedules">
-                <i class="fa fa-building-o"></i>
-                <span class="title">Schedules(for driver)</span>
-              </a>
-            </li>
+            <!--<li class="">-->
+              <!--<a href="/schedule_branches/schedules">-->
+                <!--<i class="fa fa-building-o"></i>-->
+                <!--<span class="title">Schedules(for driver)</span>-->
+              <!--</a>-->
+            <!--</li>-->
 
           </ul>
         </div>
@@ -103,8 +146,21 @@
         <div class="progress transparent progress-small no-radius no-margin">
         </div>
       </div>
-      <%= render :partial => "layouts/messages" %>
-      <%= yield %>
+      <div class="page-content">
+        <div id="portlet-config" class="modal hide">
+          <div class="modal-header">
+            <button data-dismiss="modal" class="close" type="button"></button>
+            <h3>Widget Settings</h3>
+          </div>
+          <div class="modal-body">Widget settings form goes here</div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="content">
+          <%= render :partial => "layouts/messages" %>
+          <%= yield %>
+        </div>
+      </div>
+
     </div>
   </body>
 </html>

@@ -1,0 +1,31 @@
+<ul class="breadcrumb">
+  <li><p>YOU ARE HERE</p></li>
+  <li><a href="#" class="active">Manage branches</a></li>
+</ul>
+<div class="row">
+  <div class="col-md-12">
+    <div class="grid simple ">
+      <div class="grid-body no-border">
+        <strong>Route:</strong> Route-<%= @route.id %><br/>
+        <strong>State:</strong> <%= @route.state.name %><br/>
+        <strong>City:</strong> <%= @route.city.name %><br/>
+        <strong>#of branches:</strong> <%= @route.branches.count %>
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            Branch Priority
+          </div>
+          <div class="panel-body">
+            <ul id="branches" data-update-url="<%= sort_route_branches_url %>">
+              <% @route_branches.each do |route_branch| %>
+                  <%= content_tag_for :li, route_branch do %>
+                      <span class="handle">[drag]</span>
+                      <%= link_to route_branch.branch.branch_name, route_branch %>
+                  <% end %>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

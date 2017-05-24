@@ -19,5 +19,6 @@
  *= require bootstrap-datepicker
  *= require bootstrap-multiselect
  *= require jquery.dataTables
+ *= require scaffolds
  *= require_self
  */

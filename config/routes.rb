@@ -1,4 +1,44 @@
 Rails.application.routes.draw do
+  resources :assignments do
+    member do
+      get :complete_assignment
+      get :pdf_assignment
+    end
+  end
+  resources :routes  do
+    member do
+      get :manage_branches
+    end
+    collection do
+      get :schedules
+    end
+  end
+  resources :route_branches, only:[:show] do
+    collection do
+      post 'sort'
+    end
+  end
+  resources :roles
+  resources :cities do
+    member do
+      get :get_city_areas
+    end
+  end
+  resources :states do
+    resources :cities, only:[] do
+      collection do
+        get :get_state_cities
+      end
+    end
+  end
+  
+  resources :products do
+    collection do
+      post 'sort'
+    end
+  end
+ 
+ 
   get 'transactions/payment'
 
   resources :billings do
@@ -17,7 +57,11 @@ Rails.application.routes.draw do
   resources :companies
   resources :storage_types
   resources :food_types
-  resources :areas
+  resources :areas do
+    collection do
+      get :get_area_branches
+    end
+  end
   resources :vehicles do
     collection do
       get  'assignment'

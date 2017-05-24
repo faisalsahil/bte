@@ -1,0 +1,42 @@
+<ul class="breadcrumb">
+  <li><p>YOU ARE HERE</p></li>
+  <li><a href="#" class="active">Routes</a></li>
+  <li><%= link_to 'New route', new_route_path, class:'btn btn-mini btn-primary' %></li>
+</ul>
+<div class="row">
+  <div class="col-md-12">
+    <div class="grid simple ">
+      <div class="grid-body no-border">
+        <table class="table table-striped list-data-table" id="routes_table">
+          <thead>
+          <tr>
+            <th>Route</th>
+            <th>State</th>
+            <th>City</th>
+            <th>Locations</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <% @routes.each do |route| %>
+              <tr>
+                <td><%= 'Route-' %><%= route.id %></td>
+                <td><%= route.state.name %></td>
+                <td><%= route.city.name %></td>
+                <td>
+                  <%= route.route_branches.count %>
+                  <%= link_to '[manage]', manage_branches_route_path(route) %>
+                </td>
+                <td>
+                  <%= link_to '', edit_route_path(route), class: 'fa fa-edit' %>
+                  <%= link_to '', route, method: :delete, class: 'fa fa-trash', data: { confirm: 'Are you sure?' } %>
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

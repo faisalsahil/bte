@@ -1,0 +1,25 @@
+<%= form_for(@assignment) do |f| %>
+    <% if @assignment.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@assignment.errors.count, "error") %> prohibited this task from being saved:</h2>
+          <ul>
+            <% @assignment.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+  <div class="form-inputs">
+    <%= f.text_field :assigned_at, class: 'datepicker', placeholder: 'From', value:  Date.today.strftime('%d/%m/%Y')  %>
+    <%= f.select :driver_id, options_for_select(@drivers.collect {|p| [ p[:name], p[:id] ] }, selected: @assignment.driver_id), {include_blank: 'Select driver'} %>
+    <%= f.select :helper_id, options_for_select(@helpers.collect {|p| [ p[:name], p[:id] ] }, selected: @assignment.helper_id), {include_blank: 'Select helper'} %>
+    <%= f.select :vehicle_id, options_for_select(@vehicles.collect {|p| [ p[:vehicle_number], p[:id] ] }, selected: @assignment.vehicle_id), {include_blank: 'Select vehicle'} %>
+    <%= f.select :route_id, options_for_select(@active_routes.collect {|p| [ "Route-"+ p[:id].to_s , p[:id] ] }, selected: @assignment.route_id), {include_blank: 'Select route'} %>
+  </div>
+
+    <div class="form-actions">
+      <%= link_to 'Back', assignments_path , class:'btn btn-mini btn-default'%>
+      <%= f.button :submit, class:'btn btn-mini btn-primary' %>
+    </div>
+<% end %>

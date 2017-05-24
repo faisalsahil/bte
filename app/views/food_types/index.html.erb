@@ -1,44 +1,32 @@
-<div class="page-content">
-  <div id="portlet-config" class="modal hide">
-    <div class="modal-header">
-      <button data-dismiss="modal" class="close" type="button"></button>
-      <h3>Widget Settings</h3>
-    </div>
-    <div class="modal-body">Widget settings form goes here</div>
-  </div>
-  <div class="clearfix"></div>
-  <div class="content">
-    <ul class="breadcrumb">
-      <li><p>YOU ARE HERE</p></li>
-      <li><a href="#" class="active">Food types</a></li>
-      <li><%= link_to 'Add new', new_food_type_path, class: 'btn btn-mini btn-primary' %></li>
-    </ul>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="grid simple ">
-          <div class="grid-body no-border">
-            <table class="table table-striped list-data-table">
-              <thead>
-              <tr>
-                <th>Food type</th>
-                <th>Actions</th>
-              </tr>
-              </thead>
+<ul class="breadcrumb">
+  <li><p>YOU ARE HERE</p></li>
+  <li><a href="#" class="active">Food types</a></li>
+  <li><%= link_to 'Add new', new_food_type_path, class: 'btn btn-mini btn-primary' %></li>
+</ul>
+<div class="row">
+  <div class="col-md-12">
+    <div class="grid simple ">
+      <div class="grid-body no-border">
+        <table class="table table-striped list-data-table">
+          <thead>
+          <tr>
+            <th>Food type</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
 
-              <tbody>
-              <% @food_types.each do |food_type| %>
-                  <tr>
-                    <td><%= food_type.name %></td>
-                    <td>
-                      <%= link_to '', edit_food_type_path(food_type), class: 'fa fa-edit' %>
-                      <%= link_to '', food_type, method: :delete, class: 'fa fa-trash', data: { confirm: 'Are you sure?' } %>
-                    </td>
-                  </tr>
-              <% end %>
-              </tbody>
-            </table>
-          </div>
-        </div>
+          <tbody>
+          <% @food_types.each do |food_type| %>
+              <tr>
+                <td><%= food_type.name %></td>
+                <td>
+                  <%= link_to '', edit_food_type_path(food_type), class: 'fa fa-edit' %>
+                  <%= link_to '', food_type, method: :delete, class: 'fa fa-trash', data: { confirm: 'Are you sure?' } %>
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

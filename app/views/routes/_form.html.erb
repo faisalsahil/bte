@@ -1,0 +1,52 @@
+<%= simple_form_for(@route, html: { id: :route_submit_form}) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs row">
+
+      <div class="col-md-4">
+        <%= f.select :state_id, options_for_select(State.all.collect {|p| [ p[:name], p[:id] ] }, selected: @route.state_id), {include_blank: 'Select sate'} %>
+      </div>
+
+      <div class="col-md-4">
+        <% if @route.city_id.present? %>
+            <%= f.select :city_id, options_for_select(@route.state.cities.collect {|p| [ p[:name], p[:id] ] }, selected: @route.city_id), {include_blank: 'Select city'} %>
+        <% else %>
+            <select name="route[city_id]" id="route_city_id" class="hidden"></select>
+        <% end %>
+      </div>
+      <div class="col-md-4">
+        <% if @route_area_ids.present? %>
+          <div id="route_area">
+            <select name='route[area_ids][]' id="route_area_id" multiple='multiple'>
+             <% @areas&.each do |area| %>
+                  <% if @route_area_ids.include? area.id %>
+                      <option value='<%= "#{area.id}" %>' selected='selected'><%= area.name%></option>
+                  <% else %>
+                      <option value='<%= "#{area.id}" %>'><%= area.name%></option>
+                  <% end %>
+              <% end %>
+            </select>
+          </div>
+      <% else %>
+          <div id='route_area'  class="hidden">
+            <select name='area_ids[]' id="route_area_id" multiple='multiple'></select>
+          </div>
+      <% end %>
+      </div>
+
+      <br/><br/><br/>
+      <div id="select_branches" class="row col-md-12" style="margin-left: 2%;">
+        <% if @route_area_ids.present? %>
+            <%= render 'edit_route_branches', route_areas: @route_areas, branches: @branches %>
+        <% end %>
+      </div>
+  </div>
+
+  <div class="form-actions">
+    <%= link_to 'Back', routes_path , class:'btn btn-mini btn-default'%>
+    <%= f.button :submit, class:'btn btn-mini btn-primary' %>
+    <div id="error_explanation" class="hidden route_submit_error_notification" style="margin-top:5px;">
+      <span>Please select all fields.<br/>Please choose at least one location</span>
+    </div>
+  </div>
+<% end %>

@@ -11,22 +11,22 @@
 // about supported directives.
 //
 //= require jquery-1.8.3.min
+//= require jquery-ui
 //= require jquery_ujs
-//= require bootstrap.min
 //= require jquery.validate.min
+//= require bootstrap.min
 //= require login
-//= require jquery-ui-1.10.1.custom.min
 //= require breakpoints
 //= require jquery.scrollbar.min
 //= require select2
 //= require core
-//= require jquery.animateNumbers
 //= require jquery.unveil.min
 //= require bootstrap-datepicker
 //= require date_format
 //= require bootstrap-multiselect
 //= require jquery.dataTables
 //= require main
+
 
 
 

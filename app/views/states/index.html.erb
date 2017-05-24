@@ -1,0 +1,37 @@
+<ul class="breadcrumb">
+  <li><p>YOU ARE HERE</p></li>
+  <li><a href="#" class="active">Areas</a></li>
+  <li><%= link_to 'New state', new_state_path, class:'btn btn-mini btn-primary' %></li>
+</ul>
+<div class="row">
+  <div class="col-md-12">
+    <div class="grid simple ">
+      <div class="grid-body no-border">
+        <table class="table table-striped list-data-table">
+          <thead>
+          <tr>
+            <th>State</th>
+            <th>#of cities</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <% @states.each do |state| %>
+              <tr>
+                <td><%= state.name %></td>
+                <td><%= state.cities.count %></td>
+                <td>
+                  <%= link_to '', get_state_cities_state_cities_path(state), class: 'fa fa-eye' %>
+                  <%= link_to '', edit_state_path(state), class: 'fa fa-edit' %>
+                  <%= link_to '', state, method: :delete, class: 'fa fa-trash', data: { confirm: 'Are you sure?' } %>
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+

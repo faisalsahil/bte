@@ -1,0 +1,70 @@
+<ul class="breadcrumb">
+  <li><p>YOU ARE HERE</p></li>
+  <li><a href="#" class="active">Assignment details</a></li>
+</ul>
+<div class="row">
+  <div class="col-md-12">
+    <div class="grid simple ">
+      <div class="grid-body no-border">
+        <table class="table table-striped">
+          <thead>
+            <th>Assigned at</th>
+            <th>Route</th>
+            <th>Driver</th>
+            <th>Helper</th>
+            <th>vehicle</th>
+
+          </thead>
+          <tbody>
+            <tr>
+              <td><%= @assignment.assigned_at %></td>
+              <td><%= "Route-#{@assignment.route_id}" %></td>
+              <td><%= @assignment.driver.name %></td>
+              <td><%= @assignment.helper.name %></td>
+              <td><%= @assignment.vehicle.vehicle_number %></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            Branch details
+          </div>
+          <div class="panel-body">
+            <table class="table table-striped">
+              <thead>
+              <th>Br. code</th>
+              <th>Br. name</th>
+              <th>Qnty</th>
+              <th>Transfer to</th>
+              <th>is deleted</th>
+              </thead>
+              <tbody>
+                <% @route_branches&.each do |route_branch| %>
+                    <% if route_branch.is_deleted %>
+                       <tr class="strikeout">
+                    <% else %>
+                       <tr>
+                    <% end %>
+                      <td><%= route_branch.branch.branch_code %></td>
+                      <td><%= route_branch.branch.branch_name %></td>
+                      <td><%= route_branch.quantity %></td>
+                      <td>
+                        <% if route_branch.transfer_to.present? %>
+
+                            <%= "Route-#{Vehicle.find_by_id(route_branch.transfer_to).id }"  %>
+                        <% end %>
+                      </td>
+                      <td><%= route_branch.is_deleted %></td>
+                    </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <%= link_to 'Back', assignments_path({type: 'completed'}), class: 'btn btn-mini btn-default' %>
+      </div>
+    </div>
+  </div>
+</div>

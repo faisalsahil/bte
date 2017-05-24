@@ -1,44 +1,32 @@
-<div class="page-content">
-  <div id="portlet-config" class="modal hide">
-    <div class="modal-header">
-      <button data-dismiss="modal" class="close" type="button"></button>
-      <h3>Widget Settings</h3>
-    </div>
-    <div class="modal-body">Widget settings form goes here</div>
-  </div>
-  <div class="clearfix"></div>
-  <div class="content">
-    <ul class="breadcrumb">
-      <li><p>YOU ARE HERE</p></li>
-      <li><a href="#" class="active">Storage Types</a></li>
-      <li><%= link_to 'Add new', new_storage_type_path, class: 'btn btn-primary btn-mini' %></li>
-    </ul>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="grid simple ">
-          <div class="grid-body no-border">
-            <table class="table table-striped list-data-table">
-              <thead>
-              <tr>
-                <th>Type</th>
-                <th>Actions</th>
-              </tr>
-              </thead>
+<ul class="breadcrumb">
+  <li><p>YOU ARE HERE</p></li>
+  <li><a href="#" class="active">Storage Types</a></li>
+  <li><%= link_to 'Add new', new_storage_type_path, class: 'btn btn-primary btn-mini' %></li>
+</ul>
+<div class="row">
+  <div class="col-md-12">
+    <div class="grid simple ">
+      <div class="grid-body no-border">
+        <table class="table table-striped list-data-table">
+          <thead>
+          <tr>
+            <th>Type</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
 
-              <tbody>
-              <% @storage_types.each do |storage_type| %>
-                  <tr>
-                    <td><%= storage_type.name %></td>
-                    <td>
-                      <%= link_to '', edit_storage_type_path(storage_type), class: 'fa fa-edit' %>
-                      <%= link_to '', storage_type, method: :delete, class: 'fa fa-trash', data: { confirm: 'Are you sure?' } %>
-                    </td>
-                  </tr>
-              <% end %>
-              </tbody>
-            </table>
-          </div>
-        </div>
+          <tbody>
+          <% @storage_types.each do |storage_type| %>
+              <tr>
+                <td><%= storage_type.name %></td>
+                <td>
+                  <%= link_to '', edit_storage_type_path(storage_type), class: 'fa fa-edit' %>
+                  <%= link_to '', storage_type, method: :delete, class: 'fa fa-trash', data: { confirm: 'Are you sure?' } %>
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

@@ -10,6 +10,8 @@ gem 'compass-rails'
 
 gem 'country_select'
 
+gem 'carrierwave-dropbox'
+
 gem 'devise'
 
 gem 'dotenv-rails'
@@ -39,6 +41,8 @@ gem 'pg'
 gem 'puma', '~> 3.0'
 
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
+
+gem 'record_tag_helper', '~> 1.0'
 
 gem 'rest-client'
 

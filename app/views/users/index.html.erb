@@ -1,55 +1,42 @@
-<div class="page-content">
-  <div id="portlet-config" class="modal hide">
-    <div class="modal-header">
-      <button data-dismiss="modal" class="close" type="button"></button>
-      <h3>Widget Settings</h3>
-    </div>
-    <div class="modal-body">Widget settings form goes here</div>
-  </div>
-  <div class="clearfix"></div>
-  <div class="content">
-    <ul class="breadcrumb">
-      <li><p>YOU ARE HERE</p></li>
-      <li><a href="#" class="active">Users</a></li>
-      <li><%=  link_to 'Create User', new_user_path, class: 'btn btn-primary btn-mini pull-right' %></li>
-    </ul>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="grid simple ">
-          <div class="grid-body no-border">
-            <table class="table table-striped list-data-table">
-              <thead>
+<ul class="breadcrumb">
+  <li><p>YOU ARE HERE</p></li>
+  <li><a href="#" class="active">Users</a></li>
+  <li><%=  link_to 'Create User', new_user_path, class: 'btn btn-primary btn-mini pull-right' %></li>
+</ul>
+<div class="row">
+  <div class="col-md-12">
+    <div class="grid simple ">
+      <div class="grid-body no-border">
+        <table class="table table-striped list-data-table">
+          <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+            <% @users.each do |user| %>
               <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Actions</th>
+                <td class="v-align-middle"><%= user.name %></td>
+                <td class="v-align-middle"><span class="muted"><%= user.email %></span></td>
+                <td class="v-align-middle"><span class="muted"><%= user.role.name %></td>
+                <td class="v-align-middle">
+                  <% if user != current_user %>
+                    <% if user.is_deleted %>
+                      <%= link_to 'Unblock',  block_unblock_user_user_path(user.id), class: 'btn btn-warning btn-mini', method: 'delete', data: { confirm: 'Are you sure you want to unblock this user?'}%>
+                    <% else %>
+                      <%= link_to 'Block', block_unblock_user_user_path(user.id), class: 'btn btn-danger btn-mini', method: 'delete', data: { confirm: 'Are you sure you want to block this user?'} %>
+                    <% end %>
+                  <% end %>
+                </td>
               </tr>
-              </thead>
-              <tbody>
-                <% @users.each do |user| %>
-                  <tr>
-                    <td class="v-align-middle"><%= user.name %></td>
-                    <td class="v-align-middle"><span class="muted"><%= user.email %></span></td>
-                    <td class="v-align-middle"><span class="muted"><%= user.role.name %></td>
-                    <td class="v-align-middle">
-                      <% if user != current_user %>
-                        <% if user.is_deleted %>
-                          <%= link_to 'Unblock',  block_unblock_user_user_path(user.id), class: 'btn btn-warning btn-mini', method: 'delete', data: { confirm: 'Are you sure you want to unblock this user?'}%>
-                        <% else %>
-                          <%= link_to 'Block', block_unblock_user_user_path(user.id), class: 'btn btn-danger btn-mini', method: 'delete', data: { confirm: 'Are you sure you want to block this user?'} %>
-                        <% end %>
-                      <% end %>
-                    </td>
-                  </tr>
-                <% end %>
-              </tbody>
-            </table>
-          </div>
-        </div>
+            <% end %>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
 </div>
-
 

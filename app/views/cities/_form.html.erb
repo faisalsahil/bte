@@ -1,0 +1,13 @@
+<%= simple_form_for(@city) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.select :state_id, options_for_select(State.all.collect {|p| [ p[:name], p[:id] ] }, @city.state_id), class: 'form-control' %>
+    <%= f.input :name %>
+  </div>
+
+    <div class="form-actions">
+      <%= link_to 'Back', cities_path , class:'btn btn-mini btn-default'%>
+      <%= f.button :submit, class:'btn btn-mini btn-primary' %>
+    </div>
+<% end %>

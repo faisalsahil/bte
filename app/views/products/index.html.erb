@@ -1,0 +1,33 @@
+<div class="page-content">
+  <div id="portlet-config" class="modal hide">
+    <div class="modal-header">
+      <button data-dismiss="modal" class="close" type="button"></button>
+      <h3>Widget Settings</h3>
+    </div>
+    <div class="modal-body">Widget settings form goes here</div>
+  </div>
+  <div class="clearfix"></div>
+  <div class="content">
+    <ul class="breadcrumb">
+      <li><p>YOU ARE HERE</p></li>
+      <li><a href="#" class="active">Areas</a></li>
+      <li><%= link_to 'New Product', new_product_path %></li>
+    </ul>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="grid simple ">
+          <div class="grid-body no-border">
+            <ul id="products" data-update-url="<%= sort_products_url %>">
+              <% @products.each do |product| %>
+                  <%= content_tag_for :li, product do %>
+                    <span class="handle">[drag]</span>
+                    <%= link_to product.name, product %>
+                  <% end %>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

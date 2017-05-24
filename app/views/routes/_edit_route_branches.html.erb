@@ -1,0 +1,25 @@
+<% @route_areas&.each do |area| %>
+  <div class="well well-sm col-md-3 box_height" style="margin-right:5px;">
+      <span class="area_heading"><%= area.name%></span>
+      <table class="table-striped">
+          <thead>
+          <th>Br. name</th>
+          <th></th>
+          </thead>
+          <tbody>
+          <% area.branches&.each do |branch| %>
+          <tr>
+              <td><%= branch.branch_code + "|" + branch.branch_name%></td>
+              <td>
+                <% if @branches.find_by_id(branch.id).present? %>
+                   <%= check_box_tag 'route[branches][]', branch.id, true, class: "check_box_input" %>
+                <% else %>
+                   <%= check_box_tag 'route[branches][]', branch.id, false, class: "check_box_input" %>
+                <% end %>
+              </td>
+          </tr>
+          <% end %>
+          </tbody>
+      </table>
+  </div>
+<% end %>

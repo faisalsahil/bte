@@ -10,12 +10,17 @@ class Branch < ApplicationRecord
   
   
 
-  has_many :schedule_branches
+  has_many   :schedule_branches
+
+  has_many :route_branches
+  has_many :routes, through: :route_branches
   belongs_to :area
   belongs_to :storage_type
   belongs_to :food_type
+  belongs_to :state
+  belongs_to :city
 
   def address
-    [street, city, state, zip].compact.join(', ')
+    [street, city.name, state.name, zip].compact.join(', ')
   end
 end

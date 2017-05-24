@@ -76,6 +76,15 @@ GEM
     capistrano-sidekiq (0.10.0)
       capistrano
       sidekiq (>= 3.4)
+    carrierwave (0.11.2)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
+      mime-types (>= 1.16)
+      mimemagic (>= 0.3.0)
+    carrierwave-dropbox (1.2.1)
+      carrierwave (~> 0.9)
+      dropbox-sdk (~> 1.6)
     chronic (0.10.2)
     chunky_png (1.3.8)
     coderay (1.1.1)
@@ -125,6 +134,8 @@ GEM
     dotenv-rails (2.2.0)
       dotenv (= 2.2.0)
       railties (>= 3.2, < 5.1)
+    dropbox-sdk (1.6.5)
+      json
     erubis (2.7.0)
     execjs (2.7.0)
     faker (1.7.3)
@@ -153,6 +164,7 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
+    json (2.1.0)
     libv8 (3.16.14.17)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -168,6 +180,7 @@ GEM
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
+    mimemagic (0.3.2)
     mini_portile2 (2.1.0)
     minitest (5.10.1)
     money (6.8.1)
@@ -222,6 +235,8 @@ GEM
     rb-fsevent (0.9.8)
     rb-inotify (0.9.8)
       ffi (>= 0.5.0)
+    record_tag_helper (1.0.0)
+      actionview (~> 5.x)
     redis (3.3.3)
     ref (2.0.0)
     responders (2.4.0)
@@ -312,6 +327,7 @@ DEPENDENCIES
   capistrano-rails (~> 1.1)
   capistrano-rvm
   capistrano-sidekiq
+  carrierwave-dropbox
   coffee-rails
   compass-rails
   country_select
@@ -333,6 +349,7 @@ DEPENDENCIES
   pry
   puma (~> 3.0)
   rails (~> 5.0.0, >= 5.0.0.1)
+  record_tag_helper (~> 1.0)
   rest-client
   sass-rails
   simple-navigation

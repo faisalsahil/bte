@@ -1,56 +1,39 @@
-<div class="authform">
+<ul class="breadcrumb">
+  <li><p>YOU ARE HERE</p></li>
+  <li><a href="#" class="active">Add User</a></li>
+</ul>
+<div class="row">
+  <div class="col-md-12">
+    <div class="grid simple ">
+      <div class="grid-body no-border">
+        <div class="">
+          <%= form_for(User.new, url: add_user_users_path, method: 'post', :html => {:class => 'form-horizontal' }) do |f| %>
 
-</div>
-<div class="page-content">
-  <div id="portlet-config" class="modal hide">
-    <div class="modal-header">
-      <button data-dismiss="modal" class="close" type="button"></button>
-      <h3>Widget Settings</h3>
-    </div>
-    <div class="modal-body">Widget settings form goes here</div>
-  </div>
-  <div class="clearfix"></div>
-  <div class="content">
-    <%= render :partial => "layouts/messages" %>
-    <ul class="breadcrumb">
-      <li><p>YOU ARE HERE</p></li>
-      <li><a href="#" class="active">Add User</a></li>
-    </ul>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="grid simple ">
-          <div class="grid-body no-border">
-            <div class="">
-              <%= form_for(User.new, url: add_user_users_path, method: 'post', :html => {:class => 'form-horizontal' }) do |f| %>
-
-                  <%#= devise_error_messages! %>
-                  <div class="form-group">
-                    <%= f.label :name %>
-                    <%= f.text_field :name, :autofocus => true, class: 'form-control' %>
-                  </div>
-                  <div class="form-group">
-                    <%= f.label :email %>
-                    <%= f.email_field :email, class: 'form-control' %>
-                  </div>
-                  <div class="form-group">
-                    <%= f.label :password %>
-                    <%= f.password_field :password, class: 'form-control' %>
-                  </div>
-                  <div class="form-group">
-                    <%= f.label :password_confirmation %>
-                    <%= f.password_field :password_confirmation, class: 'form-control' %>
-                  </div>
-                  <div class="form-group">
-                    <%= f.label 'Role' %>
-                    <%= f.select :role_id, options_for_select(Role.all.collect {|p| [ p[:name], p[:id] ] }, 3), class: 'form-control', style: 'width: 30%;', class: 'form-control' %>
-                  </div>
-                  <%= f.submit 'Sign up', :class => 'btn btn-sm btn-primary right' %>
-              <% end %>
-            </div>
-          </div>
+              <%#= devise_error_messages! %>
+              <div class="form-group">
+                <%= f.label :name %>
+                <%= f.text_field :name, :autofocus => true, class: 'form-control' %>
+              </div>
+              <div class="form-group">
+                <%= f.label :email %>
+                <%= f.email_field :email, class: 'form-control' %>
+              </div>
+              <div class="form-group">
+                <%= f.label :password %>
+                <%= f.password_field :password, class: 'form-control' %>
+              </div>
+              <div class="form-group">
+                <%= f.label :password_confirmation %>
+                <%= f.password_field :password_confirmation, class: 'form-control' %>
+              </div>
+              <div class="form-group">
+                <%= f.label 'Role' %>
+                <%= f.select :role_id, options_for_select(Role.all.collect {|p| [ p[:name], p[:id] ] }, 3), class: 'form-control', style: 'width: 30%;', class: 'form-control' %>
+              </div>
+              <%= f.submit 'Sign up', :class => 'btn btn-sm btn-primary right' %>
+          <% end %>
         </div>
       </div>
     </div>
   </div>
 </div>
-

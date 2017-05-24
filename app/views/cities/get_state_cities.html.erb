@@ -1,0 +1,37 @@
+<ul class="breadcrumb">
+  <li><p>YOU ARE HERE</p></li>
+  <li><a href="#" class="active">State cities</a></li>
+</ul>
+<div class="row">
+  <div class="col-md-12">
+    <div class="grid simple ">
+      <div class="grid-body no-border">
+        <div>
+          <label>State:</label><%= @state.name %>
+        </div>
+        <table class="table table-striped list-data-table">
+          <thead>
+          <tr>
+            <th>City</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @cities.each do |city| %>
+              <tr>
+                <td><%= city.name %></td>
+                <td>
+                  <%= link_to '', city, method: :delete, class: 'fa fa-trash', data: { confirm: 'If you delete city, all the areas in this city will also delete. Are you sure?' } %>
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+        <div>
+          <%= link_to 'Back', states_path, class: 'btn btn-mini btn-default'%>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

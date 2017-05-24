@@ -2,6 +2,12 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
+    <%= f.select :state_id, options_for_select(State.all.collect {|p| [ p[:name], p[:id] ] }, @area.state_id), :include_blank => true, class: 'form-control' %>
+    <% if @area.city_id.present? %>
+       <%= f.select :city_id, options_for_select(@cities.collect {|p| [ p[:name], p[:id] ] }, @area.city_id), class: 'form-control' %>
+    <% else %>
+      <select name="area[city_id]" id="area_city_id" class="hidden"></select>
+    <% end %>
     <%= f.input :name %>
   </div>
 
