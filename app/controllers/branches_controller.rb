@@ -22,7 +22,7 @@ class BranchesController < ApplicationController
 
   def new
     @branch = Branch.new
-    @statuses = ['visit', 'lead', 'contract']
+    @statuses = ['visit', 'lead', 'contracted']
   end
 
   def edit
