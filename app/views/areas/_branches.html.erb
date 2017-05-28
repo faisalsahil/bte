@@ -7,10 +7,11 @@
         <th></th>
         </thead>
         <tbody>
-        <% branches = area.branches.where(branch_status: 'contracted') %>
+        <% branches = area.branches.where(branch_status: AppConstants::CONTRACTED) %>
         <% branches&.each do |branch| %>
             <tr>
               <td><%= branch.branch_code + "|" + branch.branch_name%></td>
+              <%= hidden_field_tag :price, branch.rate_per_kg %>
               <td><%= check_box_tag 'route[branches][]', branch.id, false, class: "check_box_input" %></td>
             </tr>
         <% end %>

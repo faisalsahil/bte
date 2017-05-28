@@ -3,12 +3,12 @@ class BranchesController < ApplicationController
 
   def index
     if params[:type].present?
-      if params[:type] == 'visit'
-        @branches = Branch.where(branch_status: 'visit')
-      elsif params[:type] == 'lead'
-        @branches = Branch.where(branch_status: 'lead')
-      elsif params[:type] == 'contracted'
-        @branches = Branch.where(branch_status: 'contracted')
+      if params[:type] == AppConstants::VISIT
+        @branches = Branch.where(branch_status: AppConstants::VISIT)
+      elsif params[:type] == AppConstants::LEAD
+        @branches = Branch.where(branch_status: AppConstants::LEAD)
+      elsif params[:type] == AppConstants::CONTRACTED
+        @branches = Branch.where(branch_status: AppConstants::CONTRACTED)
       else
         @branches = Branch.all
       end
@@ -22,21 +22,17 @@ class BranchesController < ApplicationController
 
   def new
     @branch = Branch.new
-    @statuses = ['visit', 'lead', 'contracted']
+    @statuses = [AppConstants::VISIT, AppConstants::LEAD, AppConstants::CONTRACTED]
   end
 
   def edit
-    if @branch.branch_status == 'visit'
-      @statuses = ['visit', 'lead', 'contract']
-    elsif @branch.branch_status == 'lead'
-      @statuses = ['lead', 'contract']
-    elsif @branch.branch_status == 'contract'
-      @statuses = ['contract']
+    if @branch.branch_status == AppConstants::VISIT
+      @statuses = [AppConstants::VISIT, AppConstants::LEAD, AppConstants::CONTRACTED]
+    elsif @branch.branch_status == AppConstants::LEAD
+      @statuses = [AppConstants::LEAD, AppConstants::CONTRACTED]
+    elsif @branch.branch_status == AppConstants::CONTRACTED
+      @statuses = [AppConstants::CONTRACTED]
     end
-    
-    
-    
-    
   end
 
   def create
@@ -47,7 +43,7 @@ class BranchesController < ApplicationController
         format.html { redirect_to @branch, notice: 'Branch was successfully created.' }
         format.json { render :show, status: :created, location: @branch }
       else
-        @statuses = ['visit', 'lead', 'contract']
+        @statuses = [AppConstants::VISIT, AppConstants::LEAD, AppConstants::CONTRACTED]
         format.html { render :new }
         format.json { render json: @branch.errors, status: :unprocessable_entity }
       end

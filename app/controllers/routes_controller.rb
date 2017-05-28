@@ -4,9 +4,9 @@ class RoutesController < ApplicationController
   def index
     
     if params[:type].present?
-      if params[:type] == 'active'
+      if params[:type] == AppConstants::ACTIVE
         @routes = Route.where(is_completed: false).includes(:state,:city, :branches)
-      elsif params[:type] == 'completed'
+      elsif params[:type] == AppConstants::COMPLETED
         @routes = Route.where(is_completed: true).includes(:state,:city, :branches)
       else
         @routes = Route.all.includes(:state,:city, :branches)
@@ -35,25 +35,12 @@ class RoutesController < ApplicationController
     @route = Route.new(route_params)
     respond_to do |format|
       if @route.save
-        branch_ids =  params[:route][:branches]
-        branch_ids&.each_with_index do |branch_id, index|
-          # route_branch = RouteBranch.find_by_route_id_and_branch_id(@route.id, branch_id)
-          # if route_branch.blank?
-            route_branch = @route.route_branches.build(branch_id: branch_id, position: index + 1)
-            route_branch.save!
-          # end
+        branches =  Branch.where(id: params[:route][:branches])
+        branches&.each_with_index do |branch, index|
+          route_branch = @route.route_branches.build(branch_id: branch.id, position: index + 1)
+          route_branch.price = branch.rate_per_kg
+          route_branch.save!
         end
-
-        # # delete existing branches
-        # existing_route_branch_ids = @route.branches.pluck(:id)
-        # if existing_route_branch_ids.present?
-        #   existing_route_branch_ids  = existing_route_branch_ids.map(&:to_s)
-        #   existing_route_branch_ids  = existing_route_branch_ids.reject { |h| branch_ids.include? h }
-        #   existing_route_branch_ids&.each do |branch_id|
-        #     route_branch = RouteBranch.find_by_route_id_and_branch_id(@route.id, branch_id)
-        #     route_branch.destroy if route_branch.present?
-        #   end
-        # end
 
         format.html { redirect_to routes_path, notice: 'Route was successfully created.' }
         format.json { render :show, status: :created, location: @route }
@@ -85,7 +72,7 @@ class RoutesController < ApplicationController
           update_branch_positions(@route)
         else
           #  update from assignment index page (complex form)
-          mark_route_complete(@route)
+          mark_route_for_factory(@route)
         end
         if @route.is_completed
           format.html { redirect_to assignments_path({type: 'active'}), notice: 'Successfully updated.' }
@@ -124,22 +111,23 @@ class RoutesController < ApplicationController
     end
   end
   
-  def mark_route_complete(route)
+  def mark_route_for_factory(route)
     route_branches = Route.find_by_id(route.id).route_branches
     assignment     = Assignment.find_by_route_id(route.id)
  
     # Assign branch to other route
-    transferred_objects = route_branches.where('transfer_to IS NOT NULL')
+    transferred_objects = route_branches.where.not(transfer_to: nil)
     transferred_objects.each do |object|
       route_branch_object = RouteBranch.find_by_route_id_and_branch_id(object.transfer_to, object.branch_id) || RouteBranch.new(route_id: object.transfer_to, branch_id: object.branch_id)
       route_branch_object.save! if route_branch_object.new_record?
     end
     
     if route_branches.where(quantity: nil, transfer_to: nil, is_deleted: false).present?
-      assignment.is_completed = false
+      # assignment.is_completed = false
       route.is_completed = false
     else
-      assignment.is_completed = true
+      # assignment.is_completed = true
+      assignment.assignment_status = AppConstants::FACTORY
       route.is_completed = true
     end
     assignment.save!
@@ -152,6 +140,6 @@ class RoutesController < ApplicationController
     end
 
     def route_params
-      params.require(:route).permit(:state_id, :city_id, route_branches_attributes: [:id, :quantity, :is_transferred, :transfer_to, :is_deleted, :image])
+      params.require(:route).permit(:state_id, :city_id, route_branches_attributes: [:id, :quantity, :is_transferred, :transfer_to, :is_deleted, :image, :price, :factory_image])
     end
 end

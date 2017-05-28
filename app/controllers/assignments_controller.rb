@@ -114,7 +114,7 @@ class AssignmentsController < ApplicationController
       @drivers  = User.where(role_id: Role.find_by_name(AppConstants::DRIVER).id)
       @helpers  = User.where(role_id: Role.find_by_name(AppConstants::HELPER).id)
       @vehicles = Vehicle.all
-      @active_routes = Route.all
+      @active_routes = Route.where(is_completed: false)
     end
 
     def assignment_params

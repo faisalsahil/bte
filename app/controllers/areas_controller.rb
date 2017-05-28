@@ -51,15 +51,7 @@ class AreasController < ApplicationController
   end
   
   def get_area_branches
-    # # @area = Area.find_by_id(params[:id])
-    # @branches = Branch.where(area_id: params[:area_id])
-    # respond_to do |format|
-    #   format.html {  }
-    #   format.json { return render json: {status: true, branches: @branches} }
-    # end
-
-
-    @areas = Area.where(id: params[:area_id]).includes(:branches)
+   @areas = Area.where(id: params[:area_id]).includes(:branches)
     respond_to do |format|
       format.html {  }
       format.js { render layout: false }

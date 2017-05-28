@@ -8,10 +8,6 @@ class Branch < ApplicationRecord
   reverse_geocoded_by :latitude, :longitude
   after_validation :reverse_geocode
   
-  
-
-  has_many   :schedule_branches
-
   has_many :route_branches
   has_many :routes, through: :route_branches
   belongs_to :area
