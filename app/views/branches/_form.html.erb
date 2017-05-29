@@ -14,16 +14,18 @@
             <%= f.select :company_id, options_for_select(Company.all.collect {|p| [ p[:company_name], p[:id] ] }), class: 'form-control' %>
           </div>
           <div class="col-md-3">
-            <%= f.label 'Branch code' %>
-            <%= f.text_field :branch_code, class: 'form-control', placeholder: 'code' %>
-          </div>
-          <div class="col-md-3">
             <%= f.label 'Branch name' %>
             <%= f.text_field :branch_name, class: 'form-control', placeholder: 'branch name' %>
           </div>
+        </div>
+        <div class="row">
           <div class="col-md-3 form-group">
             <%= f.label 'Status' %>
             <%= f.select :branch_status, options_for_select(@statuses), class: 'form-control' %>
+          </div>
+          <div class="col-md-3 form-group">
+            <%= f.label 'Sale representative' %>
+            <%= f.select :representative, options_for_select(@sale_representatives.collect {|p| [ p[:name], p[:id] ] }), {include_blank: 'Select saler'}, class: 'form-control' %>
           </div>
         </div>
       </div>
@@ -57,11 +59,6 @@
       </div>
       <div class="panel-body">
         <div class="row">
-          <div class="col-md-3 form-group">
-            <%= f.label '#of outlets' %>
-            <%= f.number_field :number_of_outlets, class: 'form-control', placeholder: '1234' %>
-          </div>
-
           <div class="col-md-3">
             <%= f.label 'Type of establishment' %>
             <%= f.select :food_type_id, options_for_select(FoodType.all.collect {|p| [ p[:name], p[:id] ] }), class: 'form-control' %>
@@ -99,7 +96,7 @@
           <% if @branch.city_id.present? %>
               <%= f.select :city_id, options_for_select(@branch.state.cities.collect {|p| [ p[:name], p[:id] ] }, selected: @branch.city_id), {include_blank: 'Select city'}, class: 'form-control' %>
           <% else %>
-            <select name="branch[city_id]" id="branch_city_id" class="hidden"></select>
+              <select name="branch[city_id]" id="branch_city_id" class="hidden"></select>
           <% end %>
         </div>
 

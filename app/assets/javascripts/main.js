@@ -329,6 +329,42 @@ $(document).ready(function(){
         }
     });
 
+    // Company create page===============================================
+    $("#company_branch_input").change(function() {
+        if(this.checked) {
+            $('#company_branch_form').removeClass('hidden');
+            // $.ajax({
+            //     url: '/companies/get_company_branch',
+            //     dataType:'script',
+            //     data: {
+            //         area_id: area_ids
+            //     },
+            //     success:function(data){
+            //
+            //     },
+            //     error:function(){
+            //     }
+        }else{$('#company_branch_form').addClass('hidden');}
+
+    });
+
+    $('#contact_same_as_above').change(function () {
+        if(this.checked) {
+            var name  = $('#company_contact_name').val();
+            var email = $('#company_contact_email').val();
+            var phone = $('#company_contact_phone').val();
+            $('#company_branches_attributes_0_contact_name').val(name);
+            $('#company_branches_attributes_0_contact_email').val(email);
+            $('#company_branches_attributes_0_contact_phone').val(phone);
+        }else{
+            $('#company_branches_attributes_0_contact_name').val('');
+            $('#company_branches_attributes_0_contact_email').val('');
+            $('#company_branches_attributes_0_contact_phone').val('');
+        }
+    });
+
+
+    //===================================================================
 
 
 });

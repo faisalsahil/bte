@@ -1,6 +1,6 @@
 class Branch < ApplicationRecord
   
-  validates_presence_of :rate_per_kg, :branch_code, :contact_phone
+  validates_presence_of :rate_per_kg
   
   geocoded_by :address
   after_validation :geocode
@@ -15,8 +15,10 @@ class Branch < ApplicationRecord
   belongs_to :food_type
   belongs_to :state
   belongs_to :city
+  # belongs_to :company
 
   def address
     [street, city.name, state.name, zip].compact.join(', ')
   end
+  
 end

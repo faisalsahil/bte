@@ -1,10 +1,65 @@
-<%= simple_form_for(@company) do |f| %>
-  <%= f.error_notification %>
-
-  <div class="form-inputs">
-    <%= f.input :company_name, autofocus: true %>
+<%= form_for(@company) do |f| %>
+  <% if @company.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@company.errors.count, "error") %> prohibited this task from being saved:</h2>
+          <ul>
+            <% @company.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+  <div class="panel panel-default">
+      <div class="panel-heading">
+        Company Info
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-3">
+            <%= f.label 'Company Name' %>
+            <%= f.text_field :company_name, class: 'form-control', placeholder: 'company name' %>
+          </div>
+          <div class="col-md-3">
+            <%= f.label '# of outlets' %>
+            <%= f.text_field :number_of_outlets, class: 'form-control', placeholder: '000' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      Contact Info
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-3 form-group">
+          <%= f.label 'Contact name' %>
+          <%= f.text_field :contact_name, class: 'form-control', placeholder: 'cont. name' %>
+        </div>
+        <div class="col-md-3">
+          <%= f.label 'Contact email' %>
+          <%= f.text_field :contact_email, class: 'form-control', placeholder: 'cont. email' %>
+        </div>
+        <div class="col-md-3">
+          <%= f.label 'Contact phone' %>
+          <%= f.number_field :contact_phone, class: 'form-control', placeholder: 'cont. phone' %>
+        </div>
+      </div>
+      <% if @company.new_record? %>
+        <%= check_box_tag 'company_branch_input', nil, false %><%= 'Enter a branch?' %>
+      <% end %>
+    </div>
   </div>
-
+  <% if @company.new_record? %>
+    <div class="panel panel-primary hidden" id="company_branch_form">
+      <div class="panel-heading">Branch Info</div>
+      <div class="panel-body">
+        <%= f.fields_for :branches, @company.branches.build do |branch| %>
+            <%= render 'branch_form_fields', branch: branch %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
   <div class="form-actions">
     <%= link_to 'Back', companies_path , class:'btn btn-mini btn-default'%>
     <%= f.button :submit, class:'btn btn-mini btn-primary' %>

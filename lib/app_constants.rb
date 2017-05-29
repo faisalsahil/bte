@@ -3,6 +3,7 @@ module AppConstants
   HELPER = 'helper'
   ACTIVE = 'active'
   FACTORY = 'factory'
+  SALER   = 'saler'
   COMPLETED = 'completed'
   
   VISIT = 'visit'

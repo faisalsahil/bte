@@ -66,7 +66,7 @@ class RoutesController < ApplicationController
             end
           end
           # delete existing branches
-          delete_existing_branches(@route, branch_ids)
+          @route.route_branches.where.not(branch_id: branch_ids).destroy_all
           
           # update positions
           update_branch_positions(@route)
@@ -99,10 +99,6 @@ class RoutesController < ApplicationController
     @route_branches = @route.route_branches.order('position ASC')
   end
   
-  def delete_existing_branches(route, branch_ids)
-    route.route_branches.where.not(branch_id: branch_ids).destroy_all
-  end
-  
   def update_branch_positions(route)
     route_branches = route.route_branches.order('position ASC')
     route_branches&.each_with_index do |route_branch, index|
@@ -117,7 +113,7 @@ class RoutesController < ApplicationController
  
     # Assign branch to other route
     transferred_objects = route_branches.where.not(transfer_to: nil)
-    transferred_objects.each do |object|
+    transferred_objects&.each do |object|
       route_branch_object = RouteBranch.find_by_route_id_and_branch_id(object.transfer_to, object.branch_id) || RouteBranch.new(route_id: object.transfer_to, branch_id: object.branch_id)
       route_branch_object.save! if route_branch_object.new_record?
     end
