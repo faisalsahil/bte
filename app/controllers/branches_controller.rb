@@ -5,10 +5,13 @@ class BranchesController < ApplicationController
     if params[:type].present?
       if params[:type] == AppConstants::VISIT
         @branches = Branch.where(branch_status: AppConstants::VISIT)
+        @statuses = [AppConstants::VISIT, AppConstants::LEAD, AppConstants::CONTRACTED]
       elsif params[:type] == AppConstants::LEAD
         @branches = Branch.where(branch_status: AppConstants::LEAD)
+        @statuses = [AppConstants::LEAD, AppConstants::CONTRACTED]
       elsif params[:type] == AppConstants::CONTRACTED
         @branches = Branch.where(branch_status: AppConstants::CONTRACTED)
+        @statuses = [AppConstants::CONTRACTED]
       else
         @branches = Branch.all
       end
@@ -28,6 +31,8 @@ class BranchesController < ApplicationController
   end
 
   def edit
+    role = Role.find_by_name(AppConstants::SALER)
+    @sale_representatives = User.where(role_id: role.id)
     if @branch.branch_status == AppConstants::VISIT
       @statuses = [AppConstants::VISIT, AppConstants::LEAD, AppConstants::CONTRACTED]
     elsif @branch.branch_status == AppConstants::LEAD
@@ -42,7 +47,7 @@ class BranchesController < ApplicationController
 
     respond_to do |format|
       if @branch.save
-        @branch.company.update_status_and_code
+        # @branch.company.update_status_and_code
         format.html { redirect_to @branch, notice: 'Branch was successfully created.' }
         format.json { render :show, status: :created, location: @branch }
       else
@@ -56,7 +61,7 @@ class BranchesController < ApplicationController
   def update
     respond_to do |format|
       if @branch.update(branch_params)
-        @branch.company.update_status_and_code
+        # @branch.company.update_status_and_code
         format.html { redirect_to @branch, notice: 'Branch was successfully updated.' }
         format.json { render :show, status: :ok, location: @branch }
       else
@@ -64,6 +69,13 @@ class BranchesController < ApplicationController
         format.json { render json: @branch.errors, status: :unprocessable_entity }
       end
     end
+  end
+  
+  def update_branch_status
+    @branch = Branch.find_by_id(params[:id])
+    @branch.branch_status = params[:status]
+    @branch.save!
+    return render json: true
   end
 
   def destroy

@@ -2,7 +2,6 @@ class RoutesController < ApplicationController
   before_action :set_route, only: [:show, :edit, :update, :destroy, :manage_branches]
 
   def index
-    
     if params[:type].present?
       if params[:type] == AppConstants::ACTIVE
         @routes = Route.where(is_completed: false).includes(:state,:city, :branches)
@@ -119,15 +118,21 @@ class RoutesController < ApplicationController
     end
     
     if route_branches.where(quantity: nil, transfer_to: nil, is_deleted: false).present?
-      # assignment.is_completed = false
       route.is_completed = false
     else
-      # assignment.is_completed = true
       assignment.assignment_status = AppConstants::FACTORY
       route.is_completed = true
     end
     assignment.save!
     route.save!
+  end
+  
+  def get_route_branches
+    @route_branches = RouteBranch.where(route_id: params[:id]).includes(:branch)
+    respond_to do |format|
+      format.html {  }
+      format.js { render layout: false }
+    end
   end
   
   private

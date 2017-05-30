@@ -21,17 +21,19 @@
                 </thead>
                 <tbody>
                   <%= f.fields_for :route_branches do |form_route_branch| %>
-                      <tr class="route_assignment_tr">
-                        <td><%= form_route_branch.object.branch.branch_code %></td>
-                        <td><%= form_route_branch.object.branch.branch_name %></td>
-                        <td>
-                          <%= form_route_branch.text_field :quantity, placeholder: 'qnty (kg)', style: 'width:26%;', class: 'route_quantity' %>
-                          <%= form_route_branch.select :transfer_to, options_for_select(@routes.collect {|p| [ "Route-#{p[:id].to_s}", p[:id] ] }, form_route_branch.object.transfer_to ), {:include_blank => 'Transfer to'}, {style: 'width:30%;', class: 'route_transfer_to'} %>
-                          <%= form_route_branch.check_box :is_deleted, checked: form_route_branch.object.is_deleted, class: 'route_remove' %> remove
-                          <%= form_route_branch.file_field :image, style: 'width:30%;', class: 'pull-right route_image' %>
-                        </td>
-                        <td></td>
-                      </tr>
+                      <% if form_route_branch.object.transfer_to.blank? %>
+                        <tr class="route_assignment_tr">
+                          <td><%= form_route_branch.object.branch.branch_code %></td>
+                          <td><%= form_route_branch.object.branch.branch_name %></td>
+                          <td>
+                            <%= form_route_branch.text_field :quantity, placeholder: 'qnty (kg)', style: 'width:26%;', class: 'route_quantity' %>
+                            <%= form_route_branch.select :transfer_to, options_for_select(@routes.collect {|p| [ "Route-#{p[:id].to_s}", p[:id] ] }, form_route_branch.object.transfer_to ), {:include_blank => 'Transfer to'}, {style: 'width:30%;', class: 'route_transfer_to'} %>
+                            <%= form_route_branch.check_box :is_deleted, checked: form_route_branch.object.is_deleted, class: 'route_remove' %> remove
+                            <%= form_route_branch.file_field :image, style: 'width:30%;', class: 'pull-right route_image' %>
+                          </td>
+                          <td></td>
+                        </tr>
+                      <% end %>
                   <% end %>
                 </tbody>
               </table>

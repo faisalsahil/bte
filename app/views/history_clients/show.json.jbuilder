@@ -1,0 +1,1 @@
+json.partial! "history_clients/history_client", history_client: @history_client

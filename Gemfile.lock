@@ -56,6 +56,8 @@ GEM
     bootstrap-sass (3.3.7)
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
+    bootstrap-wysihtml5-rails (0.3.3.8)
+      railties (>= 3.0)
     brakeman (3.5.0)
     builder (3.2.3)
     capistrano (3.4.1)
@@ -113,14 +115,6 @@ GEM
       sprockets (< 4.0)
     concurrent-ruby (1.0.4)
     connection_pool (2.2.1)
-    countries (2.0.7)
-      i18n_data (~> 0.7.0)
-      money (~> 6.7)
-      sixarm_ruby_unaccent (~> 1.1)
-      unicode_utils (~> 1.4)
-    country_select (3.0.0)
-      countries (~> 2.0)
-      sort_alphabetical (~> 1.0)
     debug_inspector (0.0.2)
     devise (4.2.1)
       bcrypt (~> 3.0)
@@ -148,13 +142,9 @@ GEM
       activesupport (>= 4.1.0)
     haml (4.0.7)
       tilt
-    high_voltage (3.0.0)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
-    httparty (0.14.0)
-      multi_xml (>= 0.5.2)
     i18n (0.7.0)
-    i18n_data (0.7.0)
     jbuilder (2.6.1)
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
@@ -174,8 +164,6 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
-    meta-tags (2.4.0)
-      actionpack (>= 3.2.0, <= 5.1.0)
     method_source (0.8.2)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
@@ -183,11 +171,7 @@ GEM
     mimemagic (0.3.2)
     mini_portile2 (2.1.0)
     minitest (5.10.1)
-    money (6.8.1)
-      i18n (>= 0.6.4, <= 0.7.0)
-      sixarm_ruby_unaccent (>= 1.1.1, < 2)
     multi_json (1.12.1)
-    multi_xml (0.6.0)
     mysql2 (0.4.6)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
@@ -235,8 +219,6 @@ GEM
     rb-fsevent (0.9.8)
     rb-inotify (0.9.8)
       ffi (>= 0.5.0)
-    record_tag_helper (1.0.0)
-      actionview (~> 5.x)
     redis (3.3.3)
     ref (2.0.0)
     responders (2.4.0)
@@ -259,15 +241,16 @@ GEM
       connection_pool (~> 2.2, >= 2.2.0)
       rack-protection (>= 1.5.0)
       redis (~> 3.2, >= 3.2.1)
+    sidekiq-failures (0.4.5)
+      sidekiq (>= 2.16.0)
+    sidekiq-status (0.6.0)
+      sidekiq (>= 2.7)
     simple-navigation (4.0.3)
       activesupport (>= 2.3.2)
     simple_form (3.4.0)
       actionpack (> 4, < 5.1)
       activemodel (> 4, < 5.1)
-    sixarm_ruby_unaccent (1.1.1)
     slop (3.6.0)
-    sort_alphabetical (1.1.0)
-      unicode_utils (>= 1.2.2)
     spring (2.0.1)
       activesupport (>= 4.2)
     sprockets (3.7.1)
@@ -298,7 +281,6 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.2)
-    unicode_utils (1.4.0)
     warden (1.2.7)
       rack (>= 1.0)
     websocket-driver (0.6.5)
@@ -320,6 +302,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bootstrap-sass
+  bootstrap-wysihtml5-rails
   brakeman
   capistrano (= 3.4.1)
   capistrano-bundler (~> 1.1.2)
@@ -330,28 +313,26 @@ DEPENDENCIES
   carrierwave-dropbox
   coffee-rails
   compass-rails
-  country_select
   devise
   dotenv-rails
   faker
   font-awesome-sass
   geocoder
   haml
-  high_voltage
-  httparty
   jbuilder (~> 2.5)
   jquery-rails
   jquery-ui-rails
   listen
-  meta-tags
   mysql2
   pg
   pry
   puma (~> 3.0)
   rails (~> 5.0.0, >= 5.0.0.1)
-  record_tag_helper (~> 1.0)
   rest-client
   sass-rails
+  sidekiq
+  sidekiq-failures
+  sidekiq-status
   simple-navigation
   simple_form
   spring

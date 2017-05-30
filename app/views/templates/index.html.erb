@@ -1,0 +1,46 @@
+<ul class="breadcrumb">
+  <li><p>YOU ARE HERE</p></li>
+  <li><a href="#" class="active">Add template</a></li>
+  <li><%= link_to 'Add New', new_template_path, class: 'btn btn-primary btn-mini' %></li>
+</ul>
+<div class="row">
+  <div class="col-md-12">
+    <div class="grid simple ">
+      <div class="grid-body no-border">
+        <table class="table table-striped list-data-table">
+          <thead>
+          <tr>
+            <th>Subject</th>
+            <th>From Email</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <% @templates.each_with_index do |template,index| %>
+              <tr>
+                <td>
+                  <%= "#{template.subject}" %>
+                </td>
+                <td>
+                  <%= "#{template.from_email}" %>
+                </td>
+                <td>
+                  <%= link_to 'Edit',   edit_template_path(template) %>
+                  |
+                  <%= link_to 'Send mail',  send_mail_template_path(template) %>
+                  |
+                  <%= link_to 'History',  email_histories_path(template) %>
+                  |
+                  <%= link_to 'Delete', template_path(template),  method: :delete, data: { confirm: 'Are you sure to delete template ?' } %>
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+

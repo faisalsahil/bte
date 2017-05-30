@@ -3,17 +3,7 @@ class AssignmentsController < ApplicationController
   before_action :set_data, only: [:new, :edit, :update, :create]
   
   def index
-    if params[:type].present?
-      if params[:type] == 'active'
-        @assignments = Assignment.where(is_completed: false)
-      elsif params[:type] == 'completed'
-        @assignments = Assignment.where(is_completed: true)
-      else
-        @assignments = Assignment.all
-      end
-    else
-      @assignments = Assignment.all
-    end
+    @assignments = Assignment.where(assignment_status: params[:type])
   end
 
   def show
@@ -31,8 +21,7 @@ class AssignmentsController < ApplicationController
   def create
     @assignment = Assignment.new(assignment_params)
     if @assignment.save
-      
-      redirect_to assignments_path, notice: 'Assignment was successfully created.'
+      redirect_to assignments_path({type: AppConstants::ACTIVE}), notice: 'Assignment was successfully created.'
     else
       render :new
     end
@@ -114,7 +103,8 @@ class AssignmentsController < ApplicationController
       @drivers  = User.where(role_id: Role.find_by_name(AppConstants::DRIVER).id)
       @helpers  = User.where(role_id: Role.find_by_name(AppConstants::HELPER).id)
       @vehicles = Vehicle.all
-      @active_routes = Route.where(is_completed: false)
+      assigned_route_ids = Assignment.where(is_completed: false).pluck(:route_id)
+      @active_routes = Route.active_routes.where.not(id: assigned_route_ids)
     end
 
     def assignment_params

@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  html: MyText
+  subject: MyString
+  from_email: MyString
+  cc: MyString
+  is_deleted: false
+  default: MyString
+  'false': MyString
+
+two:
+  html: MyText
+  subject: MyString
+  from_email: MyString
+  cc: MyString
+  is_deleted: false
+  default: MyString
+  'false': MyString

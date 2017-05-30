@@ -1,0 +1,43 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <%= @email_history.subject %>
+    |
+    <%= @email_history.from_email %>
+    <div class="pull-right">
+      <%= @history_clients %>
+      /
+      <%= @branches %>
+    </div>
+  </div>
+  <div class="panel-body">
+    <%= @email_history.html.html_safe %>
+    <% #= text_area_tag('html', @email_history.html, size: '77x18', placeholder: 'Enter Html here', style: 'resize: none;', readonly: true) %>
+  </div>
+</div>
+<div class="panel panel-warning">
+  <div class="panel-heading">
+    <%= 'Clients' %>
+  </div>
+  <div class="panel-body">
+    <% h_clients  = @email_history.history_clients %>
+    <table cellspacing="0" class="table table-striped table-bordered template-list-table" width="100%">
+      <thead>
+      <th>Email</th>
+      <th>Email count</th>
+      </thead>
+      <tbody>
+      <% h_clients && h_clients.each_with_index do |h_client,index| %>
+          <tr>
+            <td>
+              <%= "#{h_client.branch.contact_email}" %>
+            </td>
+            <td>
+              <%= "#{h_client.count}" %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+

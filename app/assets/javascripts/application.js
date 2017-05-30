@@ -24,6 +24,7 @@
 //= require bootstrap-datepicker
 //= require date_format
 //= require bootstrap-multiselect
+//= require bootstrap-wysihtml5
 //= require jquery.dataTables
 //= require main
 

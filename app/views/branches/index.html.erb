@@ -13,7 +13,7 @@
             <th>Area</th>
             <th>Branch name</th>
             <th>Branch code</th>
-            <th>Cont. Name</th>
+            <!--<th>Cont. Name</th>-->
             <th>Cont. phone</th>
             <th>Outlets</th>
             <th>Oil used</th>
@@ -23,15 +23,16 @@
 
           <tbody>
           <% @branches.each do |branch| %>
-              <tr>
+              <tr id='<%= "#{branch.id}"%>'>
                 <td><%= branch.area.name %></td>
                 <td><%= branch.branch_name %></td>
                 <td><%= branch.branch_code %></td>
-                <td><%= branch.contact_name %></td>
+                <!--<td><%#= branch.contact_name %></td>-->
                 <td><%= branch.contact_phone %></td>
                 <td><%= branch.number_of_outlets %></td>
                 <td><%= branch.monthly_oil_used %></td>
                 <td>
+                  <%= select_tag 'state_id', options_for_select(@statuses, selected: branch.branch_status), id: 'branch_change_status', class: 'form-control' %>
                   <%= link_to '', branch, class:'fa fa-eye' %>
                   <%= link_to '', edit_branch_path(branch), class: 'fa fa-edit' %>
                   <%= link_to '', branch, method: :delete, class: 'fa fa-trash', data: { confirm: 'Are you sure?' } %>

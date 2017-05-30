@@ -19,7 +19,7 @@
           </thead>
 
           <tbody>
-          <% @routes.each do |route| %>
+          <% @routes&.each do |route| %>
               <tr>
                 <td><%= 'Route-' %><%= route.id %></td>
                 <td><%= route.state.name %></td>

@@ -1,0 +1,1 @@
+json.array! @history_clients, partial: 'history_clients/history_client', as: :history_client

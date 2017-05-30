@@ -1,0 +1,45 @@
+<ul class="breadcrumb">
+  <li><p>YOU ARE HERE</p></li>
+  <li><a href="#" class="active">Email history</a></li>
+  <li></li>
+</ul>
+<div class="row">
+  <div class="col-md-12">
+    <div class="grid simple ">
+      <div class="grid-body no-border">
+        <div class="row">
+          <div class="col-md-5 vertical">
+            <table cellspacing="0" class="table table-striped table-bordered list-data-table" width="100%">
+              <thead>
+              <th>Sr#</th>
+              <th>Subject</th>
+              <th>Actions</th>
+              </thead>
+              <tbody>
+              <% @email_histories.each_with_index do |history,index| %>
+                  <tr>
+                    <td>
+                      <%= index + 1 %>
+                    </td>
+                    <td>
+                      <%= "#{history.subject}" %>
+                    </td>
+                    <td>
+                      <%= link_to 'view', email_history_path(@template, history), remote: true %>
+                      |
+                      <%= link_to 'Send mail',  send_email_email_history_path(history) %>
+                    </td>
+                  </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-md-7 vertical" id="show-parent">
+            <div id="show"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

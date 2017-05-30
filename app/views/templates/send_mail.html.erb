@@ -1,0 +1,66 @@
+
+<ul class="breadcrumb">
+  <li><p>YOU ARE HERE</p></li>
+  <li><a href="#" class="active">Send email</a></li>
+</ul>
+<div class="row">
+  <div class="col-md-12">
+    <div class="grid simple ">
+      <div class="grid-body no-border">
+        <div class='row'>
+          <div class="col-sm-8">
+            <table class="table table-striped table-bordered">
+              <tbody>
+              <tr>
+                <td><b>CC:</b></td>
+                <td><%= @template.cc %></td>
+              </tr>
+              <tr>
+                <td><b>Subject:</b></td>
+                <td><%= @template.subject %></td>
+              </tr>
+              <tr>
+                <td><b>Sender:</b></td>
+                <td><%= @template.from_email %></td>
+              </tr>
+              <tr>
+                <td><b>Content:</b></td>
+                <td>
+                  <%= @template.html.html_safe %>
+                  <%#= text_area_tag('html', @template.html.html_safe, size: '80x18', placeholder: 'Enter Html here', style: 'resize: none;', readonly: true) %>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            You want to edit? <%= link_to 'click here', edit_template_path(@template), class: 'btn btn-primary btn-mini btn-round' %>
+          </div>
+
+          <div class="col-sm-4" style="height: 463px; position: relative;">
+            <%= form_for(@template, url: send_mail_confirm_template_path(@template), method: 'post', :html => {:class => 'form-inline' }) do |f| %>
+                <div class="form-group">
+                  <label>Send To: </label>
+                  <div  class="ScrollRef">
+                    <%= select_tag 'multiselect[]', options_for_select(@branches.collect {|p| [ p[:branch_name], p[:id] ] }), id: 'select_branches_for_email', class: 'form-control', style: 'width:30%;', multiple: 'multiple' %>
+                  </div>
+                </div>
+                <div class="form-group" style="position:absolute; bottom: 0px; left: 15px;">
+                  <div>
+                    <%= f.submit 'Send Email', id: 'sent_email_button', :class => 'btn btn-primary btn-mini', data: { confirm: 'Are you sure to send email?' }, disabled: true %>
+                  </div>
+                </div>
+            <% end %>
+            <div id='selected_clients' class="emailslistspan" style="width: 100%; margin: 10px 0 0 0; height: 344px; overflow-y: auto;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<style type="text/css">
+  .ScrollRef .multiselect-container{
+    max-height: 350px;
+    overflow-y: auto;
+  }
+</style>

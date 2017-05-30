@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  template_id: 1
+  html: MyText
+  subject: MyString
+  from_email: MyString
+  cc: MyString
+
+two:
+  template_id: 1
+  html: MyText
+  subject: MyString
+  from_email: MyString
+  cc: MyString

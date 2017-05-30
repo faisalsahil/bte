@@ -19,29 +19,25 @@
           </thead>
 
           <tbody>
-          <% @assignments.each do |assignment| %>
+          <% @assignments&.each do |assignment| %>
               <tr>
                 <td><%= assignment.assigned_at.to_date %></td>
                 <td><%= assignment.driver.name %></td>
                 <td><%= assignment.helper.name %></td>
                 <td><%= assignment.vehicle.vehicle_number %></td>
-                <td><%= 'Route-' + assignment.route_id.to_s %></td>
                 <td>
-                  <% if assignment.is_completed %>
-                    <%= link_to 'completed', 'javascript:void(0)', class: 'muted' %> |
-                  <% else %>
-                    <%= link_to 'Add qnty', complete_assignment_assignment_path(assignment) %> |
-                  <% end %>
+                  <%= link_to "Route-#{assignment.route_id.to_s}", complete_assignment_assignment_path(assignment) %>
+                </td>
+                <td>
                   <%= link_to 'pdf', pdf_assignment_assignment_path(assignment, {format: :pdf}) %>
                 </td>
                 <td>
-                  <% if assignment.is_completed %>
-                      <%= link_to '', assignment, class: 'fa fa-eye' %>
-                  <% else %>
-                     <%= link_to '', edit_assignment_path(assignment), class: 'fa fa-edit' %>
-                     <%= link_to '', assignment, method: :delete, class: 'fa fa-trash', data: { confirm: 'Are you sure?' } %>
+                  <% if assignment.assignment_status == AppConstants::ACTIVE %>
+                      <%= link_to '', edit_assignment_path(assignment), class: 'fa fa-edit' %>
+                      <%= link_to '', assignment, method: :delete, class: 'fa fa-trash', data: { confirm: 'Are you sure?' } %>
+                  <% elsif assignment.assignment_status == AppConstants::FACTORY %>
+                      <%= link_to '', edit_assignment_path(assignment), class: 'fa fa-edit' %>
                   <% end %>
-
                 </td>
               </tr>
           <% end %>

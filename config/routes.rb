@@ -1,4 +1,26 @@
 Rails.application.routes.draw do
+  
+  
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
+  
+  
+  resources :history_clients
+  resources :templates  do
+    member {
+      get :send_mail
+      post :send_mail_confirm
+      resources :email_histories
+    }
+  end
+
+  resources :email_histories, only:[] do
+    member {
+      get :send_email
+      post :send_mail_confirm
+    }
+  end
+  
   resources :assignments do
     member do
       get :complete_assignment
@@ -8,6 +30,7 @@ Rails.application.routes.draw do
   resources :routes  do
     member do
       get :manage_branches
+      get :get_route_branches
     end
     collection do
       get :schedules
@@ -73,7 +96,11 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :branches
+  resources :branches do
+    member do
+      post :update_branch_status
+    end
+  end
   resources :schedule_branches, only:[] do
     collection do
       get 'schedules'

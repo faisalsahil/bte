@@ -17,6 +17,10 @@
     <%= f.select :vehicle_id, options_for_select(@vehicles.collect {|p| [ p[:vehicle_number], p[:id] ] }, selected: @assignment.vehicle_id), {include_blank: 'Select vehicle'} %>
     <%= f.select :route_id, options_for_select(@active_routes.collect {|p| [ "Route-"+ p[:id].to_s , p[:id] ] }, selected: @assignment.route_id), {include_blank: 'Select route'} %>
   </div>
+  <br/>
+  <div id="route_branches_list">
+
+  </div>
 
     <div class="form-actions">
       <%= link_to 'Back', assignments_path , class:'btn btn-mini btn-default'%>

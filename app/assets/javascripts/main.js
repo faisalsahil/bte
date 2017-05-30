@@ -329,21 +329,12 @@ $(document).ready(function(){
         }
     });
 
+
+
     // Company create page===============================================
     $("#company_branch_input").change(function() {
         if(this.checked) {
             $('#company_branch_form').removeClass('hidden');
-            // $.ajax({
-            //     url: '/companies/get_company_branch',
-            //     dataType:'script',
-            //     data: {
-            //         area_id: area_ids
-            //     },
-            //     success:function(data){
-            //
-            //     },
-            //     error:function(){
-            //     }
         }else{$('#company_branch_form').addClass('hidden');}
 
     });
@@ -362,11 +353,159 @@ $(document).ready(function(){
             $('#company_branches_attributes_0_contact_phone').val('');
         }
     });
-
-
     //===================================================================
 
 
+    //  branches index page==============================================
+    $("#branch_change_status").change(function(){
+        var branch_id = $(this).parent().parent().attr('id');
+        var status    = $(this).val();
+        $.ajax({
+            url: '/branches/'+ branch_id +'/update_branch_status',
+            dataType:'JSON',
+            type: 'post',
+            data:{
+                status: status
+            },
+            success:function(data){
+               location.reload();
+            },
+            error:function(){
+            }
+        });
+    });
+
+
+    // Add assignment====================================================
+    $('#assignment_route_id').change(function(){
+        $('#route_branches_list').html('');
+        var route_id = $(this).val();
+        if (route_id > 0)
+        {
+            $.ajax({
+                url: '/routes/'+ route_id + '/get_route_branches',
+                dataType:'script',
+                success:function(data){
+
+                },
+                error:function(){
+                }
+            });
+        }
+    });
+
+
+
+    // Add Template =====================================================
+    $('.wysihtml5').each(function(i, elem) {
+        $(elem).wysihtml5(
+            {'toolbar':
+                {
+                    'blockquote': false,
+                    'html': true,
+                    'image': true,
+                    "size": 'sm',
+                    "color": true
+                }
+            }
+        );
+    });
+
+
+    // send email template ==============================================
+    $('#select_branches_for_email').multiselect({
+        includeSelectAllOption: true,
+        enableFiltering: true,
+        onChange: function(option, checked, select) {
+            var client = $(option).val();
+            if ( checked ){
+                var html = "<span style='margin-right: 5px;' class='badge' id="+ client + ">" + $(option).text() + "</span>";
+                $('#selected_clients').prepend(html);
+                $('#sent_email_button').attr('disabled', false);
+            }else{
+                $('#'+  client + '').remove();
+                if( $('#selected_clients').is(':empty') ){
+                    $('#sent_email_button').attr('disabled', true);
+                }
+            }
+        },
+        onSelectAll: function() {
+            $('#selected_clients').html('');
+            $("#select_branches_for_email option").each(function()
+            {
+                var client = $(this).val();
+                var html   = "<span class='badge' id="+ client + ">" + $(this).text() + "</span>";
+                $('#selected_clients').prepend(html);
+            });
+            $('#sent_email_button').attr('disabled', false);
+        },
+        onDeselectAll: function() {
+            $('#selected_clients').html('');
+            $('#sent_email_button').attr('disabled', true);
+        }
+    });
+    // $('#sent_clients').multiselect({
+    //     includeSelectAllOption: true,
+    //     enableFiltering: true,
+    //     onChange: function(option, checked, select) {
+    //         var client = $(option).val();
+    //         if ( checked ){
+    //             var html = "<span style='margin-right: 5px;' class='badge' id="+ client + ">" + $(option).text() + "</span>";
+    //             $('#selected_clients').append(html);
+    //             $('#sent_email_button').attr('disabled', false);
+    //         }else{
+    //             $('#'+  client + '').remove();
+    //             if( $('#selected_clients').is(':empty') ){
+    //                 $('#sent_email_button').attr('disabled', true);
+    //             }
+    //         }
+    //     },
+    //     onSelectAll: function() {
+    //         $('#selected_clients').html('');
+    //         $("#sent_clients option").each(function()
+    //         {
+    //             var client = $(this).val();
+    //             var html   = "<span class='badge' id="+ client + ">" + $(this).text() + "</span>";
+    //             $('#selected_clients').append(html);
+    //         });
+    //         $('#sent_email_button').attr('disabled', false);
+    //     },
+    //     onDeselectAll: function() {
+    //         $('#selected_clients').html('');
+    //         $('#sent_email_button').attr('disabled', true);
+    //     }
+    // });
+    $('#send_clients').multiselect({
+        includeSelectAllOption: true,
+        enableFiltering: true,
+        onChange: function(option, checked, select) {
+            var client = $(option).val();
+            if ( checked ){
+                var html = "<span style='margin-right: 5px;' class='badge' id="+ client + ">" + $(option).text() + "</span>";
+                $('#selected_clients').prepend(html);
+                $('#sent_email_button').attr('disabled', false);
+            }else{
+                $('#'+  client + '').remove();
+                if( $('#selected_clients').is(':empty') ){
+                    $('#sent_email_button').attr('disabled', true);
+                }
+            }
+        },
+        onSelectAll: function() {
+            $('#selected_clients').html('');
+            $("#send_clients option").each(function()
+            {
+                var client = $(this).val();
+                var html   = "<span class='badge' id="+ client + ">" + $(this).text() + "</span>";
+                $('#selected_clients').prepend(html);
+            });
+            $('#sent_email_button').attr('disabled', false);
+        },
+        onDeselectAll: function() {
+            $('#selected_clients').html('');
+            $('#sent_email_button').attr('disabled', true);
+        }
+    });
 });
 
 function load_branches(area_ids)

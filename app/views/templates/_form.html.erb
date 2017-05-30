@@ -1,0 +1,65 @@
+<%= form_for(@template, :html => {:class => 'form-horizontal' }) do |f| %>
+    <% if @template.errors.any? %>
+        <h2>
+          <%= pluralize(@template.errors.count, 'error') %>
+          prohibited this end point from being saved:
+        </h2>
+        <ul>
+          <% @template.errors.full_messages.each do |message| %>
+              <li>
+                <%= message %>
+              </li>
+          <% end %>
+        </ul>
+    <% end %>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Subject:</label>
+      <div class="col-sm-10">
+        <%= f.text_field :subject, placeholder: 'subject' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">From Email:</label>
+      <div class="col-sm-10">
+        <%= f.text_field :from_email, placeholder: 'From email' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">CC:</label>
+      <div class="col-sm-10">
+        <%= f.text_field :cc, placeholder: 'cc' %>
+        <br/>
+        <span style="font-size:12px;">
+        Use
+          <%#= succeed ',' do %>
+          <span style="color:red; font-weight:bold;">{{FULL_NAME}}</span>
+        <%# end %>
+          <%#= succeed ',' do %>
+          <span style="color:red; font-weight:bold;">{{FIRST_NAME}}</span>
+        <%# end %>
+          <%#= succeed ',' do %>
+          <span style="color:red; font-weight:bold;">{{LAST_NAME}}</span>
+        <%# end %>
+          <%#= succeed ',' do %>
+          <span style="color:red; font-weight:bold;">{{EMAIL}}</span>
+        <%# end %>
+          <%#= succeed ',' do %>
+          <span style="color:red; font-weight:bold;">{{COMPANY}}</span>
+        <%# end %>
+          <span style="color:red; font-weight:bold;">{{PHONE}}</span>
+      </span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">HTML:</label>
+      <div class="col-sm-10">
+        <%= f.text_area(:html, size: '100x18', placeholder: 'Enter Html here', class: 'wysihtml5') %>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <%= link_to 'Back', templates_path, class: 'btn btn-mini btn-default' %>
+        <%= f.submit 'Save', :class => 'btn-primary btn-mini' %>
+      </div>
+    </div>
+<% end %>

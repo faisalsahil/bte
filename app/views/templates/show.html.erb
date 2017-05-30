@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Html:</strong>
+  <%= @template.html %>
+</p>
+
+<p>
+  <strong>Subject:</strong>
+  <%= @template.subject %>
+</p>
+
+<p>
+  <strong>From email:</strong>
+  <%= @template.from_email %>
+</p>
+
+<p>
+  <strong>Cc:</strong>
+  <%= @template.cc %>
+</p>
+
+<p>
+  <strong>Is deleted:</strong>
+  <%= @template.is_deleted %>
+</p>
+
+<%= link_to 'Edit', edit_template_path(@template) %> |
+<%= link_to 'Back', templates_path %>

@@ -4,11 +4,13 @@ gem 'api-auth', '~> 2.0'
 
 gem 'bootstrap-sass'
 
+gem 'bootstrap-wysihtml5-rails'
+
 gem 'coffee-rails'
 
 gem 'compass-rails'
 
-gem 'country_select'
+# gem 'country_select'
 
 gem 'carrierwave-dropbox'
 
@@ -22,9 +24,9 @@ gem 'font-awesome-sass'
 
 gem 'geocoder'
 
-gem 'high_voltage'
+# gem 'high_voltage'
 
-gem 'httparty'
+# gem 'httparty'
 
 gem 'jquery-rails'
 
@@ -34,7 +36,7 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'listen'
 
-gem 'meta-tags', :require => 'meta_tags'
+# gem 'meta-tags', :require => 'meta_tags'
 
 gem 'pg'
 
@@ -42,7 +44,7 @@ gem 'puma', '~> 3.0'
 
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 
-gem 'record_tag_helper', '~> 1.0'
+# gem 'record_tag_helper', '~> 1.0'
 
 gem 'rest-client'
 
@@ -51,6 +53,12 @@ gem 'sass-rails'
 gem 'simple_form'
 
 gem 'simple-navigation'
+
+gem 'sidekiq'
+
+gem 'sidekiq-failures'
+
+gem 'sidekiq-status'
 
 gem 'mysql2'
 
