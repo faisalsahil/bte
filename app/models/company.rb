@@ -1,12 +1,13 @@
 class Company < ApplicationRecord
-  
+
   has_many :branches
-  
+
   validates_presence_of   :company_name
   validates_uniqueness_of :company_name
-  
+  attr_accessor :save_branch_as_nested
   accepts_nested_attributes_for :branches
-  
+  validates_associated :branches, if: 'save_branch_as_nested.present?'
+
   def update_status_and_code
     # if self.company_code == 0 && self.company_status == AppConstants::VISIT
     #   branches = self.branches

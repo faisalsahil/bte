@@ -46,7 +46,7 @@
         </div>
       </div>
       <% if @company.new_record? %>
-        <%= check_box_tag 'company_branch_input', nil, false %><%= 'Enter a branch?' %>
+        <%= f.check_box :save_branch_as_nested, {class: 'company_branch_input'}, true, false %>  <%= f.label :save_branch_as_nested, 'Enter a branch?', style: 'display: inline-block;' %>
       <% end %>
     </div>
   </div>

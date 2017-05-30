@@ -330,7 +330,7 @@ $(document).ready(function(){
     });
 
     // Company create page===============================================
-    $("#company_branch_input").change(function() {
+    $(".company_branch_input").change(function() {
         if(this.checked) {
             $('#company_branch_form').removeClass('hidden');
             // $.ajax({
