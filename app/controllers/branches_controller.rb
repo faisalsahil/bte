@@ -28,6 +28,8 @@ class BranchesController < ApplicationController
   end
 
   def edit
+    role = Role.find_by_name(AppConstants::SALER)
+    @sale_representatives = User.where(role_id: role.id)
     if @branch.branch_status == AppConstants::VISIT
       @statuses = [AppConstants::VISIT, AppConstants::LEAD, AppConstants::CONTRACTED]
     elsif @branch.branch_status == AppConstants::LEAD
@@ -42,7 +44,7 @@ class BranchesController < ApplicationController
 
     respond_to do |format|
       if @branch.save
-        @branch.company.update_status_and_code
+        # @branch.company.update_status_and_code
         format.html { redirect_to @branch, notice: 'Branch was successfully created.' }
         format.json { render :show, status: :created, location: @branch }
       else
@@ -56,7 +58,7 @@ class BranchesController < ApplicationController
   def update
     respond_to do |format|
       if @branch.update(branch_params)
-        @branch.company.update_status_and_code
+        # @branch.company.update_status_and_code
         format.html { redirect_to @branch, notice: 'Branch was successfully updated.' }
         format.json { render :show, status: :ok, location: @branch }
       else
