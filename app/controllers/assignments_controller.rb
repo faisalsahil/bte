@@ -56,7 +56,7 @@ class AssignmentsController < ApplicationController
       format.pdf do
         pdf_name = "Route- #{@assignment.route_id} | #{@assignment.vehicle.vehicle_number}"
         render pdf: pdf_name,
-               disposition: 'inline',
+               disposition: 'attachment',
                # template: templ,
                layout: 'pdf.html', # use 'pdf.html' for a pdf.html.erb file
                page_offset: 0,
