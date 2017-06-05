@@ -3,20 +3,18 @@ class BranchesController < ApplicationController
 
   def index
     if params[:type].present?
+      @branches = Branch.where(branch_status: params[:type]).includes(:company)
       if params[:type] == AppConstants::VISIT
-        @branches = Branch.where(branch_status: AppConstants::VISIT)
         @statuses = [AppConstants::VISIT, AppConstants::LEAD, AppConstants::CONTRACTED]
       elsif params[:type] == AppConstants::LEAD
-        @branches = Branch.where(branch_status: AppConstants::LEAD)
         @statuses = [AppConstants::LEAD, AppConstants::CONTRACTED]
       elsif params[:type] == AppConstants::CONTRACTED
-        @branches = Branch.where(branch_status: AppConstants::CONTRACTED)
         @statuses = [AppConstants::CONTRACTED]
       else
-        @branches = Branch.all
+        @branches = Branch.all.includes(:company)
       end
     else
-      @branches = Branch.all
+      @branches = Branch.all.includes(:company)
     end
   end
 
@@ -47,8 +45,8 @@ class BranchesController < ApplicationController
 
     respond_to do |format|
       if @branch.save
-        # @branch.company.update_status_and_code
-        format.html { redirect_to @branch, notice: 'Branch was successfully created.' }
+        @branch.update_status_and_code
+        format.html { redirect_to branches_path({type: AppConstants::CONTRACTED}), notice: 'Branch was successfully created.' }
         format.json { render :show, status: :created, location: @branch }
       else
         @statuses = [AppConstants::VISIT, AppConstants::LEAD, AppConstants::CONTRACTED]
@@ -61,8 +59,8 @@ class BranchesController < ApplicationController
   def update
     respond_to do |format|
       if @branch.update(branch_params)
-        # @branch.company.update_status_and_code
-        format.html { redirect_to @branch, notice: 'Branch was successfully updated.' }
+        @branch.update_status_and_code
+        format.html { redirect_to branches_path({type: AppConstants::CONTRACTED}), notice: 'Branch was successfully updated.' }
         format.json { render :show, status: :ok, location: @branch }
       else
         format.html { render :edit }
@@ -74,7 +72,8 @@ class BranchesController < ApplicationController
   def update_branch_status
     @branch = Branch.find_by_id(params[:id])
     @branch.branch_status = params[:status]
-    @branch.save!
+    @branch.save(validate: false)
+    @branch.update_status_and_code
     return render json: true
   end
 

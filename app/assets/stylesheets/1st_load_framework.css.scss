@@ -6,6 +6,7 @@
 img {
   @extend .img-responsive;
   margin: 0 auto;
+  width: 100px;
   }
 // override for the 'Home' navigation link
 .navbar-brand {
@@ -79,4 +80,8 @@ section {
   @extend .btn;
   @extend .btn-primary;
   @extend .btn-xs;
+}
+
+.col-md-3 {
+  /* width: 25%; */
 }

@@ -1,0 +1,20 @@
+<ul class="breadcrumb">
+  <li><p>YOU ARE HERE</p></li>
+  <li><a href="#" class="active">Assignment completion</a></li>
+</ul>
+<div class="row">
+  <div class="col-md-12">
+    <div class="grid simple ">
+      <div class="grid-body no-border">
+        <br/>
+        <%= label_tag 'Select route' %>
+        <%= select_tag 'route_id[]', options_for_select(@routes.collect {|p| [ "Route-"+ p[:id].to_s , p[:id] ] }), id: 'factory_assignments_route_selection', class: 'form-control',  multiple: 'multiple' %>
+        <div id="factory_assignments"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+

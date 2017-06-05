@@ -219,6 +219,8 @@ GEM
     rb-fsevent (0.9.8)
     rb-inotify (0.9.8)
       ffi (>= 0.5.0)
+    record_tag_helper (1.0.0)
+      actionview (~> 5.x)
     redis (3.3.3)
     ref (2.0.0)
     responders (2.4.0)
@@ -328,6 +330,7 @@ DEPENDENCIES
   pry
   puma (~> 3.0)
   rails (~> 5.0.0, >= 5.0.0.1)
+  record_tag_helper (~> 1.0)
   rest-client
   sass-rails
   sidekiq

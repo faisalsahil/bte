@@ -11,6 +11,7 @@
           <thead>
           <tr>
             <th>Company name</th>
+            <th>Status</th>
             <th>Actions</th>
           </tr>
           </thead>
@@ -19,6 +20,7 @@
           <% @companies.each do |company| %>
               <tr>
                 <td><%= company.company_name %></td>
+                <td><%= company.company_status %></td>
                 <td>
                   <%= link_to '', edit_company_path(company), class:'fa fa-edit' %>
                   <%= link_to '', company, method: :delete, class:'fa fa-trash',data: { confirm: 'Are you sure?' } %>

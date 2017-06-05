@@ -332,7 +332,7 @@ $(document).ready(function(){
 
 
     // Company create page===============================================
-    $("#company_branch_input").change(function() {
+    $(".company_branch_input").change(function() {
         if(this.checked) {
             $('#company_branch_form').removeClass('hidden');
         }else{$('#company_branch_form').addClass('hidden');}
@@ -357,7 +357,8 @@ $(document).ready(function(){
 
 
     //  branches index page==============================================
-    $("#branch_change_status").change(function(){
+    $(".branch_change_status").change(function(){
+        alert($(this));
         var branch_id = $(this).parent().parent().attr('id');
         var status    = $(this).val();
         $.ajax({
@@ -444,37 +445,6 @@ $(document).ready(function(){
             $('#sent_email_button').attr('disabled', true);
         }
     });
-    // $('#sent_clients').multiselect({
-    //     includeSelectAllOption: true,
-    //     enableFiltering: true,
-    //     onChange: function(option, checked, select) {
-    //         var client = $(option).val();
-    //         if ( checked ){
-    //             var html = "<span style='margin-right: 5px;' class='badge' id="+ client + ">" + $(option).text() + "</span>";
-    //             $('#selected_clients').append(html);
-    //             $('#sent_email_button').attr('disabled', false);
-    //         }else{
-    //             $('#'+  client + '').remove();
-    //             if( $('#selected_clients').is(':empty') ){
-    //                 $('#sent_email_button').attr('disabled', true);
-    //             }
-    //         }
-    //     },
-    //     onSelectAll: function() {
-    //         $('#selected_clients').html('');
-    //         $("#sent_clients option").each(function()
-    //         {
-    //             var client = $(this).val();
-    //             var html   = "<span class='badge' id="+ client + ">" + $(this).text() + "</span>";
-    //             $('#selected_clients').append(html);
-    //         });
-    //         $('#sent_email_button').attr('disabled', false);
-    //     },
-    //     onDeselectAll: function() {
-    //         $('#selected_clients').html('');
-    //         $('#sent_email_button').attr('disabled', true);
-    //     }
-    // });
     $('#send_clients').multiselect({
         includeSelectAllOption: true,
         enableFiltering: true,
@@ -506,6 +476,36 @@ $(document).ready(function(){
             $('#sent_email_button').attr('disabled', true);
         }
     });
+
+
+    // factory assignments page
+    $('#factory_assignments_route_selection').multiselect({
+        includeSelectAllOption: true,
+        enableFiltering: true,
+        enableClickableOptGroups: true,
+        maxHeight: 200,
+        buttonWidth: '250px',
+        onChange: function(option, checked, select) {
+            load_factory_status_branches($('#factory_assignments_route_selection').val());
+        },
+        onSelectAll: function(option, checked, select) {
+            load_factory_status_branches($('#factory_assignments_route_selection').val());
+        },
+        onDeselectAll: function(option, checked, select) {
+            load_factory_status_branches($('#factory_assignments_route_selection').val());
+        }
+    });
+
+
+    // report index page
+    $('#report_type').change(function(){
+        if($(this).val().length > 0)
+        {
+          $('#generate_report_button').removeAttr('disabled');
+        }else{
+          $('#generate_report_button').attr('disabled', true);
+        }
+    });
 });
 
 function load_branches(area_ids)
@@ -518,6 +518,27 @@ function load_branches(area_ids)
             dataType:'script',
             data: {
                 area_id: area_ids
+            },
+            success:function(data){
+
+            },
+            error:function(){
+            }
+        });
+    }
+}
+
+function load_factory_status_branches(route_ids)
+{
+    $('#factory_assignments').html('');
+    if (route_ids && route_ids.length > 0)
+    {
+        $.ajax({
+            url: '/assignments/factory_assignments',
+            dataType:'script',
+            type: 'get',
+            data: {
+                route_id: route_ids
             },
             success:function(data){
 

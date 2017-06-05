@@ -1,51 +1,44 @@
-<div class="page-content">
-  <div id="portlet-config" class="modal hide">
-    <div class="modal-header">
-      <button data-dismiss="modal" class="close" type="button"></button>
-      <h3>Widget Settings</h3>
-    </div>
-    <div class="modal-body">Widget settings form goes here</div>
-  </div>
-  <div class="clearfix"></div>
-  <div class="content">
-    <ul class="breadcrumb">
-      <li><p>YOU ARE HERE</p></li>
-      <li><a href="#" class="active">Billings</a></li>
-    </ul>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="grid simple ">
-          <div class="grid-body no-border">
-            <table class="table table-striped list-data-table">
-              <thead>
+<ul class="breadcrumb">
+  <li><p>YOU ARE HERE</p></li>
+  <li><a href="#" class="active">Billings</a></li>
+</ul>
+<div class="row">
+  <div class="col-md-12">
+    <div class="grid simple ">
+      <div class="grid-body no-border">
+        <table class="table table-striped list-data-table">
+          <thead>
+          <tr>
+            <th>Branch</th>
+            <th>Code</th>
+            <th>Total</th>
+            <th>Paid</th>
+            <th>Balance</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <% @branch_ids.each do |branch| %>
               <tr>
-                <th>Branch</th>
-                <th>Total</th>
-                <th>Paid</th>
-                <th>Balance</th>
-                <th>Actions</th>
+                <% total       = RouteBranch.where(branch_id: branch, route_id: @route_ids).sum('quantity * price')
+                   @branch     = @branches.where(id: branch).first
+                   transaction = @transactions.where(branch_id: branch).sum(:amount) || 0
+                %>
+                <td><%= @branch.branch_name %></td>
+                <td><%= "#{@branch.company.company_code}/#{@branch.branch_code}" %></td>
+                <td><%= total %></td>
+                <td><%= transaction %></td>
+                <td><%= total - transaction %></td>
+                <td>
+                  <%= link_to 'history', '#' %> |
+                  <%= link_to 'pay', payment_branch_transactions_path(branch) %>
+                  <%#= link_to '', edit_billing_path(billing), class: 'fa fa-edit' %>
+                </td>
               </tr>
-              </thead>
-
-              <tbody>
-              <% @billings.each do |billing| %>
-                  <tr>
-                    <td><%= billing.branch.branch_code   %></td>
-                    <td><%= billing.total %></td>
-                    <td><%= billing.paid %></td>
-                    <td><%= billing.balance %></td>
-                    <td>
-                      <%= link_to 'history', billing %> |
-                      <%= link_to 'pay', payment_billing_transactions_path(billing) %>
-                      <%#= link_to '', edit_billing_path(billing), class: 'fa fa-edit' %>
-
-                    </td>
-                  </tr>
-              <% end %>
-              </tbody>
-            </table>
-          </div>
-        </div>
+          <% end %>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

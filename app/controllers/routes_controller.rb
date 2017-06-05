@@ -66,7 +66,7 @@ class RoutesController < ApplicationController
           end
           # delete existing branches
           @route.route_branches.where.not(branch_id: branch_ids).destroy_all
-          
+
           # update positions
           update_branch_positions(@route)
         else
@@ -113,18 +113,29 @@ class RoutesController < ApplicationController
     # Assign branch to other route
     transferred_objects = route_branches.where.not(transfer_to: nil)
     transferred_objects&.each do |object|
-      route_branch_object = RouteBranch.find_by_route_id_and_branch_id(object.transfer_to, object.branch_id) || RouteBranch.new(route_id: object.transfer_to, branch_id: object.branch_id)
+      route_transfer_to = Route.find_by_id(object.transfer_to).route_branches.order('position ASC')
+      if route_transfer_to.present?
+        position = route_transfer_to.last.position.to_i + 1
+      else
+        position = 1
+      end
+      route_branch_object = RouteBranch.find_by_route_id_and_branch_id(object.transfer_to, object.branch_id) || RouteBranch.new(route_id: object.transfer_to, branch_id: object.branch_id, price: object.price, position: position)
       route_branch_object.save! if route_branch_object.new_record?
     end
-    
-    if route_branches.where(quantity: nil, transfer_to: nil, is_deleted: false).present?
-      route.is_completed = false
-    else
+
+    if !route_branches.where(quantity: nil, transfer_to: nil, is_deleted: false).present?
       assignment.assignment_status = AppConstants::FACTORY
-      route.is_completed = true
+      assignment.save!
     end
-    assignment.save!
-    route.save!
+    # if route_branches.where(quantity: nil, transfer_to: nil, is_deleted: false).present?
+    #   route.is_completed = false
+    #   route.save!
+    # else
+    #   assignment.assignment_status = AppConstants::FACTORY
+    #   assignment.save!
+    #   route.is_completed = true
+    #   route.save!
+    # end
   end
   
   def get_route_branches
@@ -141,6 +152,6 @@ class RoutesController < ApplicationController
     end
 
     def route_params
-      params.require(:route).permit(:state_id, :city_id, route_branches_attributes: [:id, :quantity, :is_transferred, :transfer_to, :is_deleted, :image, :price, :factory_image])
+      params.require(:route).permit(:state_id, :city_id, :area_ids, route_branches_attributes: [:id, :quantity, :is_transferred, :transfer_to, :is_deleted, :image, :price, :factory_image])
     end
 end

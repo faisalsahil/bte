@@ -9,17 +9,17 @@
           <tbody>
           <% branches = area.branches.where(branch_status: AppConstants::CONTRACTED) %>
           <% branches&.each do |branch| %>
-          <tr>
-              <td><%= branch.branch_code + "|" + branch.branch_name%></td>
-              <td>
-                <%= hidden_field_tag :price, branch.rate_per_kg %>
-                <% if @branches.find_by_id(branch.id).present? %>
-                   <%= check_box_tag 'route[branches][]', branch.id, true, class: "check_box_input" %>
-                <% else %>
-                   <%= check_box_tag 'route[branches][]', branch.id, false, class: "check_box_input" %>
-                <% end %>
-              </td>
-          </tr>
+            <tr>
+                <td><%= "#{branch.branch_code} | #{branch.branch_name}" %></td>
+                <td>
+                  <%= hidden_field_tag :price, branch.rate_per_kg %>
+                  <% if @branches.find_by_id(branch.id).present? %>
+                     <%= check_box_tag 'route[branches][]', branch.id, true, class: "check_box_input" %>
+                  <% else %>
+                     <%= check_box_tag 'route[branches][]', branch.id, false, class: "check_box_input" %>
+                  <% end %>
+                </td>
+            </tr>
           <% end %>
           </tbody>
       </table>

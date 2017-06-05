@@ -1,3 +1,5 @@
 class Transaction < ApplicationRecord
-  belongs_to :billing
+  belongs_to :branch
+
+  attr_accessor :balance
 end

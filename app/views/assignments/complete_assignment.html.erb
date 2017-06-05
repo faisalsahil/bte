@@ -7,41 +7,91 @@
     <div class="grid simple ">
       <div class="grid-body no-border">
         <div>
-          <h3><%= "Route-#{@route.id}"%></h3>
+          <h3><strong><%= "Route-#{@route.id}"%></strong></h3>
+          <% if @route.is_completed %>
+            <strong>Assigned  at:</strong> <%= @assignment.created_at.to_date.strftime('%d/%m/%Y') %><br/>
+            <strong>Completed at:</strong> <%= @route.updated_at.to_date.strftime('%d/%m/%Y')  %><br/><br/>
+          <% end %>
         </div>
-
-        <%= form_for(@route, :html=> {:multipart=>true,:class => 'form-horizontal', id: 'route_assignment_completion_form'}) do |f| %>
-            <div>
-              <table class="table table-striped">
-                <thead>
-                <th>Br. code</th>
-                <th>Br. name</th>
-                <th>Actions</th>
-                <th></th>
-                </thead>
-                <tbody>
-                  <%= f.fields_for :route_branches do |form_route_branch| %>
-                      <% if form_route_branch.object.transfer_to.blank? %>
-                        <tr class="route_assignment_tr">
-                          <td><%= form_route_branch.object.branch.branch_code %></td>
-                          <td><%= form_route_branch.object.branch.branch_name %></td>
-                          <td>
-                            <%= form_route_branch.text_field :quantity, placeholder: 'qnty (kg)', style: 'width:26%;', class: 'route_quantity' %>
-                            <%= form_route_branch.select :transfer_to, options_for_select(@routes.collect {|p| [ "Route-#{p[:id].to_s}", p[:id] ] }, form_route_branch.object.transfer_to ), {:include_blank => 'Transfer to'}, {style: 'width:30%;', class: 'route_transfer_to'} %>
-                            <%= form_route_branch.check_box :is_deleted, checked: form_route_branch.object.is_deleted, class: 'route_remove' %> remove
-                            <%= form_route_branch.file_field :image, style: 'width:30%;', class: 'pull-right route_image' %>
-                          </td>
-                          <td></td>
-                        </tr>
+        <% if !@route.is_completed %>
+           <%= form_for(@route, :html=> {:multipart=>true,:class => 'form-horizontal', id: 'route_assignment_completion_form'}) do |f| %>
+                <div>
+                  <table class="table table-striped">
+                    <thead>
+                    <th>Br. code | name</th>
+                    <th>Cont. name</th>
+                    <th>Cont. #</th>
+                    <th>Actions</th>
+                    <th></th>
+                    </thead>
+                    <tbody>
+                    <%= f.fields_for :route_branches do |form_route_branch| %>
+                        <% if form_route_branch.object.transfer_to.blank? %>
+                            <tr class="route_assignment_tr">
+                              <% branch = form_route_branch.object.branch %>
+                              <td>
+                                <%= "#{branch.branch_code} | #{branch.branch_name}" %>
+                                <%= form_route_branch.hidden_field :price, value: form_route_branch.object.branch.rate_per_kg %>
+                              </td>
+                              <td><%= branch.contact_name %></td>
+                              <td><%= branch.contact_phone %></td>
+                              <td>
+                                <%= form_route_branch.text_field :quantity, placeholder: 'qnty (kg)', style: 'width:17%;', class: 'route_quantity' %>
+                                <%= form_route_branch.select :transfer_to, options_for_select(@routes.collect {|p| [ "Route-#{p[:id].to_s}", p[:id] ] }, form_route_branch.object.transfer_to ), {:include_blank => 'Transfer to'}, {style: 'width:18%;', class: 'route_transfer_to'} %>
+                                <%= form_route_branch.check_box :is_deleted, checked: form_route_branch.object.is_deleted, class: 'route_remove' %> remove
+                                <%= form_route_branch.file_field :image, style: 'width:30%;', class: 'pull-right route_image' %>
+                              </td>
+                              <td></td>
+                            </tr>
+                        <% end %>
+                    <% end %>
+                    </tbody>
+                  </table>
+                </div>
+                <div>
+                  <%= f.submit 'submit', class: 'btn btn-mini btn-primary' %>
+                  <div id="error_explanation" class="hidden route_assignment_error_notification" style="margin-top:5px;">
+                    <span>Please choose at least one option against each location.<br/>Also make sure you select all images</span>
+                  </div>
+                </div>
+            <% end %>
+        <% else %>
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                Route details
+              </div>
+              <div class="panel-body">
+                <table class="table table-striped">
+                  <thead>
+                  <th>Br. code | name</th>
+                  <th>Cont. name</th>
+                  <th>Cont#</th>
+                  <th>Rate/Kg</th>
+                  <th>Qnty</th>
+                  <th>admin image</th>
+                  <th>factory image</th>
+                  <th></th>
+                  </thead>
+                  <tbody>
+                  <% @route_branches&.each do |route_branch| %>
+                      <% if route_branch.transfer_to.blank? && route_branch.is_deleted == false %>
+                          <tr>
+                            <% branch = route_branch.branch
+                               # a_url  = route_branch.image_url
+                               # f_url  = route_branch.factory_image_url
+                            %>
+                            <td><%= "#{branch.branch_code} | #{branch.branch_name} " %></td>
+                            <td><%= branch.contact_name %></td>
+                            <td><%= branch.contact_phone %></td>
+                            <td><%= branch.rate_per_kg %></td>
+                            <td><%= route_branch.quantity %></td>
+                            <td><%#= link_to image_tag(a_url), "#{a_url}", target: 'blank' %></td>
+                            <td><%#= link_to image_tag(f_url), "#{f_url}", target: 'blank' %></td>
+                          </tr>
                       <% end %>
                   <% end %>
-                </tbody>
-              </table>
-            </div>
-            <div>
-              <%= f.submit 'submit', class: 'btn btn-mini btn-primary' %>
-              <div id="error_explanation" class="hidden route_assignment_error_notification" style="margin-top:5px;">
-                <span>Please choose at least one option against each location.<br/>Also make sure you select all images</span>
+                  </tbody>
+                </table>
               </div>
             </div>
         <% end %>

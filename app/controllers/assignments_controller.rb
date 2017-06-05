@@ -56,7 +56,7 @@ class AssignmentsController < ApplicationController
       format.pdf do
         pdf_name = "Route- #{@assignment.route_id} | #{@assignment.vehicle.vehicle_number}"
         render pdf: pdf_name,
-               disposition: 'attachment',
+               disposition: 'inline',
                # template: templ,
                layout: 'pdf.html', # use 'pdf.html' for a pdf.html.erb file
                page_offset: 0,
@@ -64,14 +64,15 @@ class AssignmentsController < ApplicationController
                default_header: true,
                lowquality: false,
                # save_only:       true,
-               margin: {bottom: 25, top: 25},
+               margin: {bottom: 10, top: 15},
                header: {
                    html: {
                        template: '/assignments/header.pdf.erb', # use :template OR :url
                        layout: 'pdf.html' # optional, use 'pdf_plain.html' for a pdf_plain.html.erb file, defaults to main layout
                    },
                    font_name: 'Times New Roman',
-                   font_size: 14,
+                   font_size: 8,
+                   margin: {left: 0},
                    line: false
                }, # optionally you can pass plain html already rendered (useful if using pdf_from_string)
                footer: {
@@ -80,17 +81,65 @@ class AssignmentsController < ApplicationController
                        layout: 'pdf.html' # optional, use 'pdf_plain.html' for a pdf_plain.html.erb file, defaults to main layout
                    },
                    font_name: 'Times New Roman',
-                   font_size: 14,
+                   font_size: 8,
                    line: true
                }
       end
     end
   end
+  
+  def factory_assignments
+    if params[:route_id].present?
+      @routes         = Route.where(id: params[:route_id])
+      @route_branches = RouteBranch.where(route_id: params[:route_id], transfer_to: nil, is_deleted: false, is_factory: false).includes(:route, :branch).order('route_id asc')
+    else
+      @route_ids = Assignment.where(assignment_status: AppConstants::FACTORY).pluck(:route_id)
+      @routes    = Route.where(id: @route_ids)
+    end
+
+    respond_to do |format|
+      format.html {  }
+      format.js { render layout: false }
+    end
+  end
+  
+  def factory_assignment_submit
+    factory_collection = FactoryCollection.new
+    factory_collection.quantity = params[:factory_collection][:quantity]
+    factory_collection.date = params[:factory_collection][:date] || Date.today
+    factory_collection.save
+    route_ids = []
+    params[:factory_collection][:route_branches_attributes].values.each do |route_branch|
+      if route_branch[:is_factory].present? && route_branch[:is_factory] == '1'
+        route_branch["factory_collection_id"] = factory_collection.id
+        rb = RouteBranch.find_by_id(route_branch[:id])
+        rb.update_attributes(route_branch)
+        route_ids << rb.route_id
+      end
+    end
+    # Mark Route as complete and assignment as completed
+    route_ids = route_ids.uniq
+    routes = Route.where(id: route_ids).includes(:route_branches, :assignment)
+    routes.each do |route|
+      if route.route_branches.where('is_deleted = false AND transfer_to IS NULL AND is_factory = false').blank?
+        #  Mark route completed
+        route.is_completed = true
+        route.save!
+        assignment = route.assignment
+        assignment.is_completed = true
+        assignment.assignment_status = AppConstants::COMPLETED
+        assignment.save!
+      end
+    end
+    
+    flash[:notice] = 'Successfully updated.'
+    redirect_to factory_assignments_assignments_path
+  end
 
   def complete_assignment
     @assignment     = Assignment.find_by_id(params[:id])
     @route          = @assignment.route
-    @routes         = Route.where.not(id: @route.id)
+    @routes         = Route.active_routes.where.not(id: @route.id)
     @route_branches = @route.route_branches.includes(:branch)
   end
 
@@ -109,5 +158,9 @@ class AssignmentsController < ApplicationController
 
     def assignment_params
       params.require(:assignment).permit(:assigned_at, :driver_id, :helper_id, :vehicle_id, :route_id)
+    end
+
+    def factory_params
+      params.require(:factory_collection).permit(:date, :quantity, route_branches_attributes: [:id, :is_factory, :factory_image])
     end
 end

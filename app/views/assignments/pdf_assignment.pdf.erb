@@ -1,24 +1,235 @@
-<table class="table">
-  <thead>
-    <th>#</th>
-    <th>Area</th>
-    <th>Br.code</th>
-    <th>Br. name</th>
-    <th>Address</th>
-    <th>Qnty</th>
-    <th>Actions</th>
-  </thead>
-  <tbody>
-    <% @route_branches.each_with_index do |route_branch, index| %>
+<% @route_branches.each_with_index do |route_branch, index| %>
+    <% @branch  = route_branch.branch
+       @vehicle = Assignment.find_by_route_id(route_branch.route_id).vehicle
+    %>
+  <% if route_branch.id != @route_branches.last.id %>
+    <div class="page-break">
+  <% end %>
+    <table class="table table-bordered">
+      <tbody>
         <tr>
-          <td><%= index + 1 %></td>
-          <td><%= route_branch.branch.area.name %></td>
-          <td><%= route_branch.branch.branch_code %></td>
-          <td><%= route_branch.branch.branch_name %></td>
-          <td><%= route_branch.branch.address  %></td>
-          <td><%= 0  %></td>
+          <td colspan="4" class="note">Weight Transfer Note</td>
+        </tr>
+        <tr>
+          <td class="text_decoration" style="width:25%;"><%= @branch.address %></td>
+          <td colspan="2" class="note1">Bio Tech Energy Pvt Limited</td>
+          <td class="text_decoration">UAN Number</td>
+        </tr>
+        <tr>
+          <td class="text_decoration">Voucher #</td>
+          <td style="width:20%"></td>
+          <td class="text_decoration"><%= "Date: #{Date.today.strftime('%d/%m/%Y')}"%></td>
+          <td class="text_decoration"><%= "111-11-SAAF" %></td>
+        </tr>
+
+        <tr>
+          <td class="text_decoration note" colspan="4">Contact Information</td>
+        </tr>
+        <tr>
+          <td class="text_decoration">Name</td>
+          <td style="width:20%"></td>
+          <td class="text_decoration">Contact Person Name</td>
+          <td class="text_decoration"></td>
+        </tr>
+        <tr>
+          <td class="text_decoration">Address</td>
+          <td style="width:20%"></td>
+          <td class="text_decoration">Contact Number</td>
+          <td class="text_decoration"></td>
+        </tr>
+
+        <tr>
+          <td colspan="4" class="note">Consignment details</td>
+        </tr>
+        <tr>
+          <td class="text_decoration">Measurement components</td>
+          <td class="text_decoration">Weight</td>
+          <td class="text_decoration" colspan="2">Other details</td>
+        </tr>
+        <tr>
+          <td class="text_decoration">Total</td>
+          <td></td>
+          <td class="text_decoration">Customer ID</td>
           <td></td>
         </tr>
-    <% end %>
-  </tbody>
-</table>
+
+        <tr>
+          <td class="text_decoration">Container</td>
+          <td></td>
+          <td class="text_decoration">Vehicle Number</td>
+          <td class="text_decoration"><%= @vehicle.vehicle_number %></td>
+        </tr>
+        <tr>
+          <td class="text_decoration">Net Oil</td>
+          <td></td>
+          <td class="text_decoration">Inventory Check</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="text_decoration" colspan="2">Acknowledgment By</td>
+          <td class="text_decoration" colspan="2">Received By</td>
+        </tr>
+
+        <tr>
+          <td class="text_decoration">Name</td>
+          <td class="text_decoration">Signature</td>
+          <td class="text_decoration">Name</td>
+          <td class="text_decoration">Signature</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td colspan="4" class="note" >Factory Receipt</td>
+        </tr>
+
+        <tr>
+          <td class="text_decoration">Measurement components</td>
+          <td class="text_decoration">Weight</td>
+          <td class="text_decoration" colspan="2">Other details</td>
+        </tr>
+        <tr>
+          <td class="text_decoration">Total</td>
+          <td></td>
+          <td class="text_decoration">Customer ID</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="text_decoration">Container</td>
+          <td></td>
+          <td class="text_decoration">Vehicle Number</td>
+          <td class="text_decoration"><%= @vehicle.vehicle_number %></td>
+        </tr>
+
+        <tr>
+          <td class="text_decoration">Net Oil</td>
+          <td></td>
+          <td class="text_decoration">Inventory Check</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="text_decoration" colspan="2">Acknowledgment By</td>
+          <td class="text_decoration" colspan="2">Received By</td>
+        </tr>
+        <tr>
+          <td class="text_decoration">Name</td>
+          <td class="text_decoration">Signature</td>
+          <td class="text_decoration">Name</td>
+          <td class="text_decoration">Signature</td>
+        </tr>
+
+        <tr>
+          <td style="border-bottom:1pt solid black;"></td>
+          <td style="border-bottom:1pt solid black;"></td>
+          <td style="border-bottom:1pt solid black;"></td>
+          <td style="border-bottom:1pt solid black;"></td>
+        </tr>
+        <tr>
+          <td colspan="4" style="border: 1px solid;"><%= wicked_pdf_image_tag('bte.jpg', style: 'width:40px;') %></td>
+        </tr>
+        <tr>
+          <td colspan="4" class="note">Weight Transfer Note - Customer Copy</td>
+        </tr>
+
+        <tr>
+          <td class="text_decoration"><%= "Address" %></td>
+          <td colspan="2" class="note1">Bio Tech Energy Pvt Limited</td>
+          <td class="text_decoration">UAN Number</td>
+        </tr>
+        <tr>
+          <td class="text_decoration">Voucher #</td>
+          <td style="width:20%"></td>
+          <td class="text_decoration"><%= "Date: #{Date.today.strftime('%d/%m/%Y')}"%></td>
+          <td class="text_decoration"><%= "111-11-SAAF" %></td>
+        </tr>
+        <tr>
+          <td colspan="4" class="note">Consignment details</td>
+        </tr>
+
+        <tr>
+          <td class="text_decoration">Measurement components</td>
+          <td class="text_decoration">Weight</td>
+          <td class="text_decoration" colspan="2">Other details</td>
+        </tr>
+        <tr>
+          <td class="text_decoration">Total</td>
+          <td></td>
+          <td class="text_decoration">Customer ID</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="text_decoration">Container</td>
+          <td></td>
+          <td class="text_decoration">Vehicle Number</td>
+          <td class="text_decoration"><%= @vehicle.vehicle_number %></td>
+        </tr>
+
+        <tr>
+          <td class="text_decoration">Net Oil</td>
+          <td></td>
+          <td class="text_decoration">Inventory Check</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="text_decoration" colspan="2">Acknowledgment By</td>
+          <td class="text_decoration" colspan="2">Received By</td>
+        </tr>
+        <tr>
+          <td class="text_decoration">Name</td>
+          <td class="text_decoration">Signature</td>
+          <td class="text_decoration">Name</td>
+          <td class="text_decoration">Signature</td>
+        </tr>
+
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+<% end %>
+
+
+
+<style type="text/css">
+  .page-break {
+    display:block;
+    clear:both;
+    page-break-after:always;
+  }
+  .note {
+    text-align: center;
+    font-size: 10px;
+    font-weight: 900;
+  }
+
+  .note1 {
+    text-align: center;
+    font-size: 10px;
+    font-weight: 900;
+  }
+
+  .text_decoration {
+    text-align: center;
+    font-size: 9px;
+  }
+</style>
+
+
+
+
+<!--<tr>-->
+  <!--<td><%#= index + 1 %></td>-->
+  <!--<td><%#= route_branch.branch.area.name %></td>-->
+  <!--<td><%#= route_branch.branch.branch_code %></td>-->
+  <!--<td><%#= route_branch.branch.branch_name %></td>-->
+  <!--<td><%#= route_branch.branch.address  %></td>-->
+  <!--<td><%#= 0  %></td>-->
+  <!--<td></td>-->
+<!--</tr>-->

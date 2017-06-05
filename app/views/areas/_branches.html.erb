@@ -3,15 +3,24 @@
       <span class="area_heading"><%= area.name%></span>
       <table class="table-striped">
         <thead>
-        <th>Br. name</th>
+        <th>code | name</th>
+        <th>visits</th>
         <th></th>
         </thead>
         <tbody>
-        <% branches = area.branches.where(branch_status: AppConstants::CONTRACTED) %>
-        <% branches&.each do |branch| %>
+        <% @branches = area.sorted_branches
+        %>
+        <% @branches&.each do |branch| %>
             <tr>
-              <td><%= branch.branch_code + "|" + branch.branch_name%></td>
+              <td><%= "#{branch.branch_code} | #{branch.branch_name}"  %></td>
               <%= hidden_field_tag :price, branch.rate_per_kg %>
+              <td>
+                <%
+                  visits = branch.try(:route_branches).try(:count) || 0
+                  total  = branch.visits_per_month
+                %>
+                <%= "#{visits}/#{total}" %>
+              </td>
               <td><%= check_box_tag 'route[branches][]', branch.id, false, class: "check_box_input" %></td>
             </tr>
         <% end %>

@@ -15,7 +15,6 @@
 //= require jquery_ujs
 //= require jquery.validate.min
 //= require bootstrap.min
-//= require login
 //= require breakpoints
 //= require jquery.scrollbar.min
 //= require select2

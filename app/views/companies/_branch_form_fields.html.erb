@@ -7,15 +7,29 @@
     <%= branch.label 'Branch name' %>
     <%= branch.text_field :branch_name, class: 'form-control', placeholder: 'branch name' %>
   </div>
+</div>
+<div class="row">
   <div class="col-md-3 form-group">
     <%= branch.label 'Status' %>
     <%= branch.select :branch_status, options_for_select(@statuses), class: 'form-control' %>
   </div>
+  <div class="col-md-3 form-group">
+    <%= branch.label 'Sale representative' %>
+    <%= branch.select :representative, options_for_select(@sale_representatives.collect {|p| [ p[:name], p[:id] ] }), {include_blank: 'Select saler'}, class: 'form-control' %>
+  </div>
+  <div class="col-md-3 form-group">
+    <%= branch.label '# of visits' %>
+    <%= branch.number_field :visits_per_month, class: 'form-control' %>
+  </div>
 </div>
+
 <div class="panel panel-default">
   <div class="panel-heading">
     Contact Info
-    <%= check_box_tag 'contact_same_as_above', nil, false %><%= 'Same as above?' %>
+    <span style="margin-left: 20px;">
+      <%= branch.check_box :contact_same_as_above %>
+      <%= branch.label :contact_same_as_above, 'same as above?', style: 'display: inline-block;' %>
+    </span>
   </div>
   <div class="panel-body">
     <div class="row">
@@ -56,8 +70,7 @@
         <%= branch.label 'Rate/kg' %>
         <%= branch.text_field :rate_per_kg, class: 'form-control', placeholder: 'amount/kg' %>
       </div>
-    </div>
-    <div class="row">
+
       <div class="col-md-3 form-group">
         <%= branch.label 'Storage type' %>
         <%= branch.select :storage_type_id, options_for_select(StorageType.all.collect {|p| [ p[:name], p[:id] ] }), class: 'form-control' %>
@@ -65,30 +78,41 @@
     </div>
   </div>
 </div>
-<div class="row panel panel-default">
+<div class="panel panel-default">
   <div class="panel-heading">
     Address Info
   </div>
   <div class="panel-body">
-
+    <div class="row">
+      <div class="col-md-3">
+        <%= branch.select :state_id, options_for_select(State.all.collect {|p| [ p[:name], p[:id] ] }), {include_blank: 'Select sate'}, class: 'form-control', id: 'branch_state_id' %>
+      </div>
+      <div class="col-md-3">
+        <select name="company[branches_attributes][0][city_id]" id="branch_city_id" class="hidden"></select>
+      </div>
+      <div class="col-md-3">
+        <select name="company[branches_attributes][0][area_id]" id="branch_area_id" class="hidden"></select>
+      </div>
+      <div class="col-md-3">
+        <%= branch.text_field :street, placeholder: 'street', class: 'hidden', id: 'branch_street' %>
+      </div>
+      <div class="col-md-3">
+        <%= branch.text_field :zip, placeholder: 'zip', class: 'hidden', id: 'branch_zip' %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    Lat/Long
+  </div>
+  <div class="panel-body">
     <div class="col-md-3">
-      <%= branch.select :state_id, options_for_select(State.all.collect {|p| [ p[:name], p[:id] ] }), {include_blank: 'Select sate'}, class: 'form-control', id: 'branch_state_id' %>
+      <%= branch.text_field :latitude, placeholder: 'latitude' %>
     </div>
 
     <div class="col-md-3">
-      <select name="company[branches_attributes][0][city_id]" id="branch_city_id" class="hidden"></select>
-    </div>
-
-    <div class="col-md-3">
-      <select name="company[branches_attributes][0][area_id]" id="branch_area_id" class="hidden"></select>
-    </div>
-
-    <div class="col-md-3">
-      <%= branch.text_field :street, placeholder: 'street', class: 'hidden', id: 'branch_street' %>
-    </div>
-
-    <div class="col-md-3">
-      <%= branch.text_field :zip, placeholder: 'zip', class: 'hidden', id: 'branch_zip' %>
+      <%= branch.text_field :longitude, placeholder: 'longitude' %>
     </div>
   </div>
 </div>

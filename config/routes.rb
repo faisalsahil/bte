@@ -4,7 +4,12 @@ Rails.application.routes.draw do
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'
   
-  
+  resources :reports, only:[:index] do
+    collection do
+      post :generate_report
+      get  :generate_report
+    end
+  end
   resources :history_clients
   resources :templates  do
     member {
@@ -25,6 +30,10 @@ Rails.application.routes.draw do
     member do
       get :complete_assignment
       get :pdf_assignment
+    end
+    collection do
+      get :factory_assignments
+      post :factory_assignment_submit
     end
   end
   resources :routes  do
@@ -62,16 +71,8 @@ Rails.application.routes.draw do
   end
  
  
-  get 'transactions/payment'
+  # get 'transactions/payment'
 
-  resources :billings do
-    resources :transactions, only: [] do
-      collection do
-        get 'payment'
-        post 'create_payment'
-      end
-    end
-  end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root to: 'dashboards#index'
   devise_for :users
@@ -80,6 +81,7 @@ Rails.application.routes.draw do
   resources :companies
   resources :storage_types
   resources :food_types
+  resources :billings, only: [:index]
   resources :areas do
     collection do
       get :get_area_branches
@@ -99,6 +101,12 @@ Rails.application.routes.draw do
   resources :branches do
     member do
       post :update_branch_status
+    end
+    resources :transactions, only: [] do
+      collection do
+        get 'payment'
+        post 'create_payment'
+      end
     end
   end
   resources :schedule_branches, only:[] do
