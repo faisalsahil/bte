@@ -8,7 +8,7 @@ class Area < ApplicationRecord
 
 
   def sorted_branches
-    @branches = Branch.joins(:route_branches)
+    @branches = Branch.joins('LEFT OUTER JOIN "route_branches" ON "route_branches"."branch_id" = "branches"."id"')
                     .where('area_id = ? AND route_branches.transfer_to IS NULL AND route_branches.is_deleted = ? AND branches.branch_status = ? AND extract(month from route_branches.created_at) = ?', self.id, false, AppConstants::CONTRACTED, Date.today.month)
                     .group('branches.id')
                     .order(order_options)
