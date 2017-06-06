@@ -33,4 +33,19 @@ module AppConstants
       {name: 'Restaurant wise collection report', id: RESTAURANT_WISE_COLLECTION_REPORT},
       {name: 'Not visited report', id: NOT_VISITED_REPORT}
   ]
+
+  LEAD_REPORT_HEADER = [
+      {name: 'Area', id: 'area_id'},
+      {name: 'Sale representative', id: 'representative'},
+      {name: 'Branch name', id: 'branch_name'},
+      {name: 'Code', id: 'branch_code'},
+      {name: 'Contact name', id: 'contact_name'},
+      {name: 'Contact #', id: 'contact_phone'},
+      {name: 'Oil used', id: 'monthly_oil_used'},
+      {name: 'Rate/Kg', id: 'rate_per_kg'},
+      {name: 'Visits/month', id: 'visits_per_month'},
+      {name: 'Collection', id: 'total_collection'},
+      {name: 'Address', id: 'address'}
+  ]
+  
 end

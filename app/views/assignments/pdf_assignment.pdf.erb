@@ -1,9 +1,9 @@
-<% @route_branches.each_with_index do |route_branch, index| %>
-    <% @branch  = route_branch.branch
-       @vehicle = Assignment.find_by_route_id(route_branch.route_id).vehicle
-    %>
-  <% if route_branch.id != @route_branches.last.id %>
-    <div class="page-break">
+<% @branches.each_with_index do |branch, index| %>
+  <% @vehicle = @assignment.vehicle
+     @route   = @assignment.route
+  %>
+  <% if branch.id != @branches.last.id %>
+    <div class="page-break"></div>
   <% end %>
     <table class="table table-bordered">
       <tbody>
@@ -11,13 +11,13 @@
           <td colspan="4" class="note">Weight Transfer Note</td>
         </tr>
         <tr>
-          <td class="text_decoration" style="width:25%;"><%= @branch.address %></td>
+          <td class="text_decoration" style="width:25%;"><%= branch.address %></td>
           <td colspan="2" class="note1">Bio Tech Energy Pvt Limited</td>
           <td class="text_decoration">UAN Number</td>
         </tr>
         <tr>
           <td class="text_decoration">Voucher #</td>
-          <td style="width:20%"></td>
+          <td style="width:20%" class="text_decoration"><%= "Route-#{@route.id}/#{@route_branches.find_by_branch_id(branch.id).id}" %></td>
           <td class="text_decoration"><%= "Date: #{Date.today.strftime('%d/%m/%Y')}"%></td>
           <td class="text_decoration"><%= "111-11-SAAF" %></td>
         </tr>
@@ -27,15 +27,15 @@
         </tr>
         <tr>
           <td class="text_decoration">Name</td>
-          <td style="width:20%"></td>
+          <td style="width:20%" class="text_decoration"><%= branch.branch_name %></td>
           <td class="text_decoration">Contact Person Name</td>
-          <td class="text_decoration"></td>
+          <td class="text_decoration"><%= branch.contact_name %></td>
         </tr>
         <tr>
           <td class="text_decoration">Address</td>
-          <td style="width:20%"></td>
+          <td style="width:20%" class="text_decoration"><%= branch.address %></td>
           <td class="text_decoration">Contact Number</td>
-          <td class="text_decoration"></td>
+          <td class="text_decoration"><%= branch.contact_phone %></td>
         </tr>
 
         <tr>
@@ -50,7 +50,7 @@
           <td class="text_decoration">Total</td>
           <td></td>
           <td class="text_decoration">Customer ID</td>
-          <td></td>
+          <td class="text_decoration"><%= "#{branch.try(:company).try(:company_code)}/#{branch.branch_code}" %></td>
         </tr>
 
         <tr>
@@ -72,14 +72,14 @@
 
         <tr>
           <td class="text_decoration">Name</td>
-          <td class="text_decoration">Signature</td>
+          <td></td>
           <td class="text_decoration">Name</td>
-          <td class="text_decoration">Signature</td>
+          <td></td>
         </tr>
         <tr>
+          <td class="text_decoration">Signature</td>
           <td></td>
-          <td></td>
-          <td></td>
+          <td class="text_decoration">Signature</td>
           <td></td>
         </tr>
         <tr>
@@ -95,7 +95,7 @@
           <td class="text_decoration">Total</td>
           <td></td>
           <td class="text_decoration">Customer ID</td>
-          <td></td>
+          <td class="text_decoration"><%= "#{branch.try(:company).try(:company_code)}/#{branch.branch_code}" %></td>
         </tr>
         <tr>
           <td class="text_decoration">Container</td>
@@ -116,15 +116,15 @@
         </tr>
         <tr>
           <td class="text_decoration">Name</td>
-          <td class="text_decoration">Signature</td>
+          <td></td>
           <td class="text_decoration">Name</td>
-          <td class="text_decoration">Signature</td>
+          <td></td>
         </tr>
 
         <tr>
+          <td style="border-bottom:1pt solid black;" class="text_decoration">Signature</td>
           <td style="border-bottom:1pt solid black;"></td>
-          <td style="border-bottom:1pt solid black;"></td>
-          <td style="border-bottom:1pt solid black;"></td>
+          <td style="border-bottom:1pt solid black;" class="text_decoration">Signature</td>
           <td style="border-bottom:1pt solid black;"></td>
         </tr>
         <tr>
@@ -141,7 +141,7 @@
         </tr>
         <tr>
           <td class="text_decoration">Voucher #</td>
-          <td style="width:20%"></td>
+          <td style="width:20%" class="text_decoration"><%= "Route-#{@route.id}/#{@route_branches.find_by_branch_id(branch.id).id}" %></td>
           <td class="text_decoration"><%= "Date: #{Date.today.strftime('%d/%m/%Y')}"%></td>
           <td class="text_decoration"><%= "111-11-SAAF" %></td>
         </tr>
@@ -158,7 +158,7 @@
           <td class="text_decoration">Total</td>
           <td></td>
           <td class="text_decoration">Customer ID</td>
-          <td></td>
+          <td class="text_decoration"><%= "#{branch.try(:company).try(:company_code)}/#{branch.branch_code}" %></td>
         </tr>
         <tr>
           <td class="text_decoration">Container</td>
@@ -179,22 +179,53 @@
         </tr>
         <tr>
           <td class="text_decoration">Name</td>
-          <td class="text_decoration">Signature</td>
+          <td></td>
           <td class="text_decoration">Name</td>
-          <td class="text_decoration">Signature</td>
+          <td></td>
         </tr>
 
         <tr>
+          <td class="text_decoration">Signature</td>
           <td></td>
-          <td></td>
-          <td></td>
+          <td class="text_decoration">Signature</td>
           <td></td>
         </tr>
       </tbody>
     </table>
-  </div>
 <% end %>
 
+
+<!--Summary page-->
+<div class="page-break"></div>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <td colspan="7" class="note"><strong>WASTE TRANSFER NOTES - SUMMARY</strong></td>
+    </tr>
+    <tr>
+      <th>Sr#</th>
+      <th>Area</th>
+      <th>BranchName</th>
+      <th>Code(C/B)</th>
+      <th>ContactName</th>
+      <th>Contact#</th>
+      <th>Address</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @branches&.each_with_index do |branch, index| %>
+      <tr>
+        <td><%= index + 1 %></td>
+        <td><%= branch.area.name %></td>
+        <td><%= branch.branch_name %></td>
+        <td><%= "#{branch.try(:company).try(:company_code) || nil}/#{branch.branch_code}" %></td>
+        <td><%= branch.contact_name %></td>
+        <td><%= branch.contact_phone %></td>
+        <td><%= branch.address %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
 
 <style type="text/css">
@@ -220,16 +251,3 @@
     font-size: 9px;
   }
 </style>
-
-
-
-
-<!--<tr>-->
-  <!--<td><%#= index + 1 %></td>-->
-  <!--<td><%#= route_branch.branch.area.name %></td>-->
-  <!--<td><%#= route_branch.branch.branch_code %></td>-->
-  <!--<td><%#= route_branch.branch.branch_name %></td>-->
-  <!--<td><%#= route_branch.branch.address  %></td>-->
-  <!--<td><%#= 0  %></td>-->
-  <!--<td></td>-->
-<!--</tr>-->

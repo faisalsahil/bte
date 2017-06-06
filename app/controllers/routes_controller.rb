@@ -152,6 +152,6 @@ class RoutesController < ApplicationController
     end
 
     def route_params
-      params.require(:route).permit(:state_id, :city_id, :area_ids, route_branches_attributes: [:id, :quantity, :is_transferred, :transfer_to, :is_deleted, :image, :price, :factory_image])
+      params.require(:route).permit(:state_id, :city_id, :area_ids, route_branches_attributes: [:id, :quantity, :is_transferred, :transfer_to, :is_deleted, :image, :price, :factory_image, :comment])
     end
 end

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <%= include_gon(:init => true) %>
     <title>SaafPunjab</title>
     <%= csrf_meta_tags %>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
@@ -118,25 +119,11 @@
               </ul>
             </li>
 
-            <!--<li class="">-->
-              <!--<a href="/reports">-->
-                <!--<i class="fa fa-file-pdf-o"></i>-->
-                <!--<span class="title">Reports</span>-->
-              <!--</a>-->
-            <!--</li>-->
-
-            <li class=""><a href="javascript:;"> <i class="fa fa-file-pdf-o"></i> <span class="title">Reports</span> <span class="arrow open"></span> </a>
-              <ul class="sub-menu">
-                <li > <a href="/reports"><i class="fa fa-share-square-o"></i><span class="title">Lead report</span></a></li>
-                <li > <a href="#"><i class="fa fa-share-square-o"></i><span class="title">Visit report</span></a></li>
-                <li > <a href="#"><i class="fa fa-share-square-o"></i><span class="title">Contracted report</span></a></li>
-                <li > <a href="#"><i class="fa fa-share-square-o"></i><span class="title">Active routes report</span></a></li>
-                <li > <a href="#"><i class="fa fa-share-square-o"></i><span class="title">No waste oil report</span></a></li>
-                <li > <a href="#"><i class="fa fa-share-square-o"></i><span class="title">Collected oil  report</span></a></li>
-                <li > <a href="#"><i class="fa fa-share-square-o"></i><span class="title">Month wise collection report</span></a></li>
-                <li > <a href="#"><i class="fa fa-share-square-o"></i><span class="title">Restaurant collection report</span></a></li>
-                <li > <a href="#"><i class="fa fa-share-square-o"></i><span class="title">Not visited report</span></a></li>
-              </ul>
+            <li class="">
+              <a href="/reports">
+                <i class="fa fa-file-pdf-o"></i>
+                <span class="title">Reports</span>
+              </a>
             </li>
 
             <!--<li class="">-->

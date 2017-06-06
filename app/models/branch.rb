@@ -45,4 +45,12 @@ class Branch < ApplicationRecord
       end
     end
   end
+  
+  def total_collection
+    self.route_branches.sum(:quantity)
+  end
+  
+  def self.sort_branches(branch_ids)
+    @branches = Branch.joins(:company).where(id: branch_ids).order('company_code ASC, branch_code ASC').includes(:area)
+  end
 end

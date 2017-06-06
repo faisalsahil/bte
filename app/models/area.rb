@@ -18,7 +18,6 @@ class Area < ApplicationRecord
 
   def order_options
     'branches.visits_per_month - COUNT(route_branches.branch_id) desc'
-    
     # [
     #     'COALESCE(SUM(CASE ' \
     # 'WHEN (COUNT(route_branches.branch_id) - COUNT(route_branches.branch_id) > 0) ' \

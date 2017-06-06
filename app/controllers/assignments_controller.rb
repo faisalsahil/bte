@@ -51,7 +51,8 @@ class AssignmentsController < ApplicationController
   
   def pdf_assignment
     @assignment = Assignment.find_by_id(params[:id])
-    @route_branches = @assignment.route.route_branches.includes(:branch)
+    @route_branches = @assignment.route.route_branches
+    @branches       = Branch.sort_branches(@route_branches.pluck(:branch_id))
     respond_to do |format|
       format.pdf do
         pdf_name = "Route- #{@assignment.route_id} | #{@assignment.vehicle.vehicle_number}"

@@ -24,9 +24,7 @@ gem 'font-awesome-sass'
 
 gem 'geocoder'
 
-# gem 'high_voltage'
-
-# gem 'httparty'
+gem 'gon'
 
 gem 'jquery-rails'
 

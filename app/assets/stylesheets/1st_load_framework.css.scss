@@ -85,3 +85,12 @@ section {
 .col-md-3 {
   /* width: 25%; */
 }
+
+
+table, tr, td, th, tbody, thead, tfoot {
+  page-break-inside: avoid !important;
+}
+
+input[type="file"] {
+  display: inline;
+}
