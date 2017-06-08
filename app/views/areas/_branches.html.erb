@@ -1,7 +1,7 @@
 <% @areas&.each do |area| %>
     <div class="well well-sm col-md-3 box_height" style="margin-right:5px;">
       <span class="area_heading"><%= area.name%></span>
-      <table class="table-striped">
+      <table class="table-striped new-route-branches-table">
         <thead>
         <th>code | name</th>
         <th>visits</th>
@@ -10,16 +10,19 @@
         <tbody>
         <% @branches = area.sorted_branches
         %>
+        <% @branches = @branches.sort { |a,b| b.current_month_remaining_visits  <=>  a.current_month_remaining_visits } %>
         <% @branches&.each do |branch| %>
             <tr>
               <td><%= "#{branch.branch_code} | #{branch.branch_name}"  %></td>
               <%= hidden_field_tag :price, branch.rate_per_kg %>
               <td>
                 <%
-                  visits = branch.try(:route_branches).try(:count) || 0
+                  visits = branch.try(:route_branches).where("route_branches.transfer_to IS NULL AND route_branches.is_deleted != 't' AND extract(month from route_branches.created_at) = #{Date.today.month}").try(:count) || 0
                   total  = branch.visits_per_month
                 %>
-                <%= "#{visits}/#{total}" %>
+                <span class="branches-visit"><%= "#{visits}" %></span>
+                <span><%= "/" %></span>
+                <span class="total-visit-per-month"><%= "#{total}" %></span>
               </td>
               <td><%= check_box_tag 'route[branches][]', branch.id, false, class: "check_box_input" %></td>
             </tr>
