@@ -1,0 +1,48 @@
+<table class="table table-striped">
+  <thead>
+  <% @columns = @data[:columns].split(',') %>
+  <% @columns&.each do |column| %>
+      <th><%= column.camelize %></th>
+  <% end %>
+  </thead>
+  <tbody>
+  <% @route_branches&.each do |route_branch| %>
+      <%
+        assignment = route_branch.route.assignment
+      %>
+      <tr>
+        <% if @columns.include? 'voucher' %>
+            <td><%= "Route-#{route_branch.route_id}/#{route_branch.id} "%></td>
+        <% end %>
+
+        <% if @columns.include? 'branch_name' %>
+            <td><%= route_branch.branch.branch_name %></td>
+        <% end %>
+
+        <% if @columns.include? 'branch_code' %>
+            <td><%= "#{route_branch.branch.try(:company).try(:company_code)}/#{route_branch.branch.branch_code}" %></td>
+        <% end %>
+
+        <% if @columns.include? 'quantity' %>
+            <td><%= route_branch.quantity %></td>
+        <% end %>
+
+        <% if @columns.include? 'driver' %>
+            <td><%= assignment.try(:driver).try(:name) || 'N/A' %></td>
+        <% end %>
+
+        <% if @columns.include? 'helper' %>
+            <td><%= assignment.try(:helper).try(:name)  || 'N/A' %></td>
+        <% end %>
+
+        <% if @columns.include? 'vehicle' %>
+            <td><%= assignment.try(:vehicle).try(:vehicle_number) || 'N/A' %></td>
+        <% end %>
+
+        <% if @columns.include? 'comment' %>
+            <td><%= route_branch.comment%></td>
+        <% end %>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

@@ -18,8 +18,9 @@
                 <div>
                   <table class="table table-striped">
                     <thead>
-                    <th>Br. code | name</th>
-                    <th>Cont. name</th>
+                    <th>Voucher#</th>
+                    <th>BranchName</th>
+                    <th>Code (C/B)</th>
                     <th>Cont. #</th>
                     <th>Actions</th>
                     <th>Comment</th>
@@ -30,10 +31,11 @@
                             <tr class="route_assignment_tr">
                               <% branch = form_route_branch.object.branch %>
                               <td>
-                                <%= "#{branch.branch_code} | #{branch.branch_name}" %>
+                                <%= "Route-#{form_route_branch.object.route_id}/#{form_route_branch.object.id}" %>
                                 <%= form_route_branch.hidden_field :price, value: form_route_branch.object.branch.rate_per_kg %>
                               </td>
-                              <td><%= branch.contact_name %></td>
+                              <td><%= branch.branch_name %></td>
+                              <td><%= "#{branch.try(:company).try(:company_code)}/#{branch.branch_code}" %></td>
                               <td><%= branch.contact_phone %></td>
                               <td>
                                 <%= form_route_branch.text_field :quantity, placeholder: 'qnty (kg)', style: 'width:17%;', class: 'route_quantity' %>
@@ -58,44 +60,43 @@
                 </div>
             <% end %>
         <% else %>
-            <div class="panel panel-primary">
-              <div class="panel-heading">
-                Route details
-              </div>
-              <div class="panel-body">
-                <table class="table table-striped">
-                  <thead>
-                  <th>Br. code | name</th>
-                  <th>Cont. name</th>
-                  <th>Cont#</th>
-                  <th>Rate/Kg</th>
-                  <th>Qnty</th>
-                  <th>admin image</th>
-                  <th>factory image</th>
-                  <th></th>
-                  </thead>
-                  <tbody>
-                  <% @route_branches&.each do |route_branch| %>
-                      <% if route_branch.transfer_to.blank? && route_branch.is_deleted == false %>
-                          <tr>
-                            <% branch = route_branch.branch
-                               # a_url  = route_branch.image_url
-                               # f_url  = route_branch.factory_image_url
-                            %>
-                            <td><%= "#{branch.branch_code} | #{branch.branch_name} " %></td>
-                            <td><%= branch.contact_name %></td>
-                            <td><%= branch.contact_phone %></td>
-                            <td><%= branch.rate_per_kg %></td>
-                            <td><%= route_branch.quantity %></td>
-                            <td><%#= link_to image_tag(a_url), "#{a_url}", target: 'blank' %></td>
-                            <td><%#= link_to image_tag(f_url), "#{f_url}", target: 'blank' %></td>
-                          </tr>
-                      <% end %>
+            <table class="table table-striped list-data-table">
+              <thead>
+              <th>Voucher#</th>
+              <th>BranchName</th>
+              <th>Code (C/B)</th>
+              <th>Cont#</th>
+              <th>Rate/Kg</th>
+              <th>Qnty</th>
+              <th>admin image</th>
+              <th>factory image</th>
+              <th>Comment</th>
+              </thead>
+              <tbody>
+              <% @route_branches&.each do |route_branch| %>
+                  <% if route_branch.transfer_to.blank? && route_branch.is_deleted == false %>
+                      <tr>
+                        <% branch = route_branch.branch
+                           # a_url  = route_branch.image_url
+                           # f_url  = route_branch.factory_image_url
+                        %>
+                        <td><%= "Route-#{route_branch.route_id}/#{route_branch.id}" %></td>
+                        <td><%= branch.branch_name %></td>
+                        <td><%= "#{branch.try(:company).try(:company_code)}/#{branch.branch_code}" %></td>
+                        <td><%= branch.contact_phone %></td>
+                        <td><%= branch.rate_per_kg %></td>
+                        <td><%= route_branch.quantity %></td>
+                        <td>
+                          <%#= link_to route_branch.image, "#{a_url}", target: 'blank' %>
+                          <%#= link_to image_tag(a_url), "#{a_url}", target: 'blank' %>
+                        </td>
+                        <td><%#= link_to image_tag(f_url), "#{f_url}", target: 'blank' %></td>
+                        <td><%= route_branch.comment %></td>
+                      </tr>
                   <% end %>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+              <% end %>
+              </tbody>
+            </table>
         <% end %>
       </div>
     </div>

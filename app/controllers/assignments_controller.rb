@@ -51,7 +51,7 @@ class AssignmentsController < ApplicationController
   
   def pdf_assignment
     @assignment = Assignment.find_by_id(params[:id])
-    @route_branches = @assignment.route.route_branches
+    @route_branches = @assignment.route.route_branches.where('is_deleted = false AND  transfer_to IS NULL')
     @branches       = Branch.sort_branches(@route_branches.pluck(:branch_id))
     respond_to do |format|
       format.pdf do
@@ -90,17 +90,11 @@ class AssignmentsController < ApplicationController
   end
   
   def factory_assignments
-    if params[:route_id].present?
-      @routes         = Route.where(id: params[:route_id])
-      @route_branches = RouteBranch.where(route_id: params[:route_id], transfer_to: nil, is_deleted: false, is_factory: false).includes(:route, :branch).order('route_id asc')
-    else
-      @route_ids = Assignment.where(assignment_status: AppConstants::FACTORY).pluck(:route_id)
-      @routes    = Route.where(id: @route_ids)
-    end
-
+    @route_ids = Assignment.where(assignment_status: AppConstants::FACTORY).pluck(:route_id)
+    @route_branches = RouteBranch.where(route_id: @route_ids, transfer_to: nil, is_deleted: false, is_factory: false).includes(:route, :branch).order('route_id asc')
+    
     respond_to do |format|
       format.html {  }
-      format.js { render layout: false }
     end
   end
   

@@ -11,6 +11,7 @@ class Branch < ApplicationRecord
   has_many :route_branches
   has_many :routes, through: :route_branches
   has_many :transactions
+  has_many :notes
   belongs_to :area
   belongs_to :storage_type
   belongs_to :food_type
@@ -52,5 +53,14 @@ class Branch < ApplicationRecord
   
   def self.sort_branches(branch_ids)
     @branches = Branch.joins(:company).where(id: branch_ids).order('company_code ASC, branch_code ASC').includes(:area)
+  end
+
+  def self.to_csv(columns = {})
+    CSV.generate do |csv|
+      csv << columns.split(',')
+      all.each do |branch|
+        csv << [branch.branch_name, branch.branch_code, branch.rate_per_kg]
+      end
+    end
   end
 end

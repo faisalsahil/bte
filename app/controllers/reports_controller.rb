@@ -27,7 +27,14 @@ class ReportsController < ApplicationController
     end
 
     if @type == AppConstants::ACTIVE_ROUTES_REPORT
-      @routes = Route.active_routes.joins(:route_branches).where('route_branches.is_deleted = false AND transfer_to IS NULL').uniq.order('id ASC')
+      @route_branches, @states, @cities, @areas = active_route_report(params)
+      @data = params
+    end
+
+    if @type == AppConstants::FACTORY_COLLECTION_REPORT
+      @factory_collections = factory_collection(params)
+      @route_branches      = RouteBranch.where(factory_collection_id: @factory_collections.pluck(:id)).order('factory_collection_id ASC').includes(:branch, :factory_collection, :route)
+      @data = params
     end
     
     respond_to do |format|
@@ -64,28 +71,28 @@ class ReportsController < ApplicationController
                    line: true
                }
       end
+      format.csv { send_data @branches.to_csv(@data[:columns]) }
+      format.xls { send_data @branches.to_csv(@data[:columns]) }
     end
-    
   end
-  
   
   def lead_report(params)
     @branches = Branch.where(branch_status: AppConstants::LEAD).includes(:area, :city, :state, :company)
     
     if params[:from_date].present?
-      @branches.where('DATE(created_at) >= DATE(?)', params[:from_date].to_date)
+      @branches = @branches.where('DATE(created_at) >= DATE(?)', params[:from_date].to_date)
     end
 
     if params[:to_date].present?
-      @branches.where('DATE(created_at) <= DATE(?)', params[:to_date].to_date)
+      @branches = @branches.where('DATE(created_at) <= DATE(?)', params[:to_date].to_date)
     end
     
     if params[:area_wise].present?
-      @branches.where(area_id: params[:area_wise])
+      @branches = @branches.where(area_id: params[:area_wise])
     end
 
     if params[:sale_rep_wise].present?
-      @branches.where(representative: params[:sale_rep_wise])
+      @branches = @branches.where(representative: params[:sale_rep_wise])
     end
     @branches
   end
@@ -94,40 +101,80 @@ class ReportsController < ApplicationController
     @branches = Branch.where(branch_status: AppConstants::VISIT).includes(:area, :city, :state, :company)
   
     if params[:from_date].present?
-      @branches.where('DATE(created_at) >= DATE(?)', params[:from_date].to_date)
+      @branches = @branches.where('DATE(created_at) >= DATE(?)', params[:from_date].to_date)
     end
   
     if params[:to_date].present?
-      @branches.where('DATE(created_at) <= DATE(?)', params[:to_date].to_date)
+      @branches = @branches.where('DATE(created_at) <= DATE(?)', params[:to_date].to_date)
     end
   
     if params[:area_wise].present?
-      @branches.where(area_id: params[:area_wise])
+      @branches =  @branches.where(area_id: params[:area_wise])
     end
   
     if params[:sale_rep_wise].present?
-      @branches.where(representative: params[:sale_rep_wise])
+      @branches = @branches.where(representative: params[:sale_rep_wise])
     end
     @branches
   end
 
   def contracted_report(params)
     @branches = Branch.joins(:company).where(branch_status: AppConstants::CONTRACTED).order('company_code ASC, branch_code ASC').includes(:area, :city, :state)
+    
     if params[:from_date].present?
-      @branches.where('DATE(created_at) >= DATE(?)', params[:from_date].to_date)
+      @branches = @branches.where('DATE(created_at) >= DATE(?)', params[:from_date].to_date)
     end
-  
+    
     if params[:to_date].present?
-      @branches.where('DATE(created_at) <= DATE(?)', params[:to_date].to_date)
+      @branches = @branches.where('DATE(created_at) <= DATE(?)', params[:to_date].to_date)
     end
   
     if params[:area_wise].present?
-      @branches.where(area_id: params[:area_wise])
+      @branches = @branches.where(area_id: params[:area_wise])
     end
   
     if params[:sale_rep_wise].present?
-      @branches.where(representative: params[:sale_rep_wise])
+      @branches = @branches.where(representative: params[:sale_rep_wise])
     end
     @branches
+  end
+  
+  def factory_collection(params)
+    @factory_collections = FactoryCollection.all
+    if params[:from_date].present?
+      @factory_collections  = @factory_collections.where('DATE(created_at) >= DATE(?)', params[:from_date].to_date)
+    end
+    
+    if params[:to_date].present?
+      @factory_collections = @factory_collections.where('DATE(created_at) <= DATE(?)', params[:to_date].to_date)
+    end
+
+    @factory_collections
+  end
+  
+  def active_route_report(params)
+    # @routes = Route.active_routes.joins('LEFT JOIN "route_branches" ON "route_branches"."route_id" = "routes"."id"').uniq.order('id ASC').includes(:route_branches)
+    @routes = Route.active_routes
+    if params[:from_date].present?
+      @routes = @routes.where('DATE(created_at) >= DATE(?)', params[:from_date].to_date)
+    end
+  
+    if params[:to_date].present?
+      @routes = @routes.where('DATE(created_at) <= DATE(?)', params[:to_date].to_date)
+    end
+  
+    if params[:state_wise].present?
+      @routes = @routes.where(state_id: params[:state_wise])
+    end
+  
+    if params[:city_wise].present?
+      @routes = @routes.where(city_id: params[:city_wise])
+    end
+    @route_branches = RouteBranch.where('route_id IN(?) AND is_deleted = false AND transfer_to IS NULL', @routes.pluck(:id)).includes(:branch)
+    @states = State.where(id: @routes.pluck(:state_id))
+    @cities = City.where(id: @routes.pluck(:city_id))
+    ids     = @routes.pluck(:areas).flatten.uniq
+    @areas  = Area.where(id: ids)
+    [@route_branches, @states, @cities, @areas]
   end
 end

@@ -11,10 +11,12 @@ class BranchesController < ApplicationController
       elsif params[:type] == AppConstants::CONTRACTED
         @statuses = [AppConstants::CONTRACTED]
       else
-        @branches = Branch.all.includes(:company)
+        @branches = Branch.where(branch_status: AppConstants::CONTRACTED).includes(:company)
+        @statuses = [AppConstants::CONTRACTED]
       end
     else
-      @branches = Branch.all.includes(:company)
+      @branches = Branch.where(branch_status: AppConstants::CONTRACTED).includes(:company)
+      @statuses = [AppConstants::CONTRACTED]
     end
   end
 
@@ -63,6 +65,7 @@ class BranchesController < ApplicationController
         format.html { redirect_to branches_path({type: AppConstants::CONTRACTED}), notice: 'Branch was successfully updated.' }
         format.json { render :show, status: :ok, location: @branch }
       else
+        
         format.html { render :edit }
         format.json { render json: @branch.errors, status: :unprocessable_entity }
       end

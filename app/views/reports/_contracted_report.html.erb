@@ -3,7 +3,7 @@
 <% end %>
 
 <% hidden_field_tag :from_date, @from_date %>
-<% hidden_field_tag :to_date, @from_date %>
+<% hidden_field_tag :to_date, @to_date %>
 <% hidden_field_tag :report_type, @type %>
 
 <% @areas = Area.where(id: @branches.pluck(:area_id))

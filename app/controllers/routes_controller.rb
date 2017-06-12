@@ -32,6 +32,7 @@ class RoutesController < ApplicationController
 
   def create
     @route = Route.new(route_params)
+    @route.areas = params[:route][:areas]
     respond_to do |format|
       if @route.save
         branches =  Branch.where(id: params[:route][:branches])
@@ -102,7 +103,7 @@ class RoutesController < ApplicationController
     route_branches = route.route_branches.order('position ASC')
     route_branches&.each_with_index do |route_branch, index|
       route_branch.position = index + 1
-      route_branch.save!
+      route_branch.save(validate: false)
     end
   end
   
@@ -127,15 +128,6 @@ class RoutesController < ApplicationController
       assignment.assignment_status = AppConstants::FACTORY
       assignment.save!
     end
-    # if route_branches.where(quantity: nil, transfer_to: nil, is_deleted: false).present?
-    #   route.is_completed = false
-    #   route.save!
-    # else
-    #   assignment.assignment_status = AppConstants::FACTORY
-    #   assignment.save!
-    #   route.is_completed = true
-    #   route.save!
-    # end
   end
   
   def get_route_branches
@@ -152,6 +144,6 @@ class RoutesController < ApplicationController
     end
 
     def route_params
-      params.require(:route).permit(:state_id, :city_id, :area_ids, route_branches_attributes: [:id, :quantity, :is_transferred, :transfer_to, :is_deleted, :image, :price, :factory_image, :comment])
+      params.require(:route).permit(:state_id, :city_id, :areas, route_branches_attributes: [:id, :quantity, :is_transferred, :transfer_to, :is_deleted, :image, :price, :factory_image, :comment])
     end
 end

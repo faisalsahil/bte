@@ -7,12 +7,12 @@
   <div class="col-md-12">
     <div class="grid simple ">
       <div class="grid-body no-border">
-        <table class="table table-striped list-data-table">
+        <table class="table table-striped" id="branches_index_table">
           <thead>
           <tr>
             <th>Area</th>
-            <th>Branch name</th>
             <th>Code (C/B)</th>
+            <th>Branch name</th>
             <!--<th>Cont. Name</th>-->
             <th>Cont. phone</th>
             <th>Outlets</th>
@@ -25,8 +25,8 @@
           <% @branches.each do |branch| %>
               <tr id='<%= "#{branch.id}"%>'>
                 <td><%= branch.area.name %></td>
-                <td><%= branch.branch_name %></td>
                 <td><%= "#{branch.company.company_code}/#{branch.branch_code}" %></td>
+                <td><%= branch.branch_name %></td>
 
                 <!--<td><%#= branch.contact_name %></td>-->
                 <td><%= branch.contact_phone %></td>
@@ -36,6 +36,7 @@
                   <%= select_tag 'state_id', options_for_select(@statuses, selected: branch.branch_status), class: 'form-control branch_change_status' %>
                   <%= link_to '', branch, class:'fa fa-eye' %>
                   <%= link_to '', edit_branch_path(branch), class: 'fa fa-edit' %>
+                  <%= link_to 'add note', branch_notes_path(branch)%>
                   <%= link_to '', branch, method: :delete, class: 'fa fa-trash', data: { confirm: 'Are you sure?' } %>
                 </td>
               </tr>

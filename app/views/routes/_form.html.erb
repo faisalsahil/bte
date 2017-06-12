@@ -16,7 +16,7 @@
       <div class="col-md-3">
         <% if @route_area_ids.present? %>
           <div id="route_area">
-            <select name='route[area_ids][]' id="route_area_id" multiple='multiple'>
+            <select name='route[areas][]' id="route_area_id" multiple='multiple'>
              <% @areas&.each do |area| %>
                   <% if @route_area_ids.include? area.id %>
                       <option value='<%= "#{area.id}" %>' selected='selected'><%= area.name%></option>
@@ -28,7 +28,7 @@
           </div>
       <% else %>
           <div id='route_area'  class="hidden">
-            <select name='area_ids[]' id="route_area_id" multiple='multiple'></select>
+            <select name='areas[]' id="route_area_id" multiple='multiple'></select>
           </div>
       <% end %>
       </div>

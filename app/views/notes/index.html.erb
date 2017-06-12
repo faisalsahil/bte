@@ -1,0 +1,36 @@
+<ul class="breadcrumb">
+  <li><p>YOU ARE HERE</p></li>
+  <li><a href="#" class="active">Notes</a></li>
+  <li><%= link_to 'Add note', new_branch_note_path(@branch), class:'btn btn-mini btn-primary' %></li>
+</ul>
+<div class="row">
+  <div class="col-md-12">
+    <div class="grid simple ">
+      <div class="grid-body no-border">
+        <br/>
+        <% if @notes.present? %>
+          <% @notes.each do |note| %>
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <%= note.created_at.to_date.strftime('%d/%m/%Y') %>
+                  <span class="pull-right">
+                    <%= link_to 'Edit', edit_branch_note_path(@branch, note) %></td>
+                    <%= link_to 'Destroy', branch_note_path(@branch, note), method: :delete, data: { confirm: 'Are you sure?' } %>
+                  </span>
+                </div>
+                <div class="panel-body">
+                  <%= note.comment %></td>
+                </div>
+              </div>
+          <% end %>
+        <% else %>
+          No notes found.
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+

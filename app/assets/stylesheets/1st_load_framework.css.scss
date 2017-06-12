@@ -94,3 +94,32 @@ table, tr, td, th, tbody, thead, tfoot {
 input[type="file"] {
   display: inline;
 }
+
+
+
+
+.page-break {
+  display:block;
+  clear:both;
+  page-break-after:always;
+}
+.note {
+  text-align: center;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.note1 {
+  text-align: center;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.text_decoration {
+  text-align: center;
+  font-size: 9px;
+}
+#heading_box{
+
+  width: 180px
+}

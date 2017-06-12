@@ -1,9 +1,10 @@
 <% if @branches.present? %>
-  <%= link_to 'download pdf', 'javascript:void(0)', class:'pull-right btn btn-mini btn-success', id:'pdf-lead' %>
+  <%= link_to 'Download pdf', 'javascript:void(0)',   class:'pull-right btn btn-mini btn-success', id:'pdf-lead' %>
+  <%= link_to 'Export excel', 'javascript:void(0)', class:'pull-right btn btn-mini btn-success', id:'excel-lead' %>
 <% end %>
 
 <% hidden_field_tag :from_date, @from_date %>
-<% hidden_field_tag :to_date, @from_date %>
+<% hidden_field_tag :to_date, @to_date %>
 <% hidden_field_tag :report_type, @type %>
 
 <% @areas = Area.where(id: @branches.pluck(:area_id))
@@ -79,8 +80,24 @@
             var to_date         = $('#to_date').val();
             var report_type     = $('#report_type').val();
 
-            var origin = window.location.origin
+            var origin = window.location.origin;
             window.location.href = origin + '/reports/generate_report.pdf?from_date='+ from_date +
+                '&to_date='+ to_date +
+                '&report_type='+ report_type +
+                '&area_wise=' + area_wise +
+                '&sale_rep_wise=' + sale_rep_wise +
+                '&columns=' +  $('#lead_report_columns').val();
+        });
+
+        $('#excel-lead').click(function(){
+            var area_wise       = $('#area_wise').val();
+            var sale_rep_wise   = $('#sale_rep_wise').val();
+            var from_date       = $('#from_date').val();
+            var to_date         = $('#to_date').val();
+            var report_type     = $('#report_type').val();
+
+            var origin = window.location.origin;
+            window.location.href = origin + '/reports/generate_report.xls?from_date='+ from_date +
                 '&to_date='+ to_date +
                 '&report_type='+ report_type +
                 '&area_wise=' + area_wise +

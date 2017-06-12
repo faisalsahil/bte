@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   
-  
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'
+  resources :factory_collections, only:[:index, :show]
   
   resources :reports, only:[:index] do
     collection do
@@ -102,6 +102,7 @@ Rails.application.routes.draw do
     member do
       post :update_branch_status
     end
+    resources :notes
     resources :transactions, only: [] do
       collection do
         get 'payment'

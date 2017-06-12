@@ -21,6 +21,7 @@ module AppConstants
   MONTH_WISE_COLLECTION_REPORT = 'month_wise_collection_report'
   RESTAURANT_WISE_COLLECTION_REPORT = 'restaurant_wise_collection_report'
   NOT_VISITED_REPORT = 'not_visited_report'
+  FACTORY_COLLECTION_REPORT = 'factory_collection_report'
   
   REPORTS   = [
       {name: 'Lead report', id: Lead_REPORT},
@@ -31,7 +32,8 @@ module AppConstants
       {name: 'Collected oil to date report', id: COLLECTED_OIL_TO_DATE_REPORT},
       {name: 'Month wise collection report', id: MONTH_WISE_COLLECTION_REPORT},
       {name: 'Restaurant wise collection report', id: RESTAURANT_WISE_COLLECTION_REPORT},
-      {name: 'Not visited report', id: NOT_VISITED_REPORT}
+      {name: 'Not visited report', id: NOT_VISITED_REPORT},
+      {name: 'Factory collection report', id: FACTORY_COLLECTION_REPORT}
   ]
 
   LEAD_REPORT_HEADER = [
@@ -46,6 +48,29 @@ module AppConstants
       {name: 'Visits/month', id: 'visits_per_month'},
       {name: 'Collection', id: 'total_collection'},
       {name: 'Address', id: 'address'}
+  ]
+  
+  FACTORY_REPORT_HEADER = [
+      {name: 'ID', id: 'factory_collection_id'},
+      {name: 'Voucher#', id: 'voucher'},
+      {name: 'Branch name', id: 'branch_name'},
+      {name: 'Branch code', id: 'branch_code'},
+      {name: 'Quantity', id: 'quantity'},
+      {name: 'Driver', id: 'driver'},
+      {name: 'Helper', id: 'helper'},
+      {name: 'Vehicle#', id: 'vehicle'},
+      {name: 'Comment', id: 'comment'}
+  ]
+
+  ACTIVE_ROUTE__REPORT_HEADER = [
+      {name: 'Voucher#', id: 'voucher'},
+      {name: 'Branch name', id: 'branch_name'},
+      {name: 'Branch code', id: 'branch_code'},
+      {name: 'Quantity', id: 'quantity'},
+      {name: 'Driver', id: 'driver'},
+      {name: 'Helper', id: 'helper'},
+      {name: 'Vehicle#', id: 'vehicle'},
+      {name: 'Comment', id: 'comment'}
   ]
   
 end

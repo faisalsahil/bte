@@ -1,0 +1,39 @@
+<div class="well-sm">
+  <strong>Factory#</strong>  <%= @factory_collection.id %><br/>
+  <strong>Total Collection:   </strong><%= @route_branches.sum(:quantity) %><br/>
+  <strong>Factory Collection: </strong><%= @factory_collection.quantity %>
+</div><br/>
+<table class="table table-striped list-data-table">
+  <thead>
+  <tr>
+    <th>Voucher#</th>
+    <th>BranchName</th>
+    <th>Code (C/B)</th>
+    <th>Quantity</th>
+    <th>Driver</th>
+    <th>Helper</th>
+    <th>Vehicle</th>
+    <th>Comment</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @route_branches&.each do |route_branch| %>
+      <%
+        assignment = route_branch.route.assignment
+        driver  =  assignment.driver
+        helper =  assignment.helper
+        vehicle=  assignment.vehicle
+      %>
+      <tr>
+        <td><%= "Route-#{route_branch.route_id}/#{route_branch.id} "%></td>
+        <td><%= route_branch.branch.branch_name %></td>
+        <td><%= "#{route_branch.branch.try(:company).try(:company_code)}/#{route_branch.branch.branch_code}" %></td>
+        <td><%= route_branch.quantity %></td>
+        <td><%= driver.name %></td>
+        <td><%= helper.name %></td>
+        <td><%= vehicle.vehicle_number %></td>
+        <td><%= route_branch.comment%></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

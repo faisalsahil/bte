@@ -1,0 +1,13 @@
+<ul class="breadcrumb">
+  <li><p>YOU ARE HERE</p></li>
+  <li><a href="#" class="active">Add Note</a></li>
+</ul>
+<div class="row">
+  <div class="col-md-12">
+    <div class="grid simple ">
+      <div class="grid-body no-border">
+        <%= render 'form', note: @note, branch: @branch, url: branch_notes_path(@branch), type: 'post' %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+<div class="well-sm">
+  <strong>Total Collection:   </strong><%= @route_branches.sum(:quantity) %>
+</div>
+<br/>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Voucher#</th>
+      <th>BranchName</th>
+      <th>Code (C/B)</th>
+      <th>Quantity</th>
+      <th>Driver</th>
+      <th>Helper</th>
+      <th>vehicle#</th>
+      <th>Comment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% driver  = @assignment.driver
+        helper = @assignment.helper
+        vehicle = @assignment.vehicle
+    %>
+    <% @route_branches.each do |route_branch| %>
+        <tr>
+          <td><%= "Route-#{route_branch.route_id}/#{route_branch.id} "%></td>
+          <td><%= route_branch.branch.branch_name %></td>
+          <td><%= "#{route_branch.branch.company.company_code}/#{route_branch.branch.branch_code}" %></td>
+          <td><%= route_branch.quantity %></td>
+          <td><%= driver.name %></td>
+          <td><%= helper.name %></td>
+          <td><%= vehicle.vehicle_number %></td>
+          <td><%= route_branch.comment%></td>
+        </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<% @route_branches&.each_with_index do |route_branch, index| %>
+  <div class="page-break"></div>
+    <h2><%= "Route-#{route_branch.route_id}/ #{route_branch.id}" %></h2>
+    <p>Admin Image</p>
+    <%= wicked_pdf_image_tag("#{route_branch.image_url}") %>
+    <br/>
+    <br/>
+    <br/>
+    <h2><%= "Route-#{route_branch.route_id}/ #{route_branch.id}" %></h2>
+    <p>Factory Image</p>
+    <%= wicked_pdf_image_tag("#{route_branch.factory_image_url}") %>
+<% end %>

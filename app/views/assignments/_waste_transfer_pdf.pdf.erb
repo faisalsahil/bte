@@ -1,0 +1,231 @@
+<% @branches.each_with_index do |branch, index| %>
+    <% @vehicle = @assignment.vehicle
+       @route   = @assignment.route
+    %>
+    <% if branch.id != @branches.last.id %>
+    <% end %>
+    <br>
+
+    <table class="table table-bordered">
+      <tbody>
+      <tr style="height: 10px">
+        <td colspan="4" style="height: 2px" class="note"><p style="text-align: center;line-height: 1px">Weight Transfer Note</p></td>
+      </tr>
+
+      <tr>
+        <td class="text_decoration col-md-3"  id="heading_box" ><%= branch.address %></td>
+        <td colspan="2" class="note1">Bio Tech Energy Pvt Limited</td>
+        <td class="text_decoration"  style="width: 200px">UAN Number</td>
+      </tr>
+      <tr>
+        <td   id="heading_box"  class="text_decoration col-md-3">Voucher #</td>
+        <td style="width: 230px;"  class="text_decoration" ><b><%= "Route-#{@route.id}/#{@route_branches.find_by_branch_id(branch.id).id}" %> </b> </td>
+        <td  id="heading_box" class="text_decoration"><%= "Date: #{Date.today.strftime('%d/%m/%Y')}"%></td>
+        <td class="text_decoration"><%= "111-11-SAAF" %></td>
+      </tr>
+
+      <tr>
+        <td class="text_decoration note" colspan="4">Contact Information</td>
+      </tr>
+      <tr>
+        <td   id="heading_box"  class="text_decoration col-md-2">Name</td>
+        <td  class="text_decoration" ><%= branch.branch_name %></td>
+        <td  id="heading_box" class="text_decoration">Contact Person Name</td>
+        <td class="text_decoration"><%= branch.contact_name %></td>
+      </tr>
+      <tr>
+        <td  id="heading_box" class="text_decoration">Address</td>
+        <td  class="text_decoration"><%= branch.address %></td>
+        <td  id="heading_box" class="text_decoration">Contact Number</td>
+        <td class="text_decoration"><%= branch.contact_phone %></td>
+      </tr>
+
+      <tr>
+        <td colspan="4" class="note">Consignment details</td>
+      </tr>
+      <tr>
+        <td   id="heading_box" class="text_decoration">Measurement components</td>
+        <td class="text_decoration">Weight</td>
+        <td class="text_decoration" colspan="2">Other details</td>
+      </tr>
+      <tr>
+        <td  id="heading_box"  class="text_decoration">Total</td>
+        <td></td>
+        <td  id="heading_box" class="text_decoration">Customer ID</td>
+        <td class="text_decoration" ><%= "#{branch.try(:company).try(:company_code)}/#{branch.branch_code}" %></td>
+      </tr>
+
+      <tr>
+        <td  id="heading_box" class="text_decoration">Container</td>
+        <td></td>
+        <td id="heading_box"  class="text_decoration">Vehicle Number</td>
+        <td class="text_decoration"><%= @vehicle.vehicle_number %></td>
+      </tr>
+      <tr>
+        <td  id="heading_box" class="text_decoration">Net Oil</td>
+        <td></td>
+        <td  id="heading_box" class="text_decoration">Inventory Check</td>
+        <td></td>
+      </tr>
+
+
+      <tr>
+        <td class="text_decoration"   id="heading_box" ><b>Acknowledgment By</b></td>
+
+        <td class="text_decoration"></td>
+        <td class="text_decoration"   id="heading_box"  ><b>Signature</b></td>
+        <td class="text_decoration"></td>
+      </tr>
+      <tr>
+        <td  id="heading_box"   class="text_decoration"><b>Received By</b></td>
+        <td  ></td>
+        <td   id="heading_box"  class="text_decoration"><b>Signature</b></td>
+        <td  ></td>
+      </tr>
+      <tr>
+        <td colspan="4" class="note" >Factory Receipt</td>
+      </tr>
+
+      <tr>
+        <td   id="heading_box"  class="text_decoration">Measurement components</td>
+        <td class="text_decoration">Weight</td>
+        <td class="text_decoration" colspan="2">Other details</td>
+      </tr>
+      <tr>
+        <td   id="heading_box" class="text_decoration">Total</td>
+        <td></td>
+        <td  id="heading_box" class="text_decoration">Customer ID</td>
+        <td class="text_decoration" ><%= "#{branch.try(:company).try(:company_code)}/#{branch.branch_code}" %></td>
+      </tr>
+      <tr>
+        <td  id="heading_box" class="text_decoration">Container</td>
+        <td></td>
+        <td  id="heading_box" class="text_decoration">Vehicle Number</td>
+        <td class="text_decoration"><%=  @vehicle.vehicle_number  %></td>
+      </tr>
+
+      <tr>
+        <td  id="heading_box"  class="text_decoration">Net Oil</td>
+        <td></td>
+        <td  id="heading_box"  class="text_decoration">Inventory Check</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td class="text_decoration"   id="heading_box" ><b>Acknowledgment By</b></td>
+
+        <td class="text_decoration"></td>
+        <td class="text_decoration"   id="heading_box"  ><b>Signature</b></td>
+        <td class="text_decoration"></td>
+      </tr>
+      <tr>
+        <td  id="heading_box"   class="text_decoration"><b>Received By</b></td>
+        <td  ></td>
+        <td   id="heading_box"  class="text_decoration"><b>Signature</b></td>
+        <td  ></td>
+      </tr>
+
+      <tr style="height: 5px;line-height: 100px">
+        <td colspan="4" ><p style="text-align: center;margin-top: 10px;font-size: 12px"><%= wicked_pdf_image_tag('bte.jpg', style: 'width:40px;float:left')%>Weight Transfer Note - Customer Copy<%= wicked_pdf_image_tag('bte.jpg', style: 'width:40px;float:right;')%></p></td>
+      </tr>
+
+
+      <tr>
+        <td  id="heading_box" class="text_decoration"><%= "Address" %></td>
+        <td colspan="2" class="note1">Bio Tech Energy Pvt Limited</td>
+        <td class="text_decoration">UAN Number</td>
+      </tr>
+      <tr>
+        <td  id="heading_box" class="text_decoration">Voucher #</td>
+        <td class="text_decoration" ><b><%= "Route-#{@route.id}/#{@route_branches.find_by_branch_id(branch.id).id}" %></b></td>
+        <td  id="heading_box"  class="text_decoration"><%= "Date: #{Date.today.strftime('%d/%m/%Y')}"%></td>
+        <td class="text_decoration"><%= "111-11-SAAF" %></td>
+      </tr>
+      <tr>
+        <td colspan="4" class="note">Consignment details</td>
+      </tr>
+
+      <tr>
+        <td  id="heading_box" class="text_decoration">Measurement components</td>
+        <td class="text_decoration">Weight</td>
+        <td class="text_decoration" colspan="2">Other details</td>
+      </tr>
+      <tr>
+        <td  id="heading_box" class="text_decoration">Total</td>
+        <td></td>
+        <td  id="heading_box" class="text_decoration">Customer ID</td>
+        <td class="text_decoration" ><%= "#{branch.try(:company).try(:company_code)}/#{branch.branch_code}" %></td>
+      </tr>
+      <tr>
+        <td  id="heading_box" class="text_decoration">Container</td>
+        <td></td>
+        <td  id="heading_box"  class="text_decoration">Vehicle Number</td>
+        <td class="text_decoration"><%= @vehicle.vehicle_number %></td>
+      </tr>
+
+      <tr>
+        <td  id="heading_box" class="text_decoration">Net Oil</td>
+        <td></td>
+        <td  id="heading_box" class="text_decoration">Inventory Check</td>
+        <td></td>
+      </tr>
+
+
+      <tr>
+        <td class="text_decoration"   id="heading_box" ><b>Acknowledgment By</b></td>
+
+        <td class="text_decoration"></td>
+        <td class="text_decoration"   id="heading_box"  ><b>Signature</b></td>
+        <td class="text_decoration"></td>
+      </tr>
+      <tr>
+        <td  id="heading_box"   class="text_decoration"><b>Received By</b></td>
+        <td  ></td>
+        <td   id="heading_box"  class="text_decoration"><b>Signature</b></td>
+        <td  ></td>
+      </tr>
+      </tbody>
+    </table>
+    </div>
+<% end %>
+<br>
+<!--Summary page-->
+<br><br>
+<br><div>
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <td colspan="7" style="height: 2px" class="note"><p style="text-align: center;line-height: 1px;margin-top: 10px">WASTE TRANSFER NOTES - SUMMARY</p></td>
+
+    </tr>
+    <tr>
+      <th>Sr#</th>
+      <th>Area</th>
+      <th>BranchName</th>
+      <th>Code(C/B)</th>
+      <th>ContactName</th>
+      <th>Contact#</th>
+      <th>Address</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @branches&.each_with_index do |branch, index| %>
+        <tr>
+          <td><%= index + 1 %></td>
+          <td><%= branch.area.name %></td>
+          <td><%= branch.branch_name %></td>
+          <td><%= "#{branch.try(:company).try(:company_code) || nil}/#{branch.branch_code}" %></td>
+          <td><%= branch.contact_name %></td>
+          <td><%= branch.contact_phone %></td>
+          <td><%= branch.address %></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+

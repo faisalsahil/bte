@@ -24,7 +24,7 @@ gem 'font-awesome-sass'
 
 gem 'geocoder'
 
-gem 'gon'
+# gem 'axlsx_rails'
 
 gem 'jquery-rails'
 

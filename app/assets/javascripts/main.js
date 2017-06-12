@@ -1,7 +1,15 @@
 $(document).ready(function(){
     $('.list-data-table').DataTable({
-        "pageLength": 50
+        "pageLength": 50,
+        "aaSorting": [[ 0, "asc" ]]
     });
+
+    // branches index
+    $('#branches_index_table').DataTable({
+        "pageLength": 50,
+        "aaSorting": [[ 1, "asc" ]]
+    });
+
     $('#branches').sortable({
         axis: 'y',
         handle: '.handle',
@@ -188,7 +196,7 @@ $(document).ready(function(){
         var city_id = $("#route_city_id").val();
         $("#route_area").addClass('hidden');
         $('#route_area').html('');
-        $('#route_area').append('<select name="route[area_ids][]" id="route_area_id" multiple="multiple"></select>');
+        $('#route_area').append('<select name="route[areas][]" id="route_area_id" multiple="multiple"></select>');
         $("#select_branches").html('');
 
         if (city_id > 0)
@@ -479,20 +487,47 @@ $(document).ready(function(){
 
 
     // factory assignments page
-    $('#factory_assignments_route_selection').multiselect({
-        includeSelectAllOption: true,
-        enableFiltering: true,
-        enableClickableOptGroups: true,
-        maxHeight: 200,
-        buttonWidth: '250px',
-        onChange: function(option, checked, select) {
-            load_factory_status_branches($('#factory_assignments_route_selection').val());
-        },
-        onSelectAll: function(option, checked, select) {
-            load_factory_status_branches($('#factory_assignments_route_selection').val());
-        },
-        onDeselectAll: function(option, checked, select) {
-            load_factory_status_branches($('#factory_assignments_route_selection').val());
+    $('#factory_assignment_completion_form').submit(function(event)
+    {
+        var status = true;
+        $("tr.factory_assignment_tr").each(function() {
+            $this = $(this);
+            var branch_selection = $this.find(".factory_branch_select").is(":checked");
+            var image            = $this.find(".route_image").val().length;
+            if(branch_selection == false)
+            {}
+            else if(branch_selection == true && image > 0)
+            {}
+            else{
+                status = false;
+                return false;
+            }
+        });
+
+        if(status == false)
+        {
+            $('.route_assignment_error_notification').removeClass('hidden') ;
+            return false;
+        }else{
+            return true;
+        }
+    });
+
+    $(".factory_branch_select").change(function() {
+        if($(this).is(':checked')) {
+            $(this).next().removeAttr('disabled')
+        }else{
+            $(this).next().val('');
+            $(this).next().attr('disabled', true)
+        }
+    });
+
+    $('#factory_collection_quantity').on("keyup", function(event) {
+        if($(this).val().length > 0)
+        {
+            $('#factory_collection_form_submit_button').removeAttr('disabled');
+        }else{
+            $('#factory_collection_form_submit_button').attr('disabled', true);
         }
     });
 
@@ -528,23 +563,3 @@ function load_branches(area_ids)
     }
 }
 
-function load_factory_status_branches(route_ids)
-{
-    $('#factory_assignments').html('');
-    if (route_ids && route_ids.length > 0)
-    {
-        $.ajax({
-            url: '/assignments/factory_assignments',
-            dataType:'script',
-            type: 'get',
-            data: {
-                route_id: route_ids
-            },
-            success:function(data){
-
-            },
-            error:function(){
-            }
-        });
-    }
-}
