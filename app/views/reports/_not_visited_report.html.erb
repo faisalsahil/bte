@@ -1,1 +1,86 @@
-not_visited_report
+<% if @route_branches.present? %>
+    <%= link_to 'download pdf', 'javascript:void(0)', class:'pull-right btn btn-mini btn-success', id:'not_visited_report' %>
+    <% hidden_field_tag :from_date, @from_date %>
+    <% hidden_field_tag :to_date, @from_date %>
+    <% hidden_field_tag :report_type, @type %>
+
+    <select name='lead_report_columns[]' id="active_route_report_columns" multiple='multiple'>
+      <% AppConstants::ACTIVE_ROUTE_REPORT_HEADER.each do |column| %>
+          <option value='<%= "#{column[:id]}" %>' selected='selected'><%= column[:name] %></option>
+      <% end %>
+    </select>
+    <table class="table table-striped no_visited_list_data">
+      <thead>
+      <!--<tr>-->
+        <!--<th>-->
+          <!--<%#= select_tag :state_wise, options_for_select(@states.collect {|p| [ p[:name], p[:id] ] }), {include_blank: 'filter state', } %>-->
+        <!--</th>-->
+        <!--<th>-->
+          <!--<%#= select_tag :city_wise, options_for_select(@cities.collect {|p| [ p[:name], p[:id] ] }), {include_blank: 'filter city'} %>-->
+        <!--</th>-->
+
+        <!--<th>-->
+          <!--<%#= select_tag :area_wise, options_for_select(@areas.collect {|p| [ p[:name], p[:id] ] }), {include_blank: 'filter reps'} %>-->
+        <!--</th>-->
+      <!--</tr>-->
+      <tr>
+        <th>Voucher#</th>
+        <th>BranchName</th>
+        <th>Code (C/B)</th>
+        <th>Quantity</th>
+        <th>Driver</th>
+        <th>Helper</th>
+        <th>Vehicle</th>
+        <th>Comment</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @route_branches&.each do |route_branch| %>
+          <% assignment = route_branch.route.assignment %>
+          <tr>
+            <td><%= "Route-#{route_branch.route_id}/#{route_branch.id} "%></td>
+            <td><%= route_branch.branch.branch_name %></td>
+            <td><%= "#{route_branch.branch.try(:company).try(:company_code)}/#{route_branch.branch.branch_code}" %></td>
+            <td><%= route_branch.quantity %></td>
+            <td><%= assignment.try(:driver).try(:name) || 'N/A' %></td>
+            <td><%= assignment.try(:helper).try(:name)  || 'N/A' %></td>
+            <td><%= assignment.try(:vehicle).try(:vehicle_number) || 'N/A' %></td>
+            <td><%= route_branch.comment %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+<% else %>
+    <h3>No record found..</h3>
+<% end %>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.no_visited_list_data').DataTable({
+            "pageLength": 50,
+            "aaSorting": [[ 0, "asc" ]]
+        });
+
+        $('#active_route_report_columns').multiselect({
+            includeSelectAllOption: true,
+            enableFiltering: true,
+            enableClickableOptGroups: true,
+            maxHeight: 200,
+            buttonWidth: '250px'
+        });
+
+        $('#not_visited_report').click(function(){
+            var from_date       = $('#from_date').val();
+            var to_date         = $('#to_date').val();
+            var report_type     = $('#report_type').val();
+
+            var origin = window.location.origin
+            window.location.href = origin + '/reports/generate_report.pdf?from_date='+ from_date +
+                '&to_date='+ to_date +
+                '&report_type='+ report_type +
+                '&columns=' +  $('#active_route_report_columns').val();
+        });
+    });
+</script>
+
+

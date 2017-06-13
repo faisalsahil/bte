@@ -1,0 +1,12 @@
+<% @branches.each do |branch| %>
+    <%
+      @branch = branch
+      @date   = @date.to_date
+      @total  =  RouteBranch.where(branch_id: branch.id, route_id: @route_ids).sum('quantity * price')
+      @paid   = Transaction.where('branch_id = ? AND extract(month from transaction_date) = ?', branch.id, @date.to_date.month).sum(:amount) || 0
+    %>
+    <%= render 'invoice_report' %>
+    <% if @branches.last != branch %>
+      <div class="page-break"></div>
+    <% end %>
+<% end %>

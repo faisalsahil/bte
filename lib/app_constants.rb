@@ -62,7 +62,7 @@ module AppConstants
       {name: 'Comment', id: 'comment'}
   ]
 
-  ACTIVE_ROUTE__REPORT_HEADER = [
+  ACTIVE_ROUTE_REPORT_HEADER = [
       {name: 'Voucher#', id: 'voucher'},
       {name: 'Branch name', id: 'branch_name'},
       {name: 'Branch code', id: 'branch_code'},
@@ -72,5 +72,28 @@ module AppConstants
       {name: 'Vehicle#', id: 'vehicle'},
       {name: 'Comment', id: 'comment'}
   ]
+
+  NO_WASTE_OIL_REPORT_HEADER = [
+      {name: 'Voucher#', id: 'voucher'},
+      {name: 'Date', id: 'date'},
+      {name: 'Branch name', id: 'branch_name'},
+      {name: 'Branch code', id: 'branch_code'},
+      {name: 'Quantity', id: 'quantity'},
+      {name: 'Driver', id: 'driver'},
+      {name: 'Helper', id: 'helper'},
+      {name: 'Vehicle#', id: 'vehicle'},
+      {name: 'Comment', id: 'comment'}
+  ]
   
+  MONTH_WISE_COLLECCTION_REPORT_HEADER = [
+      {name: 'Area', id: 'area_id'},
+      {name: 'Sale representative', id: 'representative'},
+      {name: 'Branch name', id: 'branch_name'},
+      {name: 'Code', id: 'branch_code'},
+      {name: 'Contact name', id: 'contact_name'},
+      {name: 'Contact #', id: 'contact_phone'},
+      {name: 'Collection', id: 'total_collection'},
+      {name: 'Rate/Kg', id: 'rate_per_kg'},
+      {name: 'Address', id: 'address'}
+  ]
 end

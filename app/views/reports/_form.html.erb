@@ -6,15 +6,19 @@
   <div class="panel-body">
     <%= form_tag('/reports/generate_report', multipart: true, method: :post, class: 'form-inline', remote: true) do |f|  %>
         <div class="form-group">
+          Select Type: <%= select_tag :report_type, options_for_select(AppConstants::REPORTS.collect {|p| [ p[:name], p[:id] ] }), {include_blank: 'Select report', class: 'form-control'} %>
+        </div>
+
+        <div class="form-group" id="from_date_div">
           From date: <%= text_field_tag :from_date, nil, class: 'datepicker form-control', placeholder: 'optional' %>
         </div>
 
-        <div class="form-group">
+        <div class="form-group"  id="to_date_div">
           To date:<%= text_field_tag :to_date, nil, class: 'datepicker form-control', placeholder: 'optional' %>
         </div>
 
-        <div class="form-group">
-          Select Type: <%= select_tag :report_type, options_for_select(AppConstants::REPORTS.collect {|p| [ p[:name], p[:id] ] }), {include_blank: 'Select report', class: 'form-control'} %>
+        <div class="form-group hidden" id="month_div">
+          Select Month:<%= text_field_tag :month_wise, nil, class: 'datepicker1 form-control', placeholder: 'optional' %>
         </div>
 
         <div class="form-group">
@@ -23,3 +27,28 @@
     <% end %>
   </div>
 </div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+      $('.datepicker1').datepicker({
+          format: "mm/yyyy",
+          viewMode: "months",
+          minViewMode: "months",
+          autoclose: true,
+          todayHighlight: true,
+          toggleActive: true
+      });
+      $('#report_type').change(function(){
+         if ($('#report_type').val() == 'month_wise_collection_report')
+         {
+            $('#from_date_div').addClass('hidden');
+            $('#to_date_div').addClass('hidden');
+            $('#month_div').removeClass('hidden');
+         }else{
+             $('#from_date_div').removeClass('hidden');
+             $('#to_date_div').removeClass('hidden');
+             $('#month_div').addClass('hidden');
+         }
+      })
+  })
+</script>

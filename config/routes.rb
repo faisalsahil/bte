@@ -81,7 +81,11 @@ Rails.application.routes.draw do
   resources :companies
   resources :storage_types
   resources :food_types
-  resources :billings, only: [:index]
+  resources :billings, only: [:index] do
+    member do
+      get :invoice
+    end
+  end
   resources :areas do
     collection do
       get :get_area_branches

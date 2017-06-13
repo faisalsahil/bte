@@ -2,15 +2,33 @@
   <li><p>YOU ARE HERE</p></li>
   <li><a href="#" class="active">Billings</a></li>
 </ul>
-<div class="row">
+<div class="well-sm">
+  <%= form_tag('/billings', multipart: true, method: :get, class: 'form-inline') do |f|  %>
+      <div class="form-group">
+        <% if @date.present? %>
+            Filter by date: <%= text_field_tag :date, @date.to_date.strftime('%m/%Y'), class: 'datepicker1 form-control', placeholder: 'Select month', id: 'filter_invoice' %>
+        <% else %>
+            Filter by date: <%= text_field_tag :date, nil, class: 'datepicker1 form-control', placeholder: 'Select month', id: 'filter_invoice' %>
+        <% end %>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary" id="generate_report_button" disabled="true">Generate</button>
+      </div>
+  <% end %>
+  <% if @branches.present? && @date.present? %>
+    <%= link_to 'Print all', billings_path({format: 'pdf', date: @date}), class: 'btn btn-mini btn-success pull-right' %>
+  <% end %>
+</div>
+<% if @branches.present? %>
+  <div class="row">
   <div class="col-md-12">
     <div class="grid simple ">
       <div class="grid-body no-border">
-        <table class="table table-striped list-data-table">
+        <table class="table table-striped invoice_data_table">
           <thead>
           <tr>
             <th>Branch</th>
-            <th>Code</th>
+            <th>Code (C/B)</th>
             <th>Total</th>
             <th>Paid</th>
             <th>Balance</th>
@@ -19,21 +37,29 @@
           </thead>
 
           <tbody>
-          <% @branch_ids.each do |branch| %>
+            <% @branches.each do |branch| %>
               <tr>
-                <% total       = RouteBranch.where(branch_id: branch, route_id: @route_ids).sum('quantity * price')
-                   @branch     = @branches.where(id: branch).first
-                   transaction = @transactions.where(branch_id: branch).sum(:amount) || 0
+                <% total = RouteBranch.where(branch_id: branch.id, route_id: @route_ids).sum('quantity * price')
+                   if @date.present?
+                     transaction = @transactions.where('branch_id = ? AND extract(month from transaction_date) = ?', branch.id, @date.to_date.month).sum(:amount) || 0
+                   else
+                     transaction = @transactions.where(branch_id: branch.id).sum(:amount) || 0
+                   end
                 %>
-                <td><%= @branch.branch_name %></td>
-                <td><%= "#{@branch.company.company_code}/#{@branch.branch_code}" %></td>
+                <td><%= branch.branch_name %></td>
+                <td><%= "#{branch.company.company_code}/#{branch.branch_code}" %></td>
                 <td><%= total %></td>
                 <td><%= transaction %></td>
                 <td><%= total - transaction %></td>
                 <td>
                   <%= link_to 'history', '#' %> |
-                  <%= link_to 'pay', payment_branch_transactions_path(branch) %>
-                  <%#= link_to '', edit_billing_path(billing), class: 'fa fa-edit' %>
+                  <% if @date.present? %>
+                      <%= link_to 'pay', payment_branch_transactions_path(branch, {date: @date}) %> |
+                      <%= link_to 'invoice', invoice_billing_path(branch, {date: @date, format: 'pdf'}) %>
+                  <% else %>
+                      <%= link_to 'pay', payment_branch_transactions_path(branch) %> |
+                      <%= link_to 'invoice', invoice_billing_path(branch, {format: 'pdf'}) %>
+                  <% end %>
                 </td>
               </tr>
           <% end %>
@@ -43,3 +69,31 @@
     </div>
   </div>
 </div>
+<% elsif @date.present? %>
+    No record found.
+<% end %>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.datepicker1').datepicker({
+            format: "mm/yyyy",
+            viewMode: "months",
+            minViewMode: "months",
+            autoclose: true,
+            todayHighlight: true,
+            toggleActive: true
+        });
+        $('#filter_invoice').change(function(){
+            if($(this).val().length > 0)
+            {
+                $('#generate_report_button').removeAttr('disabled');
+            }else{
+                $('#generate_report_button').attr('disabled', true);
+            }
+        });
+        $('.invoice_data_table').DataTable({
+            "pageLength": 50,
+            "aaSorting": [[ 1, "asc" ]]
+        });
+    });
+</script>

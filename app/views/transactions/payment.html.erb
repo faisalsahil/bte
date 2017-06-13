@@ -39,6 +39,7 @@
                   </ul>
                 </div>
               <% end %>
+              <%= f.hidden_field :date, value: @date %>
               <%= f.hidden_field :balance, value: @total - @paid %>
               <div class="form-group">
                 <label>Select date:</label>

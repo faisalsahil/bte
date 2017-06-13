@@ -7,9 +7,7 @@ class ReportsController < ApplicationController
     @from_date = params[:from_date].try(:to_date)
     @to_date   = params[:to_date].try(:to_date)
     @type      = params[:report_type]
-    puts "xXXx"*90
-    puts params.inspect
-    puts "XX"*90
+    @month_year= params[:month_wise].try(:to_date)
     
     if @type == AppConstants::Lead_REPORT
       @branches = lead_report(params)
@@ -31,6 +29,26 @@ class ReportsController < ApplicationController
       @data = params
     end
 
+    if @type == AppConstants::NO_WASTE_OIL_REPORT
+      @route_branches, @branches = no_waste_oil_report(params)
+      @data = params
+    end
+
+    if @type == AppConstants::MONTH_WISE_COLLECTION_REPORT
+      @branches =  Branch.joins(:company).where(branch_status: AppConstants::CONTRACTED).includes(:route_branches, :area, :company, :city, :state).order('company_code ASC, branch_code ASC')
+      @data = params
+    end
+
+    if @type == AppConstants::RESTAURANT_WISE_COLLECTION_REPORT
+      @branches =  Branch.joins(:company).where(branch_status: AppConstants::CONTRACTED).includes(:route_branches, :area, :company, :city, :state).order('company_code ASC, branch_code ASC')
+      @data = params
+    end
+
+    if @type == AppConstants::NOT_VISITED_REPORT
+      @route_branches = not_visited_report(params)
+      @data = params
+    end
+    
     if @type == AppConstants::FACTORY_COLLECTION_REPORT
       @factory_collections = factory_collection(params)
       @route_branches      = RouteBranch.where(factory_collection_id: @factory_collections.pluck(:id)).order('factory_collection_id ASC').includes(:branch, :factory_collection, :route)
@@ -176,5 +194,36 @@ class ReportsController < ApplicationController
     ids     = @routes.pluck(:areas).flatten.uniq
     @areas  = Area.where(id: ids)
     [@route_branches, @states, @cities, @areas]
+  end
+  
+  def no_waste_oil_report(params)
+    @route_branches = RouteBranch.where(quantity: 0, is_deleted: false, transfer_to: nil).includes(:route, :branch)
+  
+    if params[:from_date].present?
+      @route_branches = @route_branches.where('DATE(created_at) >= DATE(?)', params[:from_date].to_date)
+    end
+  
+    if params[:to_date].present?
+      @route_branches = @route_branches.where('DATE(created_at) <= DATE(?)', params[:to_date].to_date)
+    end
+
+    if params[:branch_wise].present?
+      @route_branches = @route_branches.where(branch_id: params[:branch_wise])
+    end
+    
+    @branches  = Branch.where(id: @route_branches.pluck(:branch_id).uniq)
+      [@route_branches, @branches]
+  end
+  
+  def not_visited_report(params)
+    @route_branches =  RouteBranch.where(is_deleted: true).includes(:branch, :route).order('route_id DESC')
+    if params[:from_date].present?
+      @route_branches = @route_branches.where('DATE(created_at) >= DATE(?)', params[:from_date].to_date)
+    end
+
+    if params[:to_date].present?
+      @route_branches = @route_branches.where('DATE(created_at) <= DATE(?)', params[:to_date].to_date)
+    end
+    @route_branches
   end
 end

@@ -1,0 +1,54 @@
+<h3>Restaurant Collection Report</h3>
+<% if @from_date.present? && @to_date.present? %>
+    <strong>Date:</strong>  <%= @from_date.to_date.strftime('%d/%m/%Y')%><strong> - </strong><%= @to_date.to_date.strftime('%d/%m/%Y') %>
+<% elsif @from_date.present? %>
+    <strong>Date:</strong>  <%= @from_date.to_date.strftime('%d/%m/%Y')%><strong> - </strong> Now
+<% elsif @to_date.present? %>
+    <strong>Date:</strong> Start <strong> - </strong><%= @to_date.to_date.strftime('%d/%m/%Y') %>
+<% end %>
+
+
+
+<table class="table table-striped">
+  <thead>
+  <% @columns = @data[:columns].split(',') %>
+  <% @columns&.each do |column| %>
+      <th><%= column.camelize %></th>
+  <% end %>
+  </thead>
+  <tbody>
+  <% @branches&.each do |branch| %>
+      <tr>
+        <% if @columns.include? 'area_id' %>
+            <td><%= branch.area.name %></td>
+        <% end %>
+        <% if @columns.include? 'representative' %>
+            <td><%= branch.try(:representator).try(:name) || 'N/A' %></td>
+        <% end %>
+        <% if @columns.include? 'branch_name' %>
+            <td><%= branch.branch_name  %></td>
+        <% end %>
+        <% if @columns.include? 'branch_code' %>
+            <td><%= "#{branch.company.company_code}/#{branch.branch_code}" %></td>
+        <% end %>
+        <% if @columns.include? 'contact_name' %>
+            <td><%= branch.contact_name %></td>
+        <% end %>
+        <% if @columns.include? 'contact_phone' %>
+            <td><%= branch.contact_phone %></td>
+        <% end %>
+        <% if @columns.include? 'total_collection' %>
+            <td><%=  Branch.total_restaurant_collection(branch, @from_date, @to_date) %></td>
+        <% end %>
+        <% if @columns.include? 'rate_per_kg' %>
+            <td><%= branch.rate_per_kg %></td>
+        <% end %>
+        <% if @columns.include? 'address' %>
+            <td><%= branch.address %></td>
+        <% end %>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+

@@ -1,11 +1,10 @@
 <% if @branches.present? %>
-    <%= link_to 'download pdf', 'javascript:void(0)', class:'pull-right btn btn-mini btn-success', id:'pdf-month_wise_collection' %>
+    <%= link_to 'download pdf', 'javascript:void(0)', class:'pull-right btn btn-mini btn-success', id:'pdf_restaurant_wise_collection' %>
 <% end %>
 
 <% hidden_field_tag :from_date, @from_date %>
 <% hidden_field_tag :to_date,   @to_date %>
 <% hidden_field_tag :report_type, @type %>
-<% hidden_field_tag :month_wise, @month_year %>
 
 <% @areas = Area.where(id: @branches.pluck(:area_id))
    @reps  = User.where(id: @branches.pluck(:representative))
@@ -17,15 +16,15 @@
           <option value='<%= "#{column[:id]}" %>' selected='selected'><%= column[:name] %></option>
       <% end %>
     </select>
-    <table class="table table-striped motnh_wise_collection_report_table">
+    <table class="table table-striped restaurant_wise_collection_report_table">
       <thead>
       <!--<tr>-->
-        <!--<th>-->
-          <!--<%#= select_tag :area_wise, options_for_select(@areas.collect {|p| [ p[:name], p[:id] ] }), {include_blank: 'filter area', } %>-->
-        <!--</th>-->
-        <!--<th>-->
-          <!--<%#= select_tag :sale_rep_wise, options_for_select(@reps.collect {|p| [ p[:name], p[:id] ] }), {include_blank: 'filter reps'} %>-->
-        <!--</th>-->
+      <!--<th>-->
+      <!--<%#= select_tag :area_wise, options_for_select(@areas.collect {|p| [ p[:name], p[:id] ] }), {include_blank: 'filter area', } %>-->
+      <!--</th>-->
+      <!--<th>-->
+      <!--<%#= select_tag :sale_rep_wise, options_for_select(@reps.collect {|p| [ p[:name], p[:id] ] }), {include_blank: 'filter reps'} %>-->
+      <!--</th>-->
       <!--</tr>-->
       <tr>
         <th>Area</th>
@@ -48,7 +47,7 @@
             <td><%= "#{branch.try(:company).try(:company_code) || nil}/#{branch.branch_code}" %></td>
             <td><%= branch.contact_name %></td>
             <td><%= branch.contact_phone %></td>
-            <td><%= Branch.total_month_collection(branch, @month_year) %></td>
+            <td><%= Branch.total_restaurant_collection(branch, @from_date, @to_date) %></td>
             <td><%= branch.rate_per_kg %></td>
             <td><%= branch.address %></td>
           </tr>
@@ -61,7 +60,7 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-        $('.motnh_wise_collection_report_table').DataTable({
+        $('.restaurant_wise_collection_report_table').DataTable({
             "pageLength": 50,
             "aaSorting": [[ 0, "asc" ]]
         });
@@ -74,13 +73,12 @@
             buttonWidth: '250px'
         });
 
-        $('#pdf-month_wise_collection').click(function(){
+        $('#pdf_restaurant_wise_collection').click(function(){
             var area_wise       = $('#area_wise').val();
             var sale_rep_wise   = $('#sale_rep_wise').val();
             var from_date       = $('#from_date').val();
             var to_date         = $('#to_date').val();
             var report_type     = $('#report_type').val();
-            var month_wise      = $('#month_wise').val();
 
             var origin = window.location.origin
             window.location.href = origin + '/reports/generate_report.pdf?from_date='+ from_date +
@@ -88,7 +86,6 @@
                 '&report_type='+ report_type +
                 '&area_wise=' + area_wise +
                 '&sale_rep_wise=' + sale_rep_wise +
-                '&month_wise=' + month_wise +
                 '&columns=' +  $('#lead_report_columns').val();
         });
     });

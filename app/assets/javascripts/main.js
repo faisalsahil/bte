@@ -347,7 +347,7 @@ $(document).ready(function(){
 
     });
 
-    $('#contact_same_as_above').change(function () {
+    $('#company_branches_attributes_0_contact_same_as_above').change(function () {
         if(this.checked) {
             var name  = $('#company_contact_name').val();
             var email = $('#company_contact_email').val();

@@ -5,7 +5,7 @@
   <% hidden_field_tag :report_type, @type %>
 
     <select name='lead_report_columns[]' id="active_route_report_columns" multiple='multiple'>
-      <% AppConstants::ACTIVE_ROUTE__REPORT_HEADER.each do |column| %>
+      <% AppConstants::ACTIVE_ROUTE_REPORT_HEADER.each do |column| %>
           <option value='<%= "#{column[:id]}" %>' selected='selected'><%= column[:name] %></option>
       <% end %>
     </select>

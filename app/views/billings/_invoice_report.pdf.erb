@@ -1,0 +1,34 @@
+<hr style="color: dimgrey !important; border: solid 1px dimgrey !important;">
+<p>
+  <strong>Branch:</strong>
+  <span style="margin-left: 16%"><%= @branch.branch_name %>
+  </span>
+  <span style="margin-left: 30%;"><strong>Billing Month:</strong></span>  <%= @date.strftime('%m/%Y') %>
+</p>
+<hr width="50%" style="margin: 0px;">
+<p>
+  <strong>Code</strong>
+  <span style="margin-left: 18%;"><%= "#{@branch.company.company_code}/#{@branch.branch_code }"%></span>
+</p>
+<hr width="50%" style="margin: 0px;">
+<p>
+  <strong>Total:</strong>
+  <span style="margin-left: 17%;"><%= @total %></span>
+</p>
+<hr width="50%" style="margin: 0px;">
+<p>
+  <strong>Paid:</strong>
+  <span style="margin-left: 18%;"><%= @paid %></span>
+</p>
+<hr width="50%" style="margin: 0px;">
+<p>
+  <strong>Balance:</strong>
+  <span style="margin-left: 14%;"><%= @total - @paid %></span>
+</p>
+
+<hr style="color: dimgrey !important; border: solid 1px dimgrey !important;">
+<br/>
+<strong style="margin-left: 08%">Name:</strong>------------------
+<strong style="margin-left: 30%">Signature:</strong>------------------
+
+<hr style="color: dimgrey !important; border: solid 1px dimgrey !important;">

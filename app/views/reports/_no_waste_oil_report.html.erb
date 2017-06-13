@@ -1,1 +1,94 @@
-No waste oil
+<% if @route_branches.present? %>
+    <%= link_to 'download pdf', 'javascript:void(0)', class:'pull-right btn btn-mini btn-success', id:'pdf-lead' %>
+    <% hidden_field_tag :from_date, @from_date %>
+    <% hidden_field_tag :to_date, @from_date %>
+    <% hidden_field_tag :report_type, @type %>
+
+    <select name='lead_report_columns[]' id="active_route_report_columns" multiple='multiple'>
+      <% AppConstants::NO_WASTE_OIL_REPORT_HEADER.each do |column| %>
+          <option value='<%= "#{column[:id]}" %>' selected='selected'><%= column[:name] %></option>
+      <% end %>
+    </select>
+    <table class="table table-striped route_list_data">
+      <thead>
+      <tr>
+        <th></th>
+        <th>
+        </th>
+        <th>
+           <%= select_tag :branch_wise, options_for_select(@branches.collect {|p| [ p[:branch_name], p[:id] ] }), {include_blank: 'filter branch'} %>
+        </th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+      <tr>
+        <th>Voucher#</th>
+        <th>Date</th>
+        <th>BranchName</th>
+        <th>Code (C/B)</th>
+        <th>Quantity</th>
+        <th>Driver</th>
+        <th>Helper</th>
+        <th>Vehicle</th>
+        <th>Comment</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @route_branches&.each do |route_branch| %>
+          <% assignment = route_branch.route.assignment %>
+          <tr>
+            <td><%= "Route-#{route_branch.route_id}/#{route_branch.id} "%></td>
+            <td><%= route_branch.created_at.to_date.strftime('%d/%m/%Y') %></td>
+            <td><%= route_branch.branch.branch_name %></td>
+            <td><%= "#{route_branch.branch.try(:company).try(:company_code)}/#{route_branch.branch.branch_code}" %></td>
+            <td><%= route_branch.quantity %></td>
+            <td><%= assignment.try(:driver).try(:name) || 'N/A' %></td>
+            <td><%= assignment.try(:helper).try(:name) || 'N/A' %></td>
+            <td><%= assignment.try(:vehicle).try(:vehicle_number) || 'N/A' %></td>
+            <td><%= route_branch.comment%></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+<% else %>
+    <h3>No record found...</h3>
+<% end %>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.route_list_data').DataTable({
+            "pageLength": 50,
+            "aaSorting": [[ 0, "asc" ]]
+        });
+
+        $('#active_route_report_columns').multiselect({
+            includeSelectAllOption: true,
+            enableFiltering: true,
+            enableClickableOptGroups: true,
+            maxHeight: 200,
+            buttonWidth: '250px'
+        });
+
+        $('#pdf-lead').click(function(){
+//            var state_wise      = $('#state_wise').val();
+//            var city_wise       = $('#city_wise').val();
+            var branch_wise     = $('#branch_wise').val();
+            var from_date       = $('#from_date').val();
+            var to_date         = $('#to_date').val();
+            var report_type     = $('#report_type').val();
+
+            var origin = window.location.origin
+            window.location.href = origin + '/reports/generate_report.pdf?from_date='+ from_date +
+                '&to_date='+ to_date +
+                '&report_type='+ report_type +
+                '&branch_wise='+ branch_wise +
+                '&columns=' +  $('#active_route_report_columns').val();
+        });
+    });
+</script>
+
+
