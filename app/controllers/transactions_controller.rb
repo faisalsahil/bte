@@ -1,5 +1,11 @@
 class TransactionsController < ApplicationController
   
+  def index
+    @date   = params[:date]
+    @branch = Branch.find_by_id(params[:branch_id])
+    @transactions = @branch.transactions.order('transaction_date DESC')
+  end
+
   def payment
     @branch     = Branch.find_by_id(params[:branch_id])
     @transaction = @branch.transactions.build

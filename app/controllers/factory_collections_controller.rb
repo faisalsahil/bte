@@ -12,7 +12,7 @@ class FactoryCollectionsController < ApplicationController
       format.pdf do
         pdf_name = "FactoryCollection | #{@factory_collection.id}"
         render pdf: pdf_name,
-               disposition: 'inline',
+               disposition: 'attachment',
                layout: 'pdf.html', # use 'pdf.html' for a pdf.html.erb file
                page_offset: 0,
                book: false,

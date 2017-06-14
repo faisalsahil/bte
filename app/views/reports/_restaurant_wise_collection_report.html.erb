@@ -1,4 +1,5 @@
 <% if @branches.present? %>
+    <%= link_to 'Export excel', 'javascript:void(0)', class: 'pull-right btn btn-mini btn-primary', id:'excel_restaurant_wise_collection', style:'margin-left: 2px;' %>
     <%= link_to 'download pdf', 'javascript:void(0)', class:'pull-right btn btn-mini btn-success', id:'pdf_restaurant_wise_collection' %>
 <% end %>
 
@@ -80,8 +81,23 @@
             var to_date         = $('#to_date').val();
             var report_type     = $('#report_type').val();
 
-            var origin = window.location.origin
+            var origin = window.location.origin;
             window.location.href = origin + '/reports/generate_report.pdf?from_date='+ from_date +
+                '&to_date='+ to_date +
+                '&report_type='+ report_type +
+                '&area_wise=' + area_wise +
+                '&sale_rep_wise=' + sale_rep_wise +
+                '&columns=' +  $('#lead_report_columns').val();
+        });
+        $('#excel_restaurant_wise_collection').click(function(){
+            var area_wise       = $('#area_wise').val();
+            var sale_rep_wise   = $('#sale_rep_wise').val();
+            var from_date       = $('#from_date').val();
+            var to_date         = $('#to_date').val();
+            var report_type     = $('#report_type').val();
+
+            var origin = window.location.origin;
+            window.location.href = origin + '/reports/generate_report.xls?from_date='+ from_date +
                 '&to_date='+ to_date +
                 '&report_type='+ report_type +
                 '&area_wise=' + area_wise +

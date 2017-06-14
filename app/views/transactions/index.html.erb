@@ -1,0 +1,41 @@
+<ul class="breadcrumb">
+  <li><p>YOU ARE HERE</p></li>
+  <li><a href="#" class="active">Transactions</a></li>
+</ul>
+<div class="row">
+  <div class="col-md-12">
+    <div class="grid simple ">
+      <div class="grid-body no-border">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <strong><%= @branch.branch_name %></strong>
+          </div>
+          <div class="panel-body">
+            <strong>Code (C/B):</strong>  <%= "#{@branch.company.company_code}/#{@branch.branch_code}" %><br/>
+            <strong>Total Paid:</strong>  <%= @transactions.sum(:amount) %>
+          </div>
+        </div>
+        <table class="table table-striped list-data-table">
+          <thead>
+          <tr>
+            <th>Transaction Date</th>
+            <th>amount</th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <% @transactions.each do |trans| %>
+              <tr>
+                <td><%= trans.transaction_date.to_date.strftime('%d/%m/%Y') %></td>
+                <td><%= trans.amount %></td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+        <%= link_to 'Back', billings_path({date: @date}), class: 'btn btn-mini btn-default' %>
+      </div>
+    </div>
+  </div>
+</div>
+
+

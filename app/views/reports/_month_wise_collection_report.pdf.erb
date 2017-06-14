@@ -1,5 +1,11 @@
-<h3>Monthly Collection Report</h3>
-<strong>Date:</strong><%= @month_year.to_date.strftime('%m/%Y')%>
+<br/>
+<div class="well-sm">
+  <span class="pull-right"><strong>Date:</strong>  <%= Date.today.strftime('%d/%m/%Y') %></span>
+  <h3>Monthly Collection Report</h3>
+  <strong>Date:</strong>  <%= @month_year.to_date.strftime('%m/%Y') %>
+</div>
+<br/>
+
 
 <table class="table table-striped">
   <thead>

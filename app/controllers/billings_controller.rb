@@ -16,7 +16,7 @@ class BillingsController < ApplicationController
       format.pdf do
         pdf_name = "Invoice | #{Date.today.strftime('%m/%Y')}"
         render pdf: pdf_name,
-               disposition: 'inline',
+               disposition: 'attachment',
                layout: 'pdf.html', # use 'pdf.html' for a pdf.html.erb file
                page_offset: 0,
                book: false,

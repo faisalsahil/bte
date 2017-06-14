@@ -1,3 +1,16 @@
+<br/>
+<div class="well-sm">
+  <span class="pull-right"><strong>Date:</strong>  <%= Date.today.strftime('%d/%m/%Y') %></span>
+  <h3>Active Routes Report</h3>
+  <% if @from_date.present? && @to_date.present? %>
+      <strong>Date:</strong>  <%= @from_date.to_date.strftime('%d/%m/%Y')%><strong> - </strong><%= @to_date.to_date.strftime('%d/%m/%Y') %>
+  <% elsif @from_date.present? %>
+      <strong>Date:</strong>  <%= @from_date.to_date.strftime('%d/%m/%Y')%><strong> - </strong> Now
+  <% elsif @to_date.present? %>
+      <strong>Date:</strong> Start <strong> - </strong><%= @to_date.to_date.strftime('%d/%m/%Y') %>
+  <% end %>
+</div>
+<br/>
 <table class="table table-striped">
   <thead>
   <% @columns = @data[:columns].split(',') %>

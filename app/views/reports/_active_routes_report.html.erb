@@ -1,5 +1,7 @@
 <% if @route_branches.present? %>
-  <%= link_to 'download pdf', 'javascript:void(0)', class:'pull-right btn btn-mini btn-success', id:'pdf-lead' %>
+  <%= link_to 'Export excel', 'javascript:void(0)', class: 'pull-right btn btn-mini btn-primary', id:'excel_active_routes', style:'margin-left: 2px;' %>
+  <%= link_to 'download pdf', 'javascript:void(0)', class: 'pull-right btn btn-mini btn-success', id:'pdf_active_routes' %>
+
   <% hidden_field_tag :from_date, @from_date %>
   <% hidden_field_tag :to_date, @from_date %>
   <% hidden_field_tag :report_type, @type %>
@@ -69,7 +71,7 @@
             buttonWidth: '250px'
         });
 
-        $('#pdf-lead').click(function(){
+        $('#pdf_active_routes').click(function(){
             var state_wise      = $('#state_wise').val();
             var city_wise       = $('#city_wise').val();
             var area_wise       = $('#area_wise').val();
@@ -79,6 +81,23 @@
 
             var origin = window.location.origin
             window.location.href = origin + '/reports/generate_report.pdf?from_date='+ from_date +
+                '&to_date='+ to_date +
+                '&report_type='+ report_type +
+                '&state_wise=' + state_wise +
+                '&city_wise=' + city_wise +
+                '&area_wise=' + area_wise +
+                '&columns=' +  $('#active_route_report_columns').val();
+        });
+        $('#excel_active_routes').click(function(){
+            var state_wise      = $('#state_wise').val();
+            var city_wise       = $('#city_wise').val();
+            var area_wise       = $('#area_wise').val();
+            var from_date       = $('#from_date').val();
+            var to_date         = $('#to_date').val();
+            var report_type     = $('#report_type').val();
+
+            var origin = window.location.origin;
+            window.location.href = origin + '/reports/generate_report.xls?from_date='+ from_date +
                 '&to_date='+ to_date +
                 '&report_type='+ report_type +
                 '&state_wise=' + state_wise +

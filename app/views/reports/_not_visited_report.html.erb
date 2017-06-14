@@ -1,5 +1,6 @@
 <% if @route_branches.present? %>
-    <%= link_to 'download pdf', 'javascript:void(0)', class:'pull-right btn btn-mini btn-success', id:'not_visited_report' %>
+    <%= link_to 'Export excel', 'javascript:void(0)', class: 'pull-right btn btn-mini btn-primary', id:'excel_not_visited_report', style:'margin-left: 2px;' %>
+    <%= link_to 'download pdf', 'javascript:void(0)', class:'pull-right btn btn-mini btn-success', id:'pdf_not_visited_report' %>
     <% hidden_field_tag :from_date, @from_date %>
     <% hidden_field_tag :to_date, @from_date %>
     <% hidden_field_tag :report_type, @type %>
@@ -69,13 +70,24 @@
             buttonWidth: '250px'
         });
 
-        $('#not_visited_report').click(function(){
+        $('#pdf_not_visited_report').click(function(){
             var from_date       = $('#from_date').val();
             var to_date         = $('#to_date').val();
             var report_type     = $('#report_type').val();
 
-            var origin = window.location.origin
+            var origin = window.location.origin;
             window.location.href = origin + '/reports/generate_report.pdf?from_date='+ from_date +
+                '&to_date='+ to_date +
+                '&report_type='+ report_type +
+                '&columns=' +  $('#active_route_report_columns').val();
+        });
+        $('#excel_not_visited_report').click(function(){
+            var from_date       = $('#from_date').val();
+            var to_date         = $('#to_date').val();
+            var report_type     = $('#report_type').val();
+
+            var origin = window.location.origin;
+            window.location.href = origin + '/reports/generate_report.xls?from_date='+ from_date +
                 '&to_date='+ to_date +
                 '&report_type='+ report_type +
                 '&columns=' +  $('#active_route_report_columns').val();

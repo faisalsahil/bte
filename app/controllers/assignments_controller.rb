@@ -68,7 +68,7 @@ class AssignmentsController < ApplicationController
                margin: {bottom: 10, top: 15},
                header: {
                    html: {
-                       template: '/assignments/header.pdf.erb', # use :template OR :url
+                       template: '/shared/header.pdf.erb', # use :template OR :url
                        layout: 'pdf.html' # optional, use 'pdf_plain.html' for a pdf_plain.html.erb file, defaults to main layout
                    },
                    font_name: 'Times New Roman',
@@ -78,7 +78,7 @@ class AssignmentsController < ApplicationController
                }, # optionally you can pass plain html already rendered (useful if using pdf_from_string)
                footer: {
                    html: {
-                       template: '/assignments/footer.pdf.erb', # use :template OR :url
+                       template: '/shared/footer.pdf.erb', # use :template OR :url
                        layout: 'pdf.html' # optional, use 'pdf_plain.html' for a pdf_plain.html.erb file, defaults to main layout
                    },
                    font_name: 'Times New Roman',

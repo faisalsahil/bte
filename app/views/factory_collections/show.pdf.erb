@@ -1,8 +1,10 @@
 <div class="well-sm">
+  <span class="pull-right"><strong>Date:</strong>  <%= Date.today.strftime('%d/%m/%Y') %></span>
   <strong>Factory#</strong>  <%= @factory_collection.id %><br/>
   <strong>Total Collection:   </strong><%= @route_branches.sum(:quantity) %><br/>
   <strong>Factory Collection: </strong><%= @factory_collection.quantity %>
-</div><br/>
+</div>
+<br/>
 <table class="table table-striped list-data-table">
   <thead>
   <tr>

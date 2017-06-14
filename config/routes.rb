@@ -107,7 +107,7 @@ Rails.application.routes.draw do
       post :update_branch_status
     end
     resources :notes
-    resources :transactions, only: [] do
+    resources :transactions, only: [:index] do
       collection do
         get 'payment'
         post 'create_payment'

@@ -16,7 +16,7 @@
       </div>
   <% end %>
   <% if @branches.present? && @date.present? %>
-    <%= link_to 'Print all', billings_path({format: 'pdf', date: @date}), class: 'btn btn-mini btn-success pull-right' %>
+    <%= link_to 'Print all', billings_path({format: 'pdf', date: @date}), class: 'btn btn-mini btn-success pull-right' %><br/>
   <% end %>
 </div>
 <% if @branches.present? %>
@@ -52,7 +52,7 @@
                 <td><%= transaction %></td>
                 <td><%= total - transaction %></td>
                 <td>
-                  <%= link_to 'history', '#' %> |
+                  <%= link_to 'history', branch_transactions_path(branch, {date: @date}) %> |
                   <% if @date.present? %>
                       <%= link_to 'pay', payment_branch_transactions_path(branch, {date: @date}) %> |
                       <%= link_to 'invoice', invoice_billing_path(branch, {date: @date, format: 'pdf'}) %>

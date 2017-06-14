@@ -1,6 +1,6 @@
 <% if @branches.present? %>
-  <%= link_to 'Download pdf', 'javascript:void(0)',   class:'pull-right btn btn-mini btn-success', id:'pdf-lead' %>
-  <%= link_to 'Export excel', 'javascript:void(0)', class:'pull-right btn btn-mini btn-success', id:'excel-lead' %>
+  <%= link_to 'Export excel', 'javascript:void(0)', class: 'pull-right btn btn-mini btn-primary', id:'excel-lead', style:'margin-left: 2px;' %>
+  <%= link_to 'Download pdf', 'javascript:void(0)', class: 'pull-right btn btn-mini btn-success', id:'pdf-lead' %>
 <% end %>
 
 <% hidden_field_tag :from_date, @from_date %>

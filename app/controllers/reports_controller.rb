@@ -90,7 +90,27 @@ class ReportsController < ApplicationController
                }
       end
       format.csv { send_data @branches.to_csv(@data[:columns]) }
-      format.xls { send_data @branches.to_csv(@data[:columns]) }
+      format.xls {
+        if @type == AppConstants::Lead_REPORT || @type == AppConstants::VISIT_REPORT || @type == AppConstants::CONTRACTED_REPORT
+          send_data Branch.to_branch_status_csv(@branches, @data[:columns])
+        end
+
+        if @type == AppConstants::ACTIVE_ROUTES_REPORT || @type == AppConstants::NO_WASTE_OIL_REPORT || @type == AppConstants::NOT_VISITED_REPORT
+          send_data Branch.to_active_routes_or_no_waste_oil_or_no_visit_csv(@route_branches, @data[:columns])
+        end
+
+        if @type == AppConstants::MONTH_WISE_COLLECTION_REPORT
+          send_data Branch.to_monthly_collection_csv(@branches, @data[:columns], @month_year)
+        end
+
+        if @type == AppConstants::RESTAURANT_WISE_COLLECTION_REPORT
+          send_data Branch.to_restaurant_collection_csv(@branches, @data[:columns], @from_date, @to_date)
+        end
+
+        if @type == AppConstants::FACTORY_COLLECTION_REPORT
+          send_data Branch.to_factory_collection_csv(@route_branches, @data[:columns])
+        end
+      }
     end
   end
   
@@ -188,7 +208,7 @@ class ReportsController < ApplicationController
     if params[:city_wise].present?
       @routes = @routes.where(city_id: params[:city_wise])
     end
-    @route_branches = RouteBranch.where('route_id IN(?) AND is_deleted = false AND transfer_to IS NULL', @routes.pluck(:id)).includes(:branch)
+    @route_branches = RouteBranch.where('route_id IN(?) AND is_deleted = false AND transfer_to IS NULL', @routes.pluck(:id)).includes(:branch).order('route_id ASC')
     @states = State.where(id: @routes.pluck(:state_id))
     @cities = City.where(id: @routes.pluck(:city_id))
     ids     = @routes.pluck(:areas).flatten.uniq
@@ -197,7 +217,7 @@ class ReportsController < ApplicationController
   end
   
   def no_waste_oil_report(params)
-    @route_branches = RouteBranch.where(quantity: 0, is_deleted: false, transfer_to: nil).includes(:route, :branch)
+    @route_branches = RouteBranch.where(quantity: 0, is_deleted: false, transfer_to: nil).includes(:route).order('route_id ASC')
   
     if params[:from_date].present?
       @route_branches = @route_branches.where('DATE(created_at) >= DATE(?)', params[:from_date].to_date)
