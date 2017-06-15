@@ -52,6 +52,8 @@ class BranchesController < ApplicationController
         format.json { render :show, status: :created, location: @branch }
       else
         @statuses = [AppConstants::VISIT, AppConstants::LEAD, AppConstants::CONTRACTED]
+        role = Role.find_by_name(AppConstants::SALER)
+        @sale_representatives = User.where(role_id: role.id)
         format.html { render :new }
         format.json { render json: @branch.errors, status: :unprocessable_entity }
       end
