@@ -1,6 +1,15 @@
 <%= simple_form_for(@branch) do |f| %>
 
-    <%= f.error_notification %>
+    <% if @branch.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@branch.errors.count, "error") %> prohibited this task from being saved:</h2>
+          <ul>
+            <% @branch.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
 
   <div class="form-text_fields">
     <div class="panel panel-default">
@@ -25,7 +34,7 @@
           </div>
           <div class="col-md-3 form-group">
             <%= f.label 'Sale representative' %>
-            <%= f.select :representative, options_for_select(@sale_representatives.collect {|p| [ p[:name], p[:id] ] }), {include_blank: 'Select saler'}, class: 'form-control' %>
+            <%= f.select :representative, options_for_select(@sale_representatives.collect {|p| [ p[:name], p[:id] ] }, selected: @branch.try(:representative)), {include_blank: 'Select saler'}, class: 'form-control' %>
           </div>
           <div class="col-md-3 form-group">
             <%= f.label '# of visits' %>
@@ -65,7 +74,7 @@
         <div class="row">
           <div class="col-md-3">
             <%= f.label 'Type of establishment' %>
-            <%= f.select :food_type_id, options_for_select(FoodType.all.collect {|p| [ p[:name], p[:id] ] }), class: 'form-control' %>
+            <%= f.select :food_type_id, options_for_select(FoodType.all.collect {|p| [ p[:name], p[:id] ] }, selected: @branch.try(:food_type_id)), class: 'form-control' %>
           </div>
 
           <div class="col-md-3">
@@ -80,7 +89,7 @@
 
           <div class="col-md-3">
             <%= f.label 'Storage type' %>
-            <%= f.select :storage_type_id, options_for_select(StorageType.all.collect {|p| [ p[:name], p[:id] ] }), class: 'form-control' %>
+            <%= f.select :storage_type_id, options_for_select(StorageType.all.collect {|p| [ p[:name], p[:id] ]}, selected: @branch.try(:storage_type_id)), class: 'form-control' %>
           </div>
         </div>
 

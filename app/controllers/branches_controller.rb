@@ -65,7 +65,15 @@ class BranchesController < ApplicationController
         format.html { redirect_to branches_path({type: AppConstants::CONTRACTED}), notice: 'Branch was successfully updated.' }
         format.json { render :show, status: :ok, location: @branch }
       else
-        
+        role = Role.find_by_name(AppConstants::SALER)
+        @sale_representatives = User.where(role_id: role.id)
+        if @branch.branch_status == AppConstants::VISIT
+          @statuses = [AppConstants::VISIT, AppConstants::LEAD, AppConstants::CONTRACTED]
+        elsif @branch.branch_status == AppConstants::LEAD
+          @statuses = [AppConstants::LEAD, AppConstants::CONTRACTED]
+        elsif @branch.branch_status == AppConstants::CONTRACTED
+          @statuses = [AppConstants::CONTRACTED]
+        end
         format.html { render :edit }
         format.json { render json: @branch.errors, status: :unprocessable_entity }
       end
