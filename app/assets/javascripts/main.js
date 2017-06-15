@@ -515,10 +515,15 @@ $(document).ready(function(){
 
     $(".factory_branch_select").change(function() {
         if($(this).is(':checked')) {
-            $(this).next().removeAttr('disabled')
+            $(this).next().removeAttr('disabled');
+            var quantity = parseInt($(this).attr('quantity'));
+            $('#total_quantity').val(parseInt($('#total_quantity').val()) + quantity)
+
         }else{
             $(this).next().val('');
-            $(this).next().attr('disabled', true)
+            $(this).next().attr('disabled', true);
+            var quantity = parseInt($(this).attr('quantity'));
+            $('#total_quantity').val(parseInt($('#total_quantity').val()) - quantity)
         }
     });
 

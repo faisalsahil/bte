@@ -6,16 +6,16 @@
     <table class="table table-striped">
       <thead>
         <th>Area</th>
-        <th>Br code</th>
-        <th>Br name</th>
-        <th>Cont #</th>
+        <th>Branch name</th>
+        <th>Code (C/B)</th>
+        <th>Cont#</th>
       </thead>
       <tbody>
         <% @route_branches&.each do |route_branch| %>
           <tr>
             <td><%= route_branch.branch.area.name %></td>
-            <td><%= route_branch.branch.branch_code %></td>
             <td><%= route_branch.branch.branch_name %></td>
+            <td><%= "#{route_branch.branch.company.company_code}/#{route_branch.branch.branch_code}" %></td>
             <td><%= route_branch.branch.contact_phone %></td>
           </tr>
         <% end %>

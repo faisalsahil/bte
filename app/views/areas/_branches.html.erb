@@ -20,7 +20,7 @@
                   visits = branch.try(:route_branches).where("route_branches.transfer_to IS NULL AND route_branches.is_deleted != 't' AND extract(month from route_branches.created_at) = #{Date.today.month}").try(:count) || 0
                   total  = branch.visits_per_month
                 %>
-                <span class="branches-visit"><%= "#{visits}" %></span>
+                <span class="branches-visit"><%= "#{branch.current_month_remaining_visits}" %></span>
                 <span><%= "/" %></span>
                 <span class="total-visit-per-month"><%= "#{total}" %></span>
               </td>

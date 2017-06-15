@@ -42,7 +42,7 @@ class RoutesController < ApplicationController
           route_branch.save!
         end
 
-        format.html { redirect_to routes_path, notice: 'Route was successfully created.' }
+        format.html { redirect_to routes_path({type: 'active'}), notice: 'Route was successfully created.' }
         format.json { render :show, status: :created, location: @route }
       else
         format.html { render :new }
@@ -77,7 +77,7 @@ class RoutesController < ApplicationController
         if @route.is_completed
           format.html { redirect_to assignments_path({type: 'active'}), notice: 'Successfully updated.' }
         else
-          format.html { redirect_to routes_path, notice: 'Successfully updated.' }
+          format.html { redirect_to routes_path({type: 'active'}), notice: 'Successfully updated.' }
         end
         format.json { render :show, status: :ok, location: @route }
       else

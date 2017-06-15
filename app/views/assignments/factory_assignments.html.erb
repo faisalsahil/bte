@@ -26,7 +26,7 @@
                       <td><%= "#{form_route_branch.object.branch.branch_code}/#{form_route_branch.object.branch.branch_name}" %></td>
                       <td><%= form_route_branch.object.quantity %></td>
                       <td>
-                        <%= form_route_branch.check_box :is_factory, checked: form_route_branch.object.is_deleted, class: 'factory_branch_select' %>
+                        <%= form_route_branch.check_box :is_factory, checked: form_route_branch.object.is_deleted, class: 'factory_branch_select', quantity: form_route_branch.object.quantity %>
                         <%= form_route_branch.file_field :factory_image, style: 'width:66%;', class: 'pull-right route_image', disabled: true %>
                       </td>
                     </tr>
@@ -37,6 +37,7 @@
             <% if @route_branches.present? %>
                 <div>
                   <%= f.text_field :date, class: 'datepicker', placeholder: 'select date', value:  Date.today.strftime('%d/%m/%Y')  %>
+                  <%= text_field_tag :total_quantity, 0, disabled: true %>
                   <%= f.number_field :quantity, placeholder: 'Tot. received' %>
                   <%= f.submit 'submit', class: 'btn btn-primary', disabled: true, id: 'factory_collection_form_submit_button' %>
                   <div id="error_explanation" class="hidden route_assignment_error_notification" style="margin-top:5px;">
