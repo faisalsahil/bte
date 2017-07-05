@@ -13,10 +13,9 @@
             <th>Area</th>
             <th>Code (C/B)</th>
             <th>Branch name</th>
-            <!--<th>Cont. Name</th>-->
             <th>Cont. phone</th>
-            <th>Outlets</th>
             <th>Oil used</th>
+            <th>Status</th>
             <th>Actions</th>
           </tr>
           </thead>
@@ -24,20 +23,20 @@
           <tbody>
           <% @branches.each do |branch| %>
               <tr id='<%= "#{branch.id}"%>'>
-                <td><%= branch.area.name %></td>
+                <td style="width: 20%;"><%= branch.try(:area).try(:name) || 'N/A' %></td>
                 <td><%= "#{branch.company.company_code}/#{branch.branch_code}" %></td>
                 <td><%= branch.branch_name %></td>
 
                 <!--<td><%#= branch.contact_name %></td>-->
                 <td><%= branch.contact_phone %></td>
-                <td><%= branch.number_of_outlets %></td>
                 <td><%= branch.monthly_oil_used %></td>
                 <td>
                   <%= select_tag 'state_id', options_for_select(@statuses, selected: branch.branch_status), class: 'form-control branch_change_status' %>
-                  <%= link_to '', branch, class:'fa fa-eye' %>
-                  <%= link_to '', edit_branch_path(branch), class: 'fa fa-edit' %>
-                  <%= link_to 'add note', branch_notes_path(branch)%>
-                  <%= link_to '', branch, method: :delete, class: 'fa fa-trash', data: { confirm: 'Are you sure?' } %>
+                </td>
+                <td style="width: 17%;">
+                  <%= link_to 'show', branch, class: 'btn btn-mini btn-success' %>
+                  <%= link_to 'edit', edit_branch_path(branch), class: 'btn btn-mini btn-primary' %>
+                  <%= link_to 'notes', branch_notes_path(branch), class: 'btn btn-mini btn-warning'%>
                 </td>
               </tr>
           <% end %>

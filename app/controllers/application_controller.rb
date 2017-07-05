@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
+  include Pundit
   protect_from_forgery with: :exception
-  before_action :configure_permitted_parameters, if: :devise_controller?
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  before_filter :authenticate_user!
   
   layout :determine_layout
   
@@ -11,12 +13,11 @@ class ApplicationController < ActionController::Base
       "signin_layout"
     end
   end
-  
-  protected
-  
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
-    devise_parameter_sanitizer.permit(:account_update, keys: [:name])
-  end
 
+  private
+
+  def user_not_authorized
+    flash[:warning] = "Access denied."
+    redirect_to (request.referrer || root_url)
+  end
 end

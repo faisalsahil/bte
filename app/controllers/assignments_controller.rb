@@ -3,19 +3,22 @@ class AssignmentsController < ApplicationController
   before_action :set_data, only: [:new, :edit, :update, :create]
   
   def index
+    authorize :assignment
     @assignments = Assignment.where(assignment_status: params[:type])
   end
 
   def show
+    authorize :assignment
     @route_branches = @assignment.route.route_branches.includes(:branch)
   end
 
   def new
+    authorize :assignment
     @assignment = Assignment.new
   end
 
   def edit
-    
+    authorize :assignment
   end
 
   def create
@@ -42,6 +45,9 @@ class AssignmentsController < ApplicationController
   end
 
   def destroy
+    authorize :assignment
+    @assignment.route.route_branches.destroy_all
+    @assignment.route.destroy
     @assignment.destroy
     respond_to do |format|
       format.html { redirect_to assignments_url, notice: 'Assignment was successfully destroyed.' }
@@ -90,6 +96,7 @@ class AssignmentsController < ApplicationController
   end
   
   def factory_assignments
+    authorize :assignment
     @route_ids = Assignment.where(assignment_status: AppConstants::FACTORY).pluck(:route_id)
     @route_branches = RouteBranch.where(route_id: @route_ids, transfer_to: nil, is_deleted: false, is_factory: false).includes(:route, :branch).order('route_id asc')
     
@@ -132,6 +139,7 @@ class AssignmentsController < ApplicationController
   end
 
   def complete_assignment
+    authorize :assignment
     @assignment     = Assignment.find_by_id(params[:id])
     @route          = @assignment.route
     @routes         = Route.active_routes.where.not(id: @route.id)
@@ -144,11 +152,11 @@ class AssignmentsController < ApplicationController
     end
   
     def set_data
-      @drivers  = User.where(role_id: Role.find_by_name(AppConstants::DRIVER).id)
-      @helpers  = User.where(role_id: Role.find_by_name(AppConstants::HELPER).id)
-      @vehicles = Vehicle.all
+      @drivers  = User.where(role_id: Role.find_by_name(AppConstants::DRIVER).id, is_deleted: false)
+      @helpers  = User.where(role_id: Role.find_by_name(AppConstants::HELPER).id, is_deleted: false)
+      @vehicles = Vehicle.where(is_deleted: false)
       assigned_route_ids = Assignment.where(is_completed: false).pluck(:route_id)
-      @active_routes = Route.active_routes.where.not(id: assigned_route_ids)
+      @active_routes = Route.active_routes.where.not(id: assigned_route_ids, is_deleted: true)
     end
 
     def assignment_params

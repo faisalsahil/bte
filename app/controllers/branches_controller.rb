@@ -2,6 +2,7 @@ class BranchesController < ApplicationController
   before_action :set_branch, only: [:show, :edit, :update, :destroy]
 
   def index
+    authorize :branch
     if params[:type].present?
       @branches = Branch.where(branch_status: params[:type]).includes(:company)
       if params[:type] == AppConstants::VISIT
@@ -21,18 +22,21 @@ class BranchesController < ApplicationController
   end
 
   def show
+    authorize :branch
   end
 
   def new
+    authorize :branch
     @branch = Branch.new
     @statuses = [AppConstants::VISIT, AppConstants::LEAD, AppConstants::CONTRACTED]
     role = Role.find_by_name(AppConstants::SALER)
-    @sale_representatives = User.where(role_id: role.id)
+    @sale_representatives = User.where(role_id: role.id, is_deleted: false)
   end
 
   def edit
+    authorize :branch
     role = Role.find_by_name(AppConstants::SALER)
-    @sale_representatives = User.where(role_id: role.id)
+    @sale_representatives = User.where(role_id: role.id, is_deleted: false)
     if @branch.branch_status == AppConstants::VISIT
       @statuses = [AppConstants::VISIT, AppConstants::LEAD, AppConstants::CONTRACTED]
     elsif @branch.branch_status == AppConstants::LEAD
@@ -91,6 +95,7 @@ class BranchesController < ApplicationController
   end
 
   def destroy
+    authorize :branch
     @branch.destroy
     respond_to do |format|
       format.html { redirect_to branches_url, notice: 'Branch was successfully destroyed.' }

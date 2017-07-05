@@ -20,7 +20,7 @@
         <div class="row">
           <div class="col-md-3 form-group">
             <%= f.label 'Company' %>
-            <%= f.select :company_id, options_for_select(Company.all.collect {|p| [ p[:company_name], p[:id] ] }), class: 'form-control' %>
+            <%= f.select :company_id, options_for_select(Company.where(is_deleted: false).collect {|p| [ p[:company_name], p[:id] ] }), class: 'form-control' %>
           </div>
           <div class="col-md-3">
             <%= f.label 'Branch name' %>
@@ -74,7 +74,7 @@
         <div class="row">
           <div class="col-md-3">
             <%= f.label 'Type of establishment' %>
-            <%= f.select :food_type_id, options_for_select(FoodType.all.collect {|p| [ p[:name], p[:id] ] }, selected: @branch.try(:food_type_id)), class: 'form-control' %>
+            <%= f.select :food_type_id, options_for_select(FoodType.where(is_deleted: false).collect {|p| [ p[:name], p[:id] ] }, selected: @branch.try(:food_type_id)), class: 'form-control' %>
           </div>
 
           <div class="col-md-3">
@@ -89,7 +89,7 @@
 
           <div class="col-md-3">
             <%= f.label 'Storage type' %>
-            <%= f.select :storage_type_id, options_for_select(StorageType.all.collect {|p| [ p[:name], p[:id] ]}, selected: @branch.try(:storage_type_id)), class: 'form-control' %>
+            <%= f.select :storage_type_id, options_for_select(StorageType.where(is_deleted: false).collect {|p| [ p[:name], p[:id] ]}, selected: @branch.try(:storage_type_id)), class: 'form-control' %>
           </div>
         </div>
 
@@ -102,7 +102,7 @@
       <div class="panel-body">
 
         <div class="col-md-3">
-          <%= f.select :state_id, options_for_select(State.all.collect {|p| [ p[:name], p[:id] ] }, selected: @branch.state_id), {include_blank: 'Select sate'}, class: 'form-control' %>
+          <%= f.select :state_id, options_for_select(State.where(is_deleted: false).collect {|p| [ p[:name], p[:id] ] }, selected: @branch.state_id), {include_blank: 'Select sate'}, class: 'form-control' %>
         </div>
 
         <div class="col-md-3">

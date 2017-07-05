@@ -1,7 +1,7 @@
-server '23.92.19.41', user: 'live', roles: %w{app db web}
+server '45.79.155.222', user: 'root', roles: %w{app db web}
 
-set :application, 'TimeAppWeb'
+set :application, 'bte'
 
-set :deploy_to, '/home/live/TimeAppWeb'
+set :deploy_to, '/var/www/bte'
 
-set :repo_url, 'git@gitrepos.com:rubyonrails/TimeAppWeb.git'
+set :repo_url, 'git@gitrepos.com:rubyonrails/bte.git'

@@ -11,6 +11,7 @@
           <thead>
           <tr>
             <th>Type</th>
+            <th>Status</th>
             <th>Actions</th>
           </tr>
           </thead>
@@ -19,9 +20,14 @@
           <% @storage_types.each do |storage_type| %>
               <tr>
                 <td><%= storage_type.name %></td>
+                <td><%= storage_type.is_deleted? ? 'deleted' : 'active' %></td>
                 <td>
-                  <%= link_to '', edit_storage_type_path(storage_type), class: 'fa fa-edit' %>
-                  <%= link_to '', storage_type, method: :delete, class: 'fa fa-trash', data: { confirm: 'Are you sure?' } %>
+                  <%= link_to 'edit',  edit_storage_type_path(storage_type), class: 'btn btn-mini btn-primary' %>
+                  <% if storage_type.is_deleted %>
+                      <%= link_to 'undo', storage_type, method: :delete, class: 'btn btn-mini btn-warning', data: { confirm: 'Are you sure?' } %>
+                  <% else %>
+                      <%= link_to 'delete', storage_type, method: :delete, class: 'btn btn-mini btn-danger', data: { confirm: 'Are you sure?' } %>
+                  <% end %>
                 </td>
               </tr>
           <% end %>

@@ -1,6 +1,4 @@
 class DashboardsController < ApplicationController
-  before_action :authenticate_user!
-  
   def index
     @users     = User.count
     @companies = Company.count

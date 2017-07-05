@@ -2,14 +2,17 @@ class VehiclesController < ApplicationController
   before_action :set_vehicle, only: [:show, :edit, :update, :destroy]
 
   def index
+    authorize :vehicle
     @vehicles = Vehicle.all
   end
 
   def new
+    authorize :vehicle
     @vehicle = Vehicle.new
   end
 
   def edit
+    authorize :vehicle
   end
 
   def create
@@ -38,9 +41,17 @@ class VehiclesController < ApplicationController
   end
 
   def destroy
-    @vehicle.destroy
+    authorize :vehicle
+    if  @vehicle.is_deleted
+       @vehicle.is_deleted = false
+      notice = 'Vehicle was successfully undo.'
+    else
+       @vehicle.is_deleted = true
+      notice = 'Vehicle was successfully destroyed.'
+    end
+     @vehicle.save!
     respond_to do |format|
-      format.html { redirect_to vehicles_url, notice: 'Vehicle was successfully destroyed.' }
+      format.html { redirect_to vehicles_url, notice: notice }
       format.json { head :no_content }
     end
   end
@@ -48,7 +59,7 @@ class VehiclesController < ApplicationController
   def get_users
     user_vehicle = UserVehicle.where(end_date: nil, vehicle_id: params[:vehicle_id], is_deleted: false)
     role_id = Role.find_by_name(AppConstants::DRIVER).id
-    @users = User.where(role_id: role_id)
+    @users = User.where(role_id: role_id, is_deleted: false)
     
     if user_vehicle.present?
       return render json: {status: false, users: @users}

@@ -22,8 +22,12 @@
                 <td><%= vehicle.vehicle_type %></td>
                 <td><%= vehicle.vehicle_number %></td>
                 <td>
-                  <%= link_to '', edit_vehicle_path(vehicle), class: 'fa fa-edit' %>
-                  <%= link_to '', vehicle, method: :delete, class: 'fa fa-trash', data: { confirm: 'Are you sure?' } %>
+                  <%= link_to 'edit', edit_vehicle_path(vehicle), class: 'btn btn-mini btn-primary' %>
+                  <% if vehicle.is_deleted %>
+                      <%= link_to 'undo', vehicle, method: :delete, class: 'btn btn-mini btn-warning', data: { confirm: 'Are you sure?' } %>
+                  <% else %>
+                      <%= link_to 'delete', vehicle, method: :delete, class: 'btn btn-mini btn-danger', data: { confirm: 'Are you sure?' } %>
+                  <% end %>
                 </td>
               </tr>
           <% end %>

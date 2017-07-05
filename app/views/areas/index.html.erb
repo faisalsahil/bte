@@ -11,6 +11,7 @@
           <thead>
           <tr>
             <th>Area name</th>
+            <th>Status</th>
             <th>Actions</th>
           </tr>
           </thead>
@@ -19,9 +20,14 @@
             <% @areas.each do |area| %>
                 <tr>
                   <td><%= area.name %></td>
+                  <td><%= area.is_deleted? ? 'deleted' : 'active' %></td>
                   <td>
-                    <%= link_to '', edit_area_path(area), class: 'fa fa-edit' %>
-                    <%= link_to '', area, method: :delete, class: 'fa fa-trash', data: { confirm: 'Are you sure?' } %>
+                    <%= link_to 'edit', edit_area_path(area), class: 'btn btn-mini btn-primary' %>
+                    <% if area.is_deleted %>
+                        <%= link_to 'undo', area, method: :delete, class: 'btn btn-mini btn-warning', data: { confirm: 'Are you sure?' } %>
+                    <% else %>
+                        <%= link_to 'delete', area, method: :delete, class: 'btn btn-mini btn-danger', data: { confirm: 'Are you sure?' } %>
+                    <% end %>
                   </td>
                 </tr>
             <% end %>

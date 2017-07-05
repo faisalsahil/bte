@@ -2,14 +2,17 @@ class AreasController < ApplicationController
   before_action :set_area, only: [:show, :edit, :update, :destroy]
 
   def index
+    authorize :area
     @areas = Area.all
   end
 
   def new
+    authorize :area
     @area = Area.new
   end
 
   def edit
+    authorize :area
     @cities = @area.state.cities
   end
 
@@ -42,9 +45,17 @@ class AreasController < ApplicationController
   end
 
   def destroy
-    @area.destroy
+    authorize :area
+    if @area.is_deleted
+      @area.is_deleted = false
+      notice = 'Area was successfully undo.'
+    else
+      @area.is_deleted = true
+      notice = 'Area was successfully destroyed.'
+    end
+    @area.save!
     respond_to do |format|
-      format.html { redirect_to areas_url, notice: 'Area was successfully destroyed.' }
+      format.html { redirect_to areas_url, notice:  notice}
       format.json { head :no_content }
     end
   end

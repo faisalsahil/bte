@@ -1,4 +1,4 @@
-<%= simple_form_for(@note, url: url, method: type) do |f| %>
+<%= form_for(@note, url: url, method: type) do |f| %>
     <% if @note.errors.any? %>
         <div id="error_explanation">
           <h2><%= pluralize(@note.errors.count, "error") %> prohibited this task from being saved:</h2>
@@ -14,6 +14,14 @@
     <%= f.label :comment%>
     <%= f.text_area :comment, size: "50x10", placeholder: 'Enter comment here...' %>
   </div>
+  <% if not @note.new_record? %>
+    <% if @note.completed_notes.present? %>
+      <div class="form-inputs">
+        <%= f.label :completed_notes %>
+        <%= f.text_area :completed_notes, size: "50x10", placeholder: 'Enter comment here...' %>
+      </div>
+    <% end %>
+  <% end %>
 
   <div class="form-actions">
     <%= link_to 'Back', branch_notes_path(@branch) , class:'btn btn-mini btn-default'%>

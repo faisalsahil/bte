@@ -8,7 +8,7 @@
       <div class="grid-body no-border">
         <p>
           <strong>Company:</strong>
-          <%= @branch.company_id %>
+          <%= @branch.company.company_name %>
         </p>
 
         <p>
@@ -32,12 +32,8 @@
         </p>
 
         <p>
-          <strong>Number of outlets:</strong>
-          <%= @branch.number_of_outlets %>
-        </p>
-        <p>A
           <strong>Type of establishment:</strong>
-          <%= @branch.food_type.name %>
+          <%= @branch.try(:food_type).try(:name) %>
         </p>
 
         <p>
@@ -47,7 +43,7 @@
 
         <p>
           <strong>Storage type:</strong>
-          <%= @branch.storage_type.name %>
+          <%= @branch.try(:storage_type).try(:name) %>
         </p>
 
         <p>

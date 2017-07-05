@@ -1,15 +1,18 @@
 class StorageTypesController < ApplicationController
   before_action :set_storage_type, only: [:show, :edit, :update, :destroy]
-
+  
   def index
+    authorize :storage_type
     @storage_types = StorageType.all
   end
   
   def new
+    authorize :storage_type
     @storage_type = StorageType.new
   end
 
   def edit
+    authorize :storage_type
   end
 
   def create
@@ -39,9 +42,17 @@ class StorageTypesController < ApplicationController
   end
 
   def destroy
-    @storage_type.destroy
+    authorize :storage_type
+    if @storage_type.is_deleted
+      @storage_type.is_deleted = false
+      notice = 'Storage type was successfully undo.'
+    else
+      @storage_type.is_deleted = true
+      notice = 'Storage type was successfully destroyed.'
+    end
+    @storage_type.save(validate: false)
     respond_to do |format|
-      format.html { redirect_to storage_types_url, notice: 'Storage type was successfully destroyed.' }
+      format.html { redirect_to storage_types_url, notice: notice }
       format.json { head :no_content }
     end
   end

@@ -2,14 +2,20 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: 25
-  username: postgres
-  password: password
-  host: localhost
+  username: <%= ENV['BTE_DB_USERNAME_' + ENV['BTE_MODE']]%>
+  password: <%= ENV['BTE_DB_PASSWORD_' + ENV['BTE_MODE']]%>
+  host:     <%= ENV['BTE_DB_HOST_' + ENV['BTE_MODE']]%>
+  port:     <%= ENV['BTE_DB_PORT_' + ENV['BTE_MODE']]%>
+
 
 development:
   <<: *default
-  database: bte_dev
+  database: <%= ENV['BTE_DB_NAME_' + ENV['BTE_MODE']]%>
+
+staging:
+  <<: *default
+  database: <%= ENV['BTE_DB_NAME_' + ENV['BTE_MODE']]%>
 
 production:
   <<: *default
-  database: bte_dev
+  database: <%= ENV['BTE_DB_NAME_' + ENV['BTE_MODE']]%>

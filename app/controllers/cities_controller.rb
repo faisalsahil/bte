@@ -2,17 +2,21 @@ class CitiesController < ApplicationController
   before_action :set_city, only: [:show, :edit, :update, :destroy]
 
   def index
+    authorize :city
     @cities = City.all.includes(:state)
   end
 
   def show
+    authorize :city
   end
 
   def new
+    authorize :city
     @city = City.new
   end
 
   def edit
+    authorize :city
   end
 
   def create
@@ -42,16 +46,24 @@ class CitiesController < ApplicationController
   end
 
   def destroy
-    @city.destroy
+    authorize :city
+    if @city.is_deleted
+      @city.is_deleted = false
+      notice = 'City was successfully undo.'
+    else
+      @city.is_deleted = true
+      notice = 'City was successfully destroyed.'
+    end
+    @city.save!
     respond_to do |format|
-      format.html { redirect_to cities_url, notice: 'City was successfully destroyed.' }
+      format.html { redirect_to cities_url, notice: notice }
       format.json { head :no_content }
     end
   end
   
   def get_state_cities
     @state = State.find_by_id(params[:state_id])
-    @cities = @state.cities
+    @cities = @state.cities.where(is_deleted: false)
     respond_to do |format|
       format.html {  }
       format.json { return render json: {status: true, cities: @cities} }
@@ -60,7 +72,7 @@ class CitiesController < ApplicationController
   
   def get_city_areas
     @city = City.find_by_id(params[:id])
-    @areas = @city.areas
+    @areas = @city.areas.where(is_deleted: false)
     respond_to do |format|
       format.html {  }
       format.json { return render json: {status: true, areas: @areas} }

@@ -2,6 +2,7 @@ class BillingsController < ApplicationController
   before_action :set_billing, only: [:show, :edit, :update, :destroy]
 
   def index
+    authorize :billing
     if params[:date].present?
       @date = params[:date]
       @route_ids =  Assignment.where('assignment_status != ? AND extract(month from assigned_at) = ? AND extract(year from assigned_at) = ?',AppConstants::ACTIVE, params[:date].to_date.month, params[:date].to_date.year).pluck(:route_id)
@@ -50,6 +51,7 @@ class BillingsController < ApplicationController
   end
   
   def invoice
+    authorize :billing
     @date = params[:date].to_date
     @branch    = Branch.find_by_id(params[:id])
     @route_ids = Assignment.where('assignment_status != ? AND extract(month from assigned_at) = ? AND extract(year from assigned_at) = ?',AppConstants::ACTIVE, @date.month, @date.year).pluck(:route_id)
@@ -94,6 +96,7 @@ class BillingsController < ApplicationController
   end
   
   def invoice_all
+    authorize :billing
     @date = params[:date].to_date
     @route_ids = Assignment.where('assignment_status != ? AND extract(month from assigned_at) = ? AND extract(year from assigned_at) = ?',AppConstants::ACTIVE, @date.month, @date.year).pluck(:route_id)
     # @route_ids = Assignment.where('assignment_status != ? AND extract(month from assigned_at) = ?',AppConstants::ACTIVE, @date.month).pluck(:route_id)

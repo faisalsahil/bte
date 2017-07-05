@@ -1,9 +1,12 @@
 class FactoryCollectionsController < ApplicationController
+  
   def index
+    authorize :factory_collection
     @factory_collections = FactoryCollection.all.includes(:route_branches)
   end
   
   def show
+    authorize :factory_collection
     @factory_collection = FactoryCollection.find_by_id(params[:id])
     @route_branches     = @factory_collection.route_branches.order('route_id ASC').includes(:route)
 

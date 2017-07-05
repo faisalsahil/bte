@@ -101,7 +101,7 @@ Rails.application.routes.draw do
       delete 'unassigned_branch'
     end
   end
-  
+  resources :notes, only:[:index]
   resources :branches do
     member do
       post :update_branch_status

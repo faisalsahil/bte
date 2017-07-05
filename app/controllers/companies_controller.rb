@@ -3,16 +3,19 @@ class CompaniesController < ApplicationController
   before_action :set_sale_representative, only:[:new, :create]
 
   def index
+    authorize :company
     @companies = Company.all
   end
 
   def new
+    authorize :company
     @company = Company.new
     @statuses = [AppConstants::VISIT, AppConstants::LEAD, AppConstants::CONTRACTED]
     
   end
 
   def edit
+    authorize :company
   end
 
   def create
@@ -47,9 +50,17 @@ class CompaniesController < ApplicationController
   end
 
   def destroy
-    @company.destroy
+    authorize :company
+    if @company.is_deleted
+      @company.is_deleted = false
+      notice = 'Company was successfully undo.'
+    else
+      @company.is_deleted = true
+      notice = 'Company was successfully destroyed.'
+    end
+    @company.save!
     respond_to do |format|
-      format.html { redirect_to companies_url, notice: 'Company was successfully destroyed.' }
+      format.html { redirect_to companies_url, notice:  notice}
       format.json { head :no_content }
     end
   end

@@ -11,6 +11,7 @@
           <thead>
           <tr>
             <th>Food type</th>
+            <th>Status</th>
             <th>Actions</th>
           </tr>
           </thead>
@@ -19,9 +20,14 @@
           <% @food_types.each do |food_type| %>
               <tr>
                 <td><%= food_type.name %></td>
+                <td><%= food_type.is_deleted? ? 'deleted' : 'active' %></td>
                 <td>
-                  <%= link_to '', edit_food_type_path(food_type), class: 'fa fa-edit' %>
-                  <%= link_to '', food_type, method: :delete, class: 'fa fa-trash', data: { confirm: 'Are you sure?' } %>
+                  <%= link_to 'edit', edit_food_type_path(food_type), class: 'btn btn-mini btn-primary' %>
+                  <% if food_type.is_deleted %>
+                      <%= link_to 'undo', food_type, method: :delete, class: 'btn btn-mini btn-warning', data: { confirm: 'Are you sure?' } %>
+                  <% else %>
+                      <%= link_to 'delete', food_type, method: :delete, class: 'btn btn-mini btn-danger', data: { confirm: 'Are you sure?' } %>
+                  <% end %>
                 </td>
               </tr>
           <% end %>

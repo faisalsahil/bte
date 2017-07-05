@@ -31,18 +31,20 @@
                 <span class="selected"></span>
               </a>
             </li>
+            <% if AppConstants::GLOBAL_ARRAY.include? current_user.role.name %>
+              <li class="">
+                <a href="/users">
+                  <i class="fa fa-th"></i>
+                  <span class="title">Users</span>
+                </a>
+              </li>
+            <% end %>
 
-            <li class="">
-              <a href="/users">
-                <i class="fa fa-th"></i>
-                <span class="title">Users</span>
-              </a>
-            </li>
-
-            <li class=""><a href="javascript:;"> <i class="fa fa fa-cogs"></i> <span class="title">Settings</span> <span class="arrow open"></span> </a>
+            <% if AppConstants::GLOBAL_ARRAY.include? current_user.role.name %>
+              <li class=""><a href="javascript:;"> <i class="fa fa fa-cogs"></i> <span class="title">Settings</span> <span class="arrow open"></span> </a>
               <ul class="sub-menu">
-                <li > <a href="/storage_types"> <i class="fa fa-hourglass-o"></i><span class="title">Storage types</span></a> </li>
-                <li > <a href="/food_types"><i class="fa fa-spoon"></i><span class="title">Food types</span></a> </li>
+                <li > <a href="/storage_types"> <i class="fa fa-database"></i><span class="title">Storage types</span></a> </li>
+                <li > <a href="/food_types"><i class="fa fa-cutlery"></i><span class="title">Food types</span></a> </li>
                 <li class="">
                   <a href="/companies">
                     <i class="fa fa-bookmark"></i>
@@ -91,13 +93,14 @@
                 </li>
               </ul>
             </li>
+            <% end %>
 
             <li class=""><a href="javascript:;"> <i class="fa fa-building-o"></i> <span class="title">Branches</span> <span class="arrow open"></span> </a>
               <ul class="sub-menu">
-                <li > <a href="/branches/new"> <i class="fa fa-wrench"></i><span class="title">New branch</span></a></li>
-                <li > <a href="/branches?type=visit"> <i class="fa fa-wrench"></i><span class="title">Visits</span></a></li>
-                <li > <a href="/branches?type=lead"><i class="fa fa-spoon"></i><span class="title">Leads</span></a></li>
-                <li > <a href="/branches?type=contracted"><i class="fa fa-spoon"></i><span class="title">Contracts</span></a></li>
+                <li > <a href="/branches/new"> <i></i><span class="title">New branch</span></a></li>
+                <li > <a href="/branches?type=visit"> <i></i><span class="title">Visits</span></a></li>
+                <li > <a href="/branches?type=lead"><i></i><span class="title">Leads</span></a></li>
+                <li > <a href="/branches?type=contracted"><i></i><span class="title">Contracts</span></a></li>
               </ul>
             </li>
 
@@ -129,6 +132,13 @@
               <a href="/factory_collections">
                 <i class="fa fa-building-o"></i>
                 <span class="title">Factory Collection</span>
+              </a>
+            </li>
+
+            <li class="">
+              <a href="/notes">
+                <i class="fa fa-tags"></i>
+                <span class="title">Urgent Actions</span>
               </a>
             </li>
 

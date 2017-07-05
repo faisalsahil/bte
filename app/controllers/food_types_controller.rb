@@ -2,14 +2,17 @@ class FoodTypesController < ApplicationController
   before_action :set_food_type, only: [:show, :edit, :update, :destroy]
 
   def index
+    authorize :food_type
     @food_types = FoodType.all
   end
 
   def new
+    authorize :food_type
     @food_type = FoodType.new
   end
 
   def edit
+    authorize :food_type
   end
 
   def create
@@ -37,11 +40,19 @@ class FoodTypesController < ApplicationController
       end
     end
   end
-
+  
   def destroy
-    @food_type.destroy
+    authorize :food_type
+    if  @food_type.is_deleted
+      @food_type.is_deleted = false
+      notice = 'Food type was successfully undo.'
+    else
+      @food_type.is_deleted = true
+      notice = 'Food type was successfully destroyed.'
+    end
+    @food_type.save!
     respond_to do |format|
-      format.html { redirect_to food_types_url, notice: 'Food type was successfully destroyed.' }
+      format.html { redirect_to food_types_url, notice:  notice}
       format.json { head :no_content }
     end
   end

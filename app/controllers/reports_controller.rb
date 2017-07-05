@@ -1,6 +1,7 @@
 class ReportsController < ApplicationController
   
   def index
+    authorize :report
   end
   
   def generate_report
@@ -65,6 +66,9 @@ class ReportsController < ApplicationController
                layout: 'pdf.html', # use 'pdf.html' for a pdf.html.erb file
                page_offset: 0,
                book: false,
+               orientation: 'Landscape',
+               # page_width: '2000',
+               # dpi: '300',
                default_header: true,
                lowquality: false,
                # save_only:       true,

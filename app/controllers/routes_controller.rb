@@ -2,27 +2,31 @@ class RoutesController < ApplicationController
   before_action :set_route, only: [:show, :edit, :update, :destroy, :manage_branches]
 
   def index
+    authorize :route
     if params[:type].present?
       if params[:type] == AppConstants::ACTIVE
-        @routes = Route.where(is_completed: false).includes(:state,:city, :branches)
+        @routes = Route.where(is_completed: false, is_deleted: false).includes(:state,:city, :branches)
       elsif params[:type] == AppConstants::COMPLETED
-        @routes = Route.where(is_completed: true).includes(:state,:city, :branches)
+        @routes = Route.where(is_completed: true, is_deleted: false).includes(:state,:city, :branches)
       else
-        @routes = Route.all.includes(:state,:city, :branches)
+        @routes = Route.where(is_deleted: false).includes(:state,:city, :branches)
       end
     else
-      @routes = Route.all.includes(:state,:city, :branches)
+      @routes = Route.where(is_deleted: false).includes(:state,:city, :branches)
     end
   end
 
   def show
+    authorize :route
   end
 
   def new
+    authorize :route
     @route = Route.new
   end
 
   def edit
+    authorize :route
     @branches   = @route.branches
     @areas      = @route.city.areas
     @branch_ids = @branches.pluck(:id)
@@ -74,7 +78,7 @@ class RoutesController < ApplicationController
           #  update from assignment index page (complex form)
           mark_route_for_factory(@route)
         end
-        if @route.is_completed
+        if not branch_ids.present?
           format.html { redirect_to assignments_path({type: 'active'}), notice: 'Successfully updated.' }
         else
           format.html { redirect_to routes_path({type: 'active'}), notice: 'Successfully updated.' }
@@ -88,9 +92,18 @@ class RoutesController < ApplicationController
   end
 
   def destroy
-    @route.destroy
+    authorize :route
+    @route
+    if @route.is_deleted
+      @route.is_deleted = false
+      notice = 'Route was successfully undo.'
+    else
+      @route.is_deleted = true
+      notice = 'Route was successfully destroyed.'
+    end
+    @route.save!
     respond_to do |format|
-      format.html { redirect_to routes_url, notice: 'Route was successfully destroyed.' }
+      format.html { redirect_to routes_url, notice: notice }
       format.json { head :no_content }
     end
   end

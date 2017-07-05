@@ -1,7 +1,9 @@
 <ul class="breadcrumb">
   <li><p>YOU ARE HERE</p></li>
   <li><a href="#" class="active">Notes</a></li>
-  <li><%= link_to 'Add note', new_branch_note_path(@branch), class:'btn btn-mini btn-primary' %></li>
+  <% if @branch.present? %>
+    <li><%= link_to 'Add note', new_branch_note_path(@branch), class:'btn btn-mini btn-primary' %></li>
+  <% end %>
 </ul>
 <div class="row">
   <div class="col-md-12">
@@ -9,19 +11,37 @@
       <div class="grid-body no-border">
         <br/>
         <% if @notes.present? %>
-          <% @notes.each do |note| %>
+          <% if @branch.present? %>
+            <% @notes.each do |note| %>
               <div class="panel panel-primary">
                 <div class="panel-heading">
                   <%= note.created_at.to_date.strftime('%d/%m/%Y') %>
                   <span class="pull-right">
-                    <%= link_to 'Edit', edit_branch_note_path(@branch, note) %></td>
-                    <%= link_to 'Destroy', branch_note_path(@branch, note), method: :delete, data: { confirm: 'Are you sure?' } %>
+                    <%= note.completed_notes.present? ? 'Completed' : '' %>
+                    <%= link_to 'Edit', edit_branch_note_path(@branch, note), class: 'btn btn-mini btn-primary' %></td>
+                    <%= link_to 'Destroy', branch_note_path(@branch, note), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-mini btn-danger' %>
                   </span>
                 </div>
                 <div class="panel-body">
-                  <%= note.comment %></td>
+                  <p><%= note.comment %></p>
+                  <% if note.completed_notes.blank? %>
+                    <br/>
+                    <%= form_for(note, :url=> branch_note_path(@branch, note), :html=> {:multipart=>true,:class => 'form-inline'}) do |f| %>
+                      <div class="form-group">
+                        <label for="exampleInputName2">Completed Comment</label>
+                        <%= f.text_area :completed_notes, size: "100x1", placeholder: 'Enter comment here...', class:"form-control" %>
+                      </div>
+                      <button type="submit" class="btn btn-mini btn-primary" style="margin-top:4%;">Submit</button>
+                    <% end %>
+                  <% else %>
+                      <br/>
+                      <b>Completed Notes:</b><p><%= note.completed_notes %></p>
+                  <% end %>
                 </div>
               </div>
+          <% end %>
+          <% else %>
+            <%= render 'notes' %>
           <% end %>
         <% else %>
           No notes found.

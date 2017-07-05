@@ -1,0 +1,19 @@
+<table class="table table-striped list-data-table">
+  <thead>
+    <tr>
+      <th>Branch</th>
+      <th>Code (C/B)</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @notes.each do |note| %>
+      <tr>
+        <% branch = Branch.find_by_id(note.first) %>
+        <td><%= branch.branch_name %></td>
+        <td><%= "#{branch.company.company_code}/#{branch.branch_code}" %></td>
+        <td><%= link_to note.last.count, branch_notes_path(branch), class: 'btn btn-mini btn-primary' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

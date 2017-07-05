@@ -96,4 +96,22 @@ module AppConstants
       {name: 'Rate/Kg', id: 'rate_per_kg'},
       {name: 'Address', id: 'address'}
   ]
+  GLOBAL_ARRAY   = ["Super admin", "admin"]
+  STORAGE_ARRAY  = ["Super admin", "admin"]
+  FOODTYPE_ARRAY = ["Super admin", "admin"]
+  COMPANY_ARRAY  = ["Super admin", "admin"]
+  STATE_ARRAY    = ["Super admin", "admin"]
+  CITY_ARRAY     = ["Super admin", "admin"]
+  AREA_ARRAY     = ["Super admin", "admin"]
+  VEHICLE_ARRAY  = ["Super admin", "admin"]
+  ROLE_ARRAY     = ["Super admin", "admin"]
+  BILLING_ARRAY  = ["Super admin", "admin"]
+  USER_ARRAY     = ["Super admin", "admin"]
+  
+  BRANCH_ARRAY     = ["Super admin", "admin", "accout-1", "account-2"]
+  ROUTES_ARRAY     = ["Super admin", "admin", "accout-1", "account-2"]
+  ASSIGNMENT_ARRAY = ["Super admin", "admin", "accout-1", "account-2"]
+  FACTORY_ASSIGNMENT_ARRAY = ["Super admin", "admin", "factory"]
+  REPORT_ARRAY     = ["Super admin", "admin", "accout-1", "account-2"]
+  FACTORY_ARRAY    = ["Super admin", "admin", "factory"]
 end

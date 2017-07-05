@@ -23,7 +23,7 @@
   <% @branches&.each do |branch| %>
       <tr>
         <% if @columns.include? 'area_id' %>
-            <td><%= branch.area.name %></td>
+            <td><%= branch.try(:area).try(:name) %></td>
         <% end %>
         <% if @columns.include? 'representative' %>
             <td><%= branch.try(:representator).try(:name) || 'N/A' %></td>

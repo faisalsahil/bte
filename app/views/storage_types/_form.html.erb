@@ -1,9 +1,19 @@
-<%= simple_form_for(@storage_type) do |f| %>
-  <%= f.error_notification %>
+<%= form_for(@storage_type) do |f| %>
+    <% if @storage_type.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@storage_type.errors.count, "error") %> prohibited this task from being saved:</h2>
+          <ul>
+            <% @storage_type.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
 
-  <div class="form-inputs">
-    <%= f.input :name %>
-  </div>
+    <div class="form-group">
+      <%= f.label 'Name' %>
+      <%= f.text_field :name, placeholder: 'cont. name' %>
+    </div>
 
   <div class="form-actions">
     <%= link_to 'Back', storage_types_path, class:'btn btn-mini btn-default' %>

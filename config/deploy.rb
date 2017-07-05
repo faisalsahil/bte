@@ -29,7 +29,8 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log',
                                                'vendor/bundle',
                                                'public/system')
 
-set :rvm_type, :user
+# set :rvm_type, :user
+set :rvm_type, :system
 set :rvm_ruby_version, '2.3.1@bte'
 
 set :bundle_gemfile, -> { release_path.join('Gemfile') }

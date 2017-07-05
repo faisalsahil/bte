@@ -8,8 +8,7 @@
         <th></th>
         </thead>
         <tbody>
-        <% @branches = area.sorted_branches
-        %>
+        <% @branches = area.sorted_branches %>
         <% @branches = @branches.sort { |a,b| b.current_month_remaining_visits  <=>  a.current_month_remaining_visits } %>
         <% @branches&.each do |branch| %>
             <tr>

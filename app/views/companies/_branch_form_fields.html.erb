@@ -1,25 +1,22 @@
 <div class="row">
-  <!--<div class="col-md-3 form-group">-->
-    <!--<%#= branch.label 'Company' %>-->
-    <!--<%#= branch.select :company_id, options_for_select(Company.all.collect {|p| [ p[:company_name], p[:id] ] }), class: 'form-control' %>-->
-  <!--</div>-->
   <div class="col-md-3">
     <%= branch.label 'Branch name' %>
     <%= branch.text_field :branch_name, class: 'form-control', placeholder: 'branch name' %>
   </div>
-</div>
-<div class="row">
   <div class="col-md-3 form-group">
-    <%= branch.label 'Status' %>
-    <%= branch.select :branch_status, options_for_select(@statuses), class: 'form-control' %>
+    <%= branch.label '# of visits' %>
+    <%= branch.number_field :visits_per_month, class: 'form-control' %>
   </div>
+</div>
+
+<div class="row">
   <div class="col-md-3 form-group">
     <%= branch.label 'Sale representative' %>
     <%= branch.select :representative, options_for_select(@sale_representatives.collect {|p| [ p[:name], p[:id] ] }), {include_blank: 'Select saler'}, class: 'form-control' %>
   </div>
   <div class="col-md-3 form-group">
-    <%= branch.label '# of visits' %>
-    <%= branch.number_field :visits_per_month, class: 'form-control' %>
+    <%= branch.label 'Status' %>
+    <%= branch.select :branch_status, options_for_select(@statuses), class: 'form-control' %>
   </div>
 </div>
 
@@ -59,7 +56,7 @@
     <div class="row">
       <div class="col-md-3">
         <%= branch.label 'Type of establishment' %>
-        <%= branch.select :food_type_id, options_for_select(FoodType.all.collect {|p| [ p[:name], p[:id] ] }), class: 'form-control' %>
+        <%= branch.select :food_type_id, options_for_select(FoodType.where(is_deleted: false).collect {|p| [ p[:name], p[:id] ] }), class: 'form-control' %>
       </div>
 
       <div class="col-md-3">
@@ -74,7 +71,7 @@
 
       <div class="col-md-3 form-group">
         <%= branch.label 'Storage type' %>
-        <%= branch.select :storage_type_id, options_for_select(StorageType.all.collect {|p| [ p[:name], p[:id] ] }), class: 'form-control' %>
+        <%= branch.select :storage_type_id, options_for_select(StorageType.where(is_deleted: false).collect {|p| [ p[:name], p[:id] ] }), class: 'form-control' %>
       </div>
     </div>
   </div>
@@ -86,7 +83,7 @@
   <div class="panel-body">
     <div class="row">
       <div class="col-md-3">
-        <%= branch.select :state_id, options_for_select(State.all.collect {|p| [ p[:name], p[:id] ] }), {include_blank: 'Select sate'}, class: 'form-control', id: 'branch_state_id' %>
+        <%= branch.select :state_id, options_for_select(State.where(is_deleted: false).collect {|p| [ p[:name], p[:id] ] }), {include_blank: 'Select sate'}, class: 'form-control', id: 'branch_state_id' %>
       </div>
       <div class="col-md-3">
         <select name="company[branches_attributes][0][city_id]" id="branch_city_id" class="hidden"></select>

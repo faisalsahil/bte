@@ -24,6 +24,11 @@
         <th>
           <%= select_tag :area_wise, options_for_select(@areas.collect {|p| [ p[:name], p[:id] ] }), {include_blank: 'filter reps'} %>
         </th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
       </tr>
       <tr>
         <th>Voucher#</th>
@@ -47,7 +52,7 @@
               <td><%= assignment.try(:driver).try(:name) || 'N/A' %></td>
               <td><%= assignment.try(:helper).try(:name)  || 'N/A' %></td>
               <td><%= assignment.try(:vehicle).try(:vehicle_number) || 'N/A' %></td>
-              <td><%= route_branch.comment%></td>
+              <td><%= route_branch.comment %></td>
             </tr>
         <% end %>
       </tbody>

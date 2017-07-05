@@ -2,14 +2,17 @@ class RolesController < ApplicationController
   before_action :set_role, only: [:show, :edit, :update, :destroy]
 
   def index
+    authorize :role
     @roles = Role.all
   end
 
   def new
+    authorize :role
     @role = Role.new
   end
 
   def edit
+    authorize :role
   end
 
   def create
@@ -39,9 +42,17 @@ class RolesController < ApplicationController
   end
 
   def destroy
-    @role.destroy
+    authorize :role
+    if @role.is_deleted
+      @role.is_deleted = false
+      notice = 'Role was successfully undo.'
+    else
+      @role.is_deleted = true
+      notice = 'Role was successfully destroyed.'
+    end
+    @role.save(validate: false)
     respond_to do |format|
-      format.html { redirect_to roles_url, notice: 'Role was successfully destroyed.' }
+      format.html { redirect_to roles_url, notice: notice }
       format.json { head :no_content }
     end
   end

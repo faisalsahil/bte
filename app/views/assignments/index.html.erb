@@ -33,10 +33,10 @@
                 </td>
                 <td>
                   <% if assignment.assignment_status == AppConstants::ACTIVE %>
-                      <%= link_to '', edit_assignment_path(assignment), class: 'fa fa-edit' %>
-                      <%= link_to '', assignment, method: :delete, class: 'fa fa-trash', data: { confirm: 'Are you sure?' } %>
+                      <%= link_to 'edit', edit_assignment_path(assignment), class: 'btn btn-mini btn-primary' %>
+                      <%= link_to 'delete', assignment, method: :delete, class: 'btn btn-mini btn-danger', data: { confirm: 'To delete the assignment, route and route branches will also be deleted. Are you sure ?' } %>
                   <% elsif assignment.assignment_status == AppConstants::FACTORY %>
-                      <%= link_to '', edit_assignment_path(assignment), class: 'fa fa-edit' %>
+                      <%= link_to 'edit', edit_assignment_path(assignment), class: 'btn btn-mini btn-primary' %>
                   <% end %>
                 </td>
               </tr>

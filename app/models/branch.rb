@@ -1,6 +1,6 @@
 class Branch < ApplicationRecord
 
-  validates_presence_of :rate_per_kg
+  # validates_presence_of :rate_per_kg
 
   geocoded_by :address
   after_validation :geocode, if: ->(obj){ !obj.latitude.present? and !obj.longitude.present? }

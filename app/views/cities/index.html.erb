@@ -22,8 +22,12 @@
                 <td><%= city.name %></td>
                 <td><%= city.state.name %></td>
                 <td>
-                  <%= link_to '', edit_city_path(city), class: 'fa fa-edit' %>
-                  <%= link_to '', city, method: :delete, class: 'fa fa-trash', data: { confirm: 'Are you sure?' } %>
+                  <%= link_to 'edit', edit_city_path(city), class: 'btn btn-mini btn-primary' %>
+                  <% if city.is_deleted %>
+                      <%= link_to 'undo', city, method: :delete, class: 'btn btn-mini btn-warning', data: { confirm: 'Are you sure?' } %>
+                  <% else %>
+                      <%= link_to 'delete', city, method: :delete, class: 'btn btn-mini btn-danger', data: { confirm: 'Are you sure?' } %>
+                  <% end %>
                 </td>
               </tr>
           <% end %>

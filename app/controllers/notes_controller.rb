@@ -2,7 +2,11 @@ class NotesController < ApplicationController
   before_action :set_branch, only: [:index, :new, :create, :edit, :update, :destroy]
   
   def index
-    @notes = @branch.notes
+    if params[:branch_id].present?
+      @notes = @branch.notes.order('created_at DESC')
+    else
+      @notes = Note.all.group_by { |d| d[:branch_id] }
+    end
   end
   
 
@@ -52,6 +56,6 @@ class NotesController < ApplicationController
     end
 
     def note_params
-      params.require(:note).permit(:branch_id, :comment)
+      params.require(:note).permit(:branch_id, :comment, :completed_notes)
     end
 end

@@ -33,6 +33,7 @@
         <th>Helper</th>
         <th>Vehicle</th>
         <th>Comment</th>
+        <th>Add Note</th>
       </tr>
       </thead>
       <tbody>
@@ -47,6 +48,7 @@
             <td><%= assignment.try(:helper).try(:name)  || 'N/A' %></td>
             <td><%= assignment.try(:vehicle).try(:vehicle_number) || 'N/A' %></td>
             <td><%= route_branch.comment %></td>
+            <td><%= link_to 'Notes', branch_notes_path(route_branch.branch_id), class: 'btn btn-mini btn-primary' %></td>
           </tr>
       <% end %>
       </tbody>

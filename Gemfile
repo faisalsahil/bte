@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'api-auth', '~> 2.0'
+# gem 'api-auth', '~> 2.0'
 
 gem 'bootstrap-sass'
 
@@ -9,8 +9,6 @@ gem 'bootstrap-wysihtml5-rails'
 gem 'coffee-rails'
 
 gem 'compass-rails'
-
-# gem 'country_select'
 
 gem 'carrierwave-dropbox'
 
@@ -24,8 +22,6 @@ gem 'font-awesome-sass'
 
 gem 'geocoder'
 
-# gem 'axlsx_rails'
-
 gem 'jquery-rails'
 
 gem 'jquery-ui-rails'
@@ -34,9 +30,9 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'listen'
 
-# gem 'meta-tags', :require => 'meta_tags'
-
 gem 'pg'
+
+gem "pundit"
 
 gem 'puma', '~> 3.0'
 
@@ -45,6 +41,8 @@ gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 gem 'record_tag_helper', '~> 1.0'
 
 gem 'rest-client'
+
+gem 'roo'
 
 gem 'sass-rails'
 

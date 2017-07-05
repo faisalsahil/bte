@@ -1,9 +1,19 @@
-<%= simple_form_for(@role) do |f| %>
-  <%= f.error_notification %>
+<%= form_for(@role) do |f| %>
+    <% if @role.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@role.errors.count, "error") %> prohibited this task from being saved:</h2>
+          <ul>
+            <% @role.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
 
-  <div class="form-inputs">
-    <%= f.input :name %>
-  </div>
+    <div class="form-group">
+      <%= f.label 'Name' %>
+      <%= f.text_field :name, placeholder: 'name' %>
+    </div>
 
     <div class="form-actions">
       <%= link_to 'Back', roles_path , class:'btn btn-mini btn-default'%>

@@ -20,11 +20,14 @@
           <% @states.each do |state| %>
               <tr>
                 <td><%= state.name %></td>
-                <td><%= state.cities.count %></td>
+                <td><%= link_to state.cities.count, get_state_cities_state_cities_path(state)%></td>
                 <td>
-                  <%= link_to '', get_state_cities_state_cities_path(state), class: 'fa fa-eye' %>
-                  <%= link_to '', edit_state_path(state), class: 'fa fa-edit' %>
-                  <%= link_to '', state, method: :delete, class: 'fa fa-trash', data: { confirm: 'Are you sure?' } %>
+                  <%= link_to 'edit', edit_state_path(state), class: 'btn btn-mini btn-primary' %>
+                  <% if state.is_deleted %>
+                      <%= link_to 'undo', state, method: :delete, class: 'btn btn-mini btn-warning', data: { confirm: 'Are you sure?' } %>
+                  <% else %>
+                      <%= link_to 'delete', state, method: :delete, class: 'btn btn-mini btn-danger', data: { confirm: 'Are you sure?' } %>
+                  <% end %>
                 </td>
               </tr>
           <% end %>

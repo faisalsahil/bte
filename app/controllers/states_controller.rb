@@ -2,17 +2,21 @@ class StatesController < ApplicationController
   before_action :set_state, only: [:show, :edit, :update, :destroy]
 
   def index
+    authorize :state
     @states = State.all.includes(:cities)
   end
 
   def show
+    authorize :state
   end
 
   def new
+    authorize :state
     @state = State.new
   end
 
   def edit
+    authorize :state
   end
 
   def create
@@ -42,9 +46,17 @@ class StatesController < ApplicationController
   end
 
   def destroy
-    @state.destroy
+    authorize :state
+    if @state.is_deleted
+      @state.is_deleted = false
+      notice = 'State was successfully undo.'
+    else
+      @state.is_deleted = true
+      notice = 'State was successfully destroyed.'
+    end
+    @state.save!
     respond_to do |format|
-      format.html { redirect_to states_url, notice: 'State was successfully destroyed.' }
+      format.html { redirect_to states_url, notice: notice }
       format.json { head :no_content }
     end
   end

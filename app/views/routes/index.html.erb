@@ -29,8 +29,14 @@
                   <%= link_to '[manage]', manage_branches_route_path(route) %>
                 </td>
                 <td>
-                  <%= link_to '', edit_route_path(route), class: 'fa fa-edit' %>
-                  <%= link_to '', route, method: :delete, class: 'fa fa-trash', data: { confirm: 'Are you sure?' } %>
+                  <% if not route.is_completed %>
+                    <%= link_to 'edit', edit_route_path(route), class: 'btn btn-mini btn-primary' %>
+                  <% end %>
+                  <% if route.is_deleted %>
+                      <%= link_to 'undo', route, method: :delete, class: 'btn btn-mini btn-warning', data: { confirm: 'Are you sure?' } %>
+                  <% else %>
+                      <%= link_to 'delete', route, method: :delete, class: 'btn btn-mini btn-danger', data: { confirm: 'Are you sure?' } %>
+                  <% end %>
                 </td>
               </tr>
           <% end %>
