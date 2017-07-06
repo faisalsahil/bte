@@ -14,8 +14,8 @@
       </a>
       <!--END LOGO -->
       <ul class="nav pull-right notifcation-center">
-        <li class="dropdown" id="header_task_bar"> <a href="/" class="dropdown-toggle active" data-toggle="">
-          <div class="iconset top-home"></div>
+        <li class="dropdown"> <a href="/" class="" data-toggle="">
+          <div class="glyphicon glyphicon-home"></div>
         </a> </li>
       </ul>
     </div>
@@ -25,7 +25,7 @@
       <div class="pull-left">
         <ul class="nav quick-section">
           <li class="quicklinks"> <a href="javascript:void(0)" class="" id="layout-condensed-toggle" >
-            <div class="iconset top-menu-toggle-dark"></div>
+            <div class="glyphicon glyphicon-menu-hamburger"></div>
           </a> </li>
         </ul>
       </div>
@@ -39,16 +39,16 @@
         </div>
         <ul class="nav quick-section ">
           <li class="quicklinks"> <a data-toggle="dropdown" class="dropdown-toggle  pull-right " href="#" id="user-options">
-            <div class="iconset top-settings-dark "></div>
+            <div class="glyphicon glyphicon-cog"></div>
           </a>
             <ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options">
               <li class="divider"></li>
               <li>
-                <%= link_to 'Edit account', edit_user_registration_path, class:'fa fa-edit' %>
+                <%= link_to 'Edit account', edit_user_registration_path %>
               </li>
               <li>
 
-                <%= link_to 'Sign out', destroy_user_session_path, class:'fa fa-power-off', :method=>'delete' %>
+                <%= link_to 'Sign out', destroy_user_session_path, :method=>'delete' %>
               </li>
             </ul>
           </li>

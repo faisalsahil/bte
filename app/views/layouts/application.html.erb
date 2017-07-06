@@ -26,7 +26,7 @@
           <ul>
             <li class="start">
               <a href="/dashboards" class="active">
-                <i class="icon-custom-home"></i>
+                <i class="glyphicon glyphicon-dashboard"></i>
                 <span class="title">Dashboard</span>
                 <span class="selected"></span>
               </a>
@@ -34,60 +34,53 @@
             <% if AppConstants::GLOBAL_ARRAY.include? current_user.role.name %>
               <li class="">
                 <a href="/users">
-                  <i class="fa fa-th"></i>
+                  <i class="glyphicon glyphicon-user"></i>
                   <span class="title">Users</span>
                 </a>
               </li>
             <% end %>
 
             <% if AppConstants::GLOBAL_ARRAY.include? current_user.role.name %>
-              <li class=""><a href="javascript:;"> <i class="fa fa fa-cogs"></i> <span class="title">Settings</span> <span class="arrow open"></span> </a>
+              <li class=""><a href="javascript:;"> <i class="glyphicon glyphicon-cog"></i> <span class="title">Settings</span></a>
               <ul class="sub-menu">
-                <li > <a href="/storage_types"> <i class="fa fa-database"></i><span class="title">Storage types</span></a> </li>
-                <li > <a href="/food_types"><i class="fa fa-cutlery"></i><span class="title">Food types</span></a> </li>
+                <li > <a href="/storage_types"><span class="title">Storage types</span></a> </li>
+                <li > <a href="/food_types"><span class="title">Food types</span></a> </li>
                 <li class="">
                   <a href="/companies">
-                    <i class="fa fa-bookmark"></i>
                     <span class="title">Companies</span>
                   </a>
                 </li>
 
                 <li class="">
                   <a href="/states">
-                    <i class="fa fa-tasks"></i>
                     <span class="title">States</span>
                   </a>
                 </li>
 
                 <li class="">
                   <a href="/cities">
-                    <i class="fa fa-tasks"></i>
                     <span class="title">Cities</span>
                   </a>
                 </li>
 
                 <li class="">
                   <a href="/areas">
-                    <i class="fa fa-building"></i>
                     <span class="title">Areas</span>
                   </a>
                 </li>
 
                 <li class="">
                   <a href="/vehicles">
-                    <i class="fa fa-truck"></i>
                     <span class="title">Vehicles</span>
                   </a>
                 </li>
                 <li class="">
                   <a href="/roles">
-                    <i class="fa fa-users"></i>
                     <span class="title">Roles</span>
                   </a>
                 </li>
                 <li class="">
                   <a href="/billings">
-                    <i class="fa fa-google-wallet"></i>
                     <span class="title">Billings</span>
                   </a>
                 </li>
@@ -95,49 +88,49 @@
             </li>
             <% end %>
 
-            <li class=""><a href="javascript:;"> <i class="fa fa-building-o"></i> <span class="title">Branches</span> <span class="arrow open"></span> </a>
+            <li class=""><a href="javascript:;"> <i class="glyphicon glyphicon-cutlery"></i> <span class="title">Branches</span></a>
               <ul class="sub-menu">
-                <li > <a href="/branches/new"> <i></i><span class="title">New branch</span></a></li>
-                <li > <a href="/branches?type=visit"> <i></i><span class="title">Visits</span></a></li>
-                <li > <a href="/branches?type=lead"><i></i><span class="title">Leads</span></a></li>
-                <li > <a href="/branches?type=contracted"><i></i><span class="title">Contracts</span></a></li>
+                <li > <a href="/branches/new"><span class="title">New branch</span></a></li>
+                <li > <a href="/branches?type=visit"><span class="title">Visits</span></a></li>
+                <li > <a href="/branches?type=lead"><span class="title">Leads</span></a></li>
+                <li > <a href="/branches?type=contracted"><span class="title">Contracts</span></a></li>
               </ul>
             </li>
 
-            <li class=""><a href="javascript:;"> <i class="fa fa-send"></i> <span class="title">Routes</span> <span class="arrow open"></span> </a>
+            <li class=""><a href="javascript:;"> <i class="glyphicon glyphicon-road"></i> <span class="title">Routes</span></a>
               <ul class="sub-menu">
-                <li > <a href="/routes/new"> <i class="fa fa-send-o"></i><span class="title">New route</span></a></li>
-                <li > <a href="/routes?type=active"><i class="fa fa-clock-o"></i><span class="title">Active routes</span></a></li>
-                <li > <a href="/routes?type=completed"><i class="fa fa-check"></i><span class="title">Completed routes</span></a></li>
+                <li > <a href="/routes/new"><span class="title">New route</span></a></li>
+                <li > <a href="/routes?type=active"><span class="title">Active routes</span></a></li>
+                <li > <a href="/routes?type=completed"></i><span class="title">Completed routes</span></a></li>
               </ul>
             </li>
 
-            <li class=""><a href="javascript:;"> <i class="fa fa-share"></i> <span class="title">Assignments</span> <span class="arrow open"></span> </a>
+            <li class=""><a href="javascript:;"> <i class="glyphicon glyphicon-tasks"></i> <span class="title">Assignments</span></a>
               <ul class="sub-menu">
-                <li > <a href="/assignments/new"> <i class="fa fa-share-square-o"></i><span class="title">New assignment</span></a></li>
-                <li > <a href="/assignments?type=active"><i class="fa fa-clock-o"></i><span class="title">Active assignments</span></a></li>
-                <li > <a href="/assignments/factory_assignments"><i class="fa fa-building-o"></i><span class="title">Factory assignments</span></a></li>
-                <li > <a href="/assignments?type=completed"><i class="fa fa-check"></i><span class="title">Completed assignments</span></a></li>
+                <li > <a href="/assignments/new"><span class="title">New assignment</span></a></li>
+                <li > <a href="/assignments?type=active"><span class="title">Active assignments</span></a></li>
+                <li > <a href="/assignments/factory_assignments"><span class="title">Factory assignments</span></a></li>
+                <li > <a href="/assignments?type=completed"><span class="title">Completed assignments</span></a></li>
               </ul>
             </li>
 
             <li class="">
               <a href="/reports">
-                <i class="fa fa-file-pdf-o"></i>
+                <i class="glyphicon glyphicon-file"></i>
                 <span class="title">Reports</span>
               </a>
             </li>
 
             <li class="">
               <a href="/factory_collections">
-                <i class="fa fa-building-o"></i>
+                <i class="glyphicon glyphicon-stats"></i>
                 <span class="title">Factory Collection</span>
               </a>
             </li>
 
             <li class="">
               <a href="/notes">
-                <i class="fa fa-tags"></i>
+                <i class="glyphicon glyphicon-flag"></i>
                 <span class="title">Urgent Actions</span>
               </a>
             </li>

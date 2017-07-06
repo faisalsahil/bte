@@ -2189,7 +2189,7 @@ span.iconset {
   display: block;
 }
 .iconset {
-  background: url("../assets/top-tray.png") no-repeat;
+  /*background: url("../assets/top-tray.png") no-repeat;*/
   position: relative;
   top: 1px;
 }
@@ -4598,7 +4598,7 @@ form legend,
   margin-top: 3px;
 }
 .grid.box .grid-title .tools a {
-  background: url(@{base-img-url}/icon/portlet-tray.png) no-repeat;
+  /*background: url(@{base-img-url}/icon/portlet-tray.png) no-repeat;*/
   width: 23px;
   height: 23px;
 }
@@ -5031,7 +5031,7 @@ form legend,
   top: 8px;
 }
 .alert .close {
-  background: url("../assets/icon/noti-cross.png") no-repeat scroll 0 0 transparent;
+  /*background: url("../assets/icon/noti-cross.png") no-repeat scroll 0 0 transparent;*/
   background-position: -9px -10px;
   width: 10px;
   height: 9px;
@@ -5460,7 +5460,7 @@ form legend,
 }
 .tiles .controller a {
   position: relative;
-  background: url('../assets/icon/portlet-tray.png') no-repeat;
+  /*background: url('../assets/icon/portlet-tray.png') no-repeat;*/
   transition: all 0.1s linear 0s;
   display: inline-block;
 }
@@ -5793,7 +5793,7 @@ form legend,
 }
 .widget-item .controller a {
   position: relative;
-  background: url('../assets/icon/portlet-tray.png') no-repeat;
+  /*background: url('../assets/icon/portlet-tray.png') no-repeat;*/
   transition: all 0.1s linear 0s;
   display: inline-block;
 }
@@ -5917,7 +5917,7 @@ form legend,
 }
 .widget .controller a {
   position: relative;
-  background: url('../assets/icon/portlet-tray.png') no-repeat;
+  /*background: url('../assets/icon/portlet-tray.png') no-repeat;*/
   transition: all 0.1s linear 0s;
   display: inline-block;
 }
@@ -6577,7 +6577,7 @@ code:hover {
 }
 .nav .tools a {
   position: relative;
-  background: url('../assets/icon/portlet-tray.png') no-repeat;
+  /*background: url('../assets/icon/portlet-tray.png') no-repeat;*/
   transition: all 0.1s linear 0s;
 }
 .nav > .disabled > a:hover,
