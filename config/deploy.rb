@@ -11,6 +11,8 @@ set :pty, true
 
 set :branch, ask('Enter Git Branch:', 'master')
 
+set :tmp_dir, '/home/live/tmp'
+
 # Default value for :linked_files is []
 set :linked_files, fetch(:linked_files, []).push('config/database.yml',
                                                  '.env.development',
@@ -40,10 +42,10 @@ set :bundle_flags, ''
 set :bundle_without, nil
 
 set :sidekiq_config, File.join(current_path, 'config', 'sidekiq.yml')
-set :sidekiq_options_per_process, ["--queue default --queue mailers"]
+set :sidekiq_options_per_process, ['--queue default --queue mailers']
 
 # set :passenger_instance_name, ask('Remote Passenger Instance:', '', echo: true)
-# set :passenger_restart_options, -> { "--instance #{fetch(:passenger_instance_name)}"  }
+# set :passenger_restart_options, -> { '--instance #{fetch(:passenger_instance_name)}'  }
 # set :passenger_restart_with_touch, true
 
 
