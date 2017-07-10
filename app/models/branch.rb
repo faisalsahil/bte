@@ -184,4 +184,23 @@ class Branch < ApplicationRecord
       end
     end
   end
+  
+  def self.to_urgent_action_csv(notes, columns = {})
+    @columns = columns.split(',')
+    CSV.generate do |csv|
+      csv << @columns
+      notes.each do |note|
+        ar = []
+        ar <<  note.created_at.to_date.strftime('%d/%m/%Y') if @columns.include? 'date'
+        ar <<  note.branch.branch_name if @columns.include? 'branch_name'
+        ar <<  "#{note.branch.company.company_code}/#{note.branch.branch_code}" if @columns.include? 'branch_code'
+        ar <<  note.branch.contact_phone if @columns.include? 'contact_phone'
+        ar <<  note.comment if @columns.include? 'comment'
+        ar <<  note.completed_notes if @columns.include? 'completed_notes'
+        ar <<  note.branch.address if @columns.include? 'address'
+        
+        csv << ar
+      end
+    end
+  end
 end

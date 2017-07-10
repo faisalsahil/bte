@@ -127,6 +127,10 @@ class ReportsController < ApplicationController
         if @type == AppConstants::FACTORY_COLLECTION_REPORT
           send_data Branch.to_factory_collection_csv(@route_branches, @data[:columns])
         end
+
+        if @type == AppConstants::URGENT_ACTION_REPORT
+          send_data Branch.to_urgent_action_csv(@notes, @data[:columns])
+        end
       }
     end
   end

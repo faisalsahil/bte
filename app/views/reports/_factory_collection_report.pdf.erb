@@ -16,7 +16,7 @@
   <thead>
   <% @columns = @data[:columns].split(',') %>
   <% @columns&.each do |column| %>
-      <th><%= column.camelize %></th>
+      <th><%= column.humanize %></th>
   <% end %>
   </thead>
   <tbody>
