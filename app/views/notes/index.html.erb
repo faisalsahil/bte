@@ -19,7 +19,7 @@
                   <span class="pull-right">
                     <%= note.completed_notes.present? ? 'Completed' : '' %>
                     <%= link_to 'Edit', edit_branch_note_path(@branch, note), class: 'btn btn-mini btn-primary' %></td>
-                    <%= link_to 'Destroy', branch_note_path(@branch, note), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-mini btn-danger' %>
+                    <%#= link_to 'Destroy', branch_note_path(@branch, note), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-mini btn-danger' %>
                   </span>
                 </div>
                 <div class="panel-body">

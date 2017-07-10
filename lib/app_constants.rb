@@ -22,6 +22,7 @@ module AppConstants
   RESTAURANT_WISE_COLLECTION_REPORT = 'restaurant_wise_collection_report'
   NOT_VISITED_REPORT = 'not_visited_report'
   FACTORY_COLLECTION_REPORT = 'factory_collection_report'
+  URGENT_ACTION_REPORT      = 'urgent_action_report'
   
   REPORTS   = [
       {name: 'Lead report', id: Lead_REPORT},
@@ -33,7 +34,8 @@ module AppConstants
       {name: 'Month wise collection report', id: MONTH_WISE_COLLECTION_REPORT},
       {name: 'Restaurant wise collection report', id: RESTAURANT_WISE_COLLECTION_REPORT},
       {name: 'Not visited report', id: NOT_VISITED_REPORT},
-      {name: 'Factory collection report', id: FACTORY_COLLECTION_REPORT}
+      {name: 'Factory collection report', id: FACTORY_COLLECTION_REPORT},
+      {name: 'Urgent action report', id: URGENT_ACTION_REPORT}
   ]
 
   LEAD_REPORT_HEADER = [
@@ -95,6 +97,16 @@ module AppConstants
       {name: 'Collection', id: 'total_collection'},
       {name: 'Rate/Kg', id: 'rate_per_kg'},
       {name: 'Address', id: 'address'}
+  ]
+  
+  URGENT_ACTION_REPORT_HEADER = [
+      {name: 'date', id: 'date'},
+      {name: 'Branch name', id: 'branch_name'},
+      {name: 'Code', id: 'branch_code'},
+      {name: 'Contact #', id: 'contact_phone'},
+      {name: 'Address', id: 'address'},
+      {name: 'Comment', id: 'comment'},
+      {name: 'Completed Notes', id: 'completed_notes'}
   ]
   GLOBAL_ARRAY   = ["Super admin", "admin"]
   STORAGE_ARRAY  = ["Super admin", "admin"]

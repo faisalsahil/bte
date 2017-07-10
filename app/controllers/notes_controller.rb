@@ -9,7 +9,6 @@ class NotesController < ApplicationController
     end
   end
   
-
   def new
     @note = @branch.notes.build
   end

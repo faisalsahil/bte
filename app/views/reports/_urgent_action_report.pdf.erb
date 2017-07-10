@@ -1,0 +1,55 @@
+<br/>
+<div class="well-sm">
+  <span class="pull-right"><strong>Date:</strong>  <%= Date.today.strftime('%d/%m/%Y') %></span>
+  <h3>Urgent Action Report</h3>
+  <% if @from_date.present? && @to_date.present? %>
+      <strong>Date:</strong>  <%= @from_date.to_date.strftime('%d/%m/%Y')%><strong> - </strong><%= @to_date.to_date.strftime('%d/%m/%Y') %>
+  <% elsif @from_date.present? %>
+      <strong>Date:</strong>  <%= @from_date.to_date.strftime('%d/%m/%Y')%><strong> - </strong> Now
+  <% elsif @to_date.present? %>
+      <strong>Date:</strong> Start <strong> - </strong><%= @to_date.to_date.strftime('%d/%m/%Y') %>
+  <% end %>
+</div>
+<br/>
+
+<table class="table table-striped">
+  <thead>
+  <% @columns = @data[:columns].split(',') %>
+  <% @columns&.each do |column| %>
+      <th><%= column.camelize %></th>
+  <% end %>
+  </thead>
+  <tbody>
+    <% @notes&.each do |note| %>
+      <tr>
+        <% if @columns.include? 'date' %>
+            <td><%= note.created_at.to_date.strftime('%d/%m/%Y') %></td>
+        <% end %>
+
+        <% if @columns.include? 'branch_name' %>
+            <td><%= note.branch.branch_name  %></td>
+        <% end %>
+        <% if @columns.include? 'branch_code' %>
+            <td><%= "#{note.branch.company.company_code}/#{note.branch.branch_code}" %></td>
+        <% end %>
+
+        <% if @columns.include? 'contact_phone' %>
+            <td><%= note.branch.contact_phone %></td>
+        <% end %>
+
+
+        <% if @columns.include? 'comment' %>
+            <td><%= note.comment %></td>
+        <% end %>
+
+        <% if @columns.include? 'completed_notes' %>
+            <td><%= note.completed_notes %></td>
+        <% end %>
+
+        <% if @columns.include? 'address' %>
+            <td><%= note.branch.address %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

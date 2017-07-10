@@ -56,6 +56,19 @@ class ReportsController < ApplicationController
       @data = params
     end
     
+    if @type == AppConstants::URGENT_ACTION_REPORT
+      @data  = params
+      @notes = Note.order('created_at DESC').includes('branch')
+      
+      if params[:from_date].present?
+        @notes = @notes.where('DATE(created_at) >= DATE(?)', params[:from_date].to_date)
+      end
+
+      if params[:to_date].present?
+        @notes = @notes.where('DATE(created_at) <= DATE(?)', params[:to_date].to_date)
+      end
+    end
+    
     respond_to do |format|
       format.html { redirect_to reports_path }
       format.js { render layout: false }

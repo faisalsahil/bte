@@ -1,0 +1,94 @@
+<% if @notes.present? %>
+    <%= link_to 'Export excel', 'javascript:void(0)', class: 'pull-right btn btn-mini btn-primary', id:'excel_urgent_action', style:'margin-left: 2px;' %>
+    <%= link_to 'Download pdf', 'javascript:void(0)', class: 'pull-right btn btn-mini btn-success', id:'pdf_urgent_action' %>
+<% end %>
+
+<% hidden_field_tag :from_date, @from_date %>
+<% hidden_field_tag :to_date, @to_date %>
+<% hidden_field_tag :report_type, @type %>
+
+<% if @notes.present? %>
+    <select name='urgent_action_report_columns[]' id="urgent_action_report_columns" multiple='multiple'>
+      <% AppConstants::URGENT_ACTION_REPORT_HEADER.each do |column| %>
+          <option value='<%= "#{column[:id]}" %>' selected='selected'><%= column[:name] %></option>
+      <% end %>
+    </select>
+    <table class="table table-striped list-data-table">
+      <thead>
+      <tr>
+        <th>Date</th>
+        <th>Branch</th>
+        <th>Code</th>
+        <th>Cont#</th>
+        <th>Comment</th>
+        <th>Completed Notes</th>
+        <th>Address</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @notes&.each do |note| %>
+          <tr>
+            <td><%= note.created_at.to_date.strftime('%d/%m/%Y') %></td>
+            <td><%= note.branch.branch_name %></td>
+            <td><%= "#{note.branch.try(:company).try(:company_code) || nil}/#{note.branch.branch_code}" %></td>
+            <td><%= note.branch.contact_phone %></td>
+            <td><%= note.comment %></td>
+            <td><%= note.completed_notes %></td>
+            <td><%= note.branch.address %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+<% else %>
+    <h3>No record found.</h3>
+<% end %>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.list-data-table').DataTable({
+            "pageLength": 50
+        });
+
+        $('#urgent_action_report_columns').multiselect({
+            includeSelectAllOption: true,
+            enableFiltering: true,
+            enableClickableOptGroups: true,
+            maxHeight: 200,
+            buttonWidth: '250px'
+        });
+
+        $('#pdf_urgent_action').click(function(){
+            var area_wise       = $('#area_wise').val();
+            var sale_rep_wise   = $('#sale_rep_wise').val();
+            var from_date       = $('#from_date').val();
+            var to_date         = $('#to_date').val();
+            var report_type     = $('#report_type').val();
+
+            var origin = window.location.origin;
+            window.location.href = origin + '/reports/generate_report.pdf?from_date='+ from_date +
+                '&to_date='+ to_date +
+                '&report_type='+ report_type +
+                '&area_wise=' + area_wise +
+                '&sale_rep_wise=' + sale_rep_wise +
+                '&columns=' +  $('#urgent_action_report_columns').val();
+        });
+
+        $('#excel_urgent_action').click(function(){
+            var area_wise       = $('#area_wise').val();
+            var sale_rep_wise   = $('#sale_rep_wise').val();
+            var from_date       = $('#from_date').val();
+            var to_date         = $('#to_date').val();
+            var report_type     = $('#report_type').val();
+
+            var origin = window.location.origin;
+            window.location.href = origin + '/reports/generate_report.xls?from_date='+ from_date +
+                '&to_date='+ to_date +
+                '&report_type='+ report_type +
+                '&area_wise=' + area_wise +
+                '&sale_rep_wise=' + sale_rep_wise +
+                '&columns=' +  $('#urgent_action_report_columns').val();
+        });
+    });
+</script>
+
+
