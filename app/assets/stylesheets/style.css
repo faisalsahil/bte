@@ -1057,15 +1057,16 @@ color: #fff;
   left: 0;
   padding: 11px 21px;
   background-color: #22262e;
-  width: 250px;
+  /*width: 250px;*/
+  width: 100%;
   clear: both;
   -webkit-transition: -webkit-transform 0.3s ease;
   transition: transform 0.3s ease;
 }
 .footer-widget .progress {
-  position: relative;
-  top: 15px;
-  width: 70%;
+  /*position: relative;*/
+  /*top: 15px;*/
+  /*width: 70%;*/
 }
 .footer-widget a {
   color: #8b91a0;
@@ -5200,7 +5201,7 @@ form legend,
   padding: 6px 9px;
 }
 .progress {
-  height: 12px;
+  /*height: 12px;*/
   background-color: #e9ecee;
   background-image: none;
   box-shadow: none;
@@ -5216,7 +5217,7 @@ form legend,
   background-color: rgba(0, 0, 0, 0.28);
 }
 .progress.progress-small {
-  height: 4px;
+  /*height: 4px;*/
 }
 .progress.progress-large {
   height: 20px;

@@ -149,10 +149,10 @@
           </ul>
         </div>
       </div>
-      <div class="footer-widget">
-        <div class="progress transparent progress-small no-radius no-margin">
-        </div>
-      </div>
+      <!--<div class="footer-widget">-->
+        <!--<div class="progress transparent progress-small no-radius no-margin">-->
+        <!--</div>-->
+      <!--</div>-->
       <div class="page-content">
         <div id="portlet-config" class="modal hide">
           <div class="modal-header">
@@ -165,6 +165,12 @@
         <div class="content">
           <%= render :partial => "layouts/messages" %>
           <%= yield %>
+          <div class="footer-widget">
+            <div class="progress transparent progress-small no-radius no-margin">
+              <%= render :partial => "layouts/footer" %>
+            </div>
+          </div>
+
         </div>
       </div>
 
