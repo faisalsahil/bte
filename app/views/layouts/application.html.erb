@@ -31,7 +31,7 @@
                 <span class="selected"></span>
               </a>
             </li>
-            <% if AppConstants::GLOBAL_ARRAY.include? current_user.role.name %>
+            <% if AppConstants::SETTING_ARRAY.include? current_user.role.name %>
               <li class="">
                 <a href="/users">
                   <i class="glyphicon glyphicon-user"></i>
@@ -40,7 +40,7 @@
               </li>
             <% end %>
 
-            <% if AppConstants::GLOBAL_ARRAY.include? current_user.role.name %>
+            <% if AppConstants::SETTING_ARRAY.include? current_user.role.name %>
               <li class=""><a href="javascript:;"> <i class="glyphicon glyphicon-cog"></i> <span class="title">Settings</span></a>
               <ul class="sub-menu">
                 <li > <a href="/storage_types"><span class="title">Storage types</span></a> </li>
@@ -88,7 +88,8 @@
             </li>
             <% end %>
 
-            <li class=""><a href="javascript:;"> <i class="glyphicon glyphicon-cutlery"></i> <span class="title">Branches</span></a>
+            <% if AppConstants::BRANCH_ARRAY.include? current_user.role.name %>
+              <li class=""><a href="javascript:;"> <i class="glyphicon glyphicon-cutlery"></i> <span class="title">Branches</span></a>
               <ul class="sub-menu">
                 <li > <a href="/branches/new"><span class="title">New branch</span></a></li>
                 <li > <a href="/branches?type=visit"><span class="title">Visits</span></a></li>
@@ -97,51 +98,54 @@
               </ul>
             </li>
 
-            <li class=""><a href="javascript:;"> <i class="glyphicon glyphicon-road"></i> <span class="title">Routes</span></a>
+              <li class=""><a href="javascript:;"> <i class="glyphicon glyphicon-road"></i> <span class="title">Routes</span></a>
+                <ul class="sub-menu">
+                  <li > <a href="/routes/new"><span class="title">New route</span></a></li>
+                  <li > <a href="/routes?type=active"><span class="title">Active routes</span></a></li>
+                  <li > <a href="/routes?type=completed"></i><span class="title">Completed routes</span></a></li>
+                </ul>
+              </li>
+            <% end %>
+
+            <li ><a href="javascript:;"> <i class="glyphicon glyphicon-tasks"></i> <span class="title">Assignments</span></a>
               <ul class="sub-menu">
-                <li > <a href="/routes/new"><span class="title">New route</span></a></li>
-                <li > <a href="/routes?type=active"><span class="title">Active routes</span></a></li>
-                <li > <a href="/routes?type=completed"></i><span class="title">Completed routes</span></a></li>
+                <% if AppConstants::ASSIGNMENT_ARRAY.include? current_user.role.name %>
+                  <li > <a href="/assignments/new"><span class="title">New assignment</span></a></li>
+                  <li > <a href="/assignments?type=active"><span class="title">Active assignments</span></a></li>
+                  <li > <a href="/assignments/factory_assignments"><span class="title">Factory assignments</span></a></li>
+                  <li > <a href="/assignments?type=completed"><span class="title">Completed assignments</span></a></li>
+                <% else %>
+                    <li > <a href="/assignments/factory_assignments"><span class="title">Factory assignments</span></a></li>
+                <% end %>
               </ul>
             </li>
 
-            <li class=""><a href="javascript:;"> <i class="glyphicon glyphicon-tasks"></i> <span class="title">Assignments</span></a>
-              <ul class="sub-menu">
-                <li > <a href="/assignments/new"><span class="title">New assignment</span></a></li>
-                <li > <a href="/assignments?type=active"><span class="title">Active assignments</span></a></li>
-                <li > <a href="/assignments/factory_assignments"><span class="title">Factory assignments</span></a></li>
-                <li > <a href="/assignments?type=completed"><span class="title">Completed assignments</span></a></li>
-              </ul>
-            </li>
+            <% if AppConstants::REPORT_ARRAY.include? current_user.role.name %>
+              <li class="">
+                <a href="/reports">
+                  <i class="glyphicon glyphicon-file"></i>
+                  <span class="title">Reports</span>
+                </a>
+              </li>
+            <% end %>
 
-            <li class="">
-              <a href="/reports">
-                <i class="glyphicon glyphicon-file"></i>
-                <span class="title">Reports</span>
-              </a>
-            </li>
+            <% if AppConstants::FACTORY_ARRAY.include? current_user.role.name %>
+              <li class="">
+                <a href="/factory_collections">
+                  <i class="glyphicon glyphicon-stats"></i>
+                  <span class="title">Factory Collection</span>
+                </a>
+              </li>
+            <% end %>
 
-            <li class="">
-              <a href="/factory_collections">
-                <i class="glyphicon glyphicon-stats"></i>
-                <span class="title">Factory Collection</span>
-              </a>
-            </li>
-
-            <li class="">
-              <a href="/notes">
-                <i class="glyphicon glyphicon-flag"></i>
-                <span class="title">Urgent Actions</span>
-              </a>
-            </li>
-
-            <!--<li class="">-->
-              <!--<a href="/schedule_branches/schedules">-->
-                <!--<i class="fa fa-building-o"></i>-->
-                <!--<span class="title">Schedules(for driver)</span>-->
-              <!--</a>-->
-            <!--</li>-->
-
+            <% if AppConstants::SETTING_ARRAY.include? current_user.role.name %>
+              <li class="">
+                <a href="/notes">
+                  <i class="glyphicon glyphicon-flag"></i>
+                  <span class="title">Urgent Actions</span>
+                </a>
+              </li>
+            <% end %>
           </ul>
         </div>
       </div>
