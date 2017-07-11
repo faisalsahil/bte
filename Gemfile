@@ -16,6 +16,8 @@ gem 'devise'
 
 gem 'dotenv-rails'
 
+gem 'fog-aws'
+
 gem 'haml'
 
 gem 'font-awesome-sass'
@@ -32,7 +34,7 @@ gem 'listen'
 
 gem 'pg'
 
-gem "pundit"
+gem 'pundit'
 
 gem 'puma', '~> 3.0'
 

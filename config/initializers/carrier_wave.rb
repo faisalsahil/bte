@@ -1,8 +1,9 @@
 CarrierWave.configure do |config|
-  config.dropbox_app_key = ENV["APP_KEY"]
-  config.dropbox_app_secret = ENV["APP_SECRET"]
-  config.dropbox_access_token = ENV["ACCESS_TOKEN"]
-  config.dropbox_access_token_secret = ENV["ACCESS_TOKEN_SECRET"]
-  config.dropbox_user_id = ENV["USER_ID"]
-  config.dropbox_access_type = "app_folder"
+  config.fog_credentials = {
+      provider:              'AWS',                                      # required
+      aws_access_key_id:     ENV['BTE_AMAZON_KEY_' + ENV['BTE_MODE']],   # required
+      aws_secret_access_key: ENV['BTE_AMAZON_SECRET_' + ENV['BTE_MODE']],# required
+      region:                'us-east-1',                                # optional, defaults to 'us-east-1'
+  }
+  config.fog_directory  = ENV['BTE_AMAZON_BUCKET_' + ENV['BTE_MODE']]    # required
 end

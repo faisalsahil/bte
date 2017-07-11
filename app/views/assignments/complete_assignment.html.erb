@@ -77,8 +77,8 @@
                   <% if route_branch.transfer_to.blank? && route_branch.is_deleted == false %>
                       <tr>
                         <% branch = route_branch.branch
-                           # a_url  = route_branch.image_url
-                           # f_url  = route_branch.factory_image_url
+                            a_url  = route_branch.image_url
+                            f_url  = route_branch.factory_image_url
                         %>
                         <td><%= "Route-#{route_branch.route_id}/#{route_branch.id}" %></td>
                         <td><%= branch.branch_name %></td>
@@ -86,11 +86,8 @@
                         <td><%= branch.contact_phone %></td>
                         <td><%= branch.rate_per_kg %></td>
                         <td><%= route_branch.quantity %></td>
-                        <td>
-                          <%#= link_to route_branch.image, "#{a_url}", target: 'blank' %>
-                          <%#= link_to image_tag(a_url), "#{a_url}", target: 'blank' %>
-                        </td>
-                        <td><%#= link_to image_tag(f_url), "#{f_url}", target: 'blank' %></td>
+                        <td><%= link_to 'View image', "#{a_url}", target: 'blank' %></td>
+                        <td><%= link_to 'View Image', "#{f_url}", target: 'blank' %></td>
                         <td><%= route_branch.comment %></td>
                       </tr>
                   <% end %>
