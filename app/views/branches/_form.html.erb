@@ -20,7 +20,7 @@
         <div class="row">
           <div class="col-md-3 form-group">
             <%= f.label 'Company' %>
-            <%= f.select :company_id, options_for_select(Company.where(is_deleted: false).collect {|p| [ p[:company_name], p[:id] ] }), class: 'form-control' %>
+            <%= f.select :company_id, options_for_select(Company.where(is_deleted: false).collect {|p| [ p[:company_name], p[:id] ] }), {include_blank: 'Select company'}, class: 'form-control dropdown_easy_selection' %>
           </div>
           <div class="col-md-3">
             <%= f.label 'Branch name' %>
@@ -34,7 +34,7 @@
           </div>
           <div class="col-md-3 form-group">
             <%= f.label 'Sale representative' %>
-            <%= f.select :representative, options_for_select(@sale_representatives.collect {|p| [ p[:name], p[:id] ] }, selected: @branch.try(:representative)), {include_blank: 'Select saler'}, class: 'form-control' %>
+            <%= f.select :representative, options_for_select(@sale_representatives.collect {|p| [ p[:name], p[:id] ] }, selected: @branch.try(:representative)), {include_blank: 'Select saler'}, class: 'form-control dropdown_easy_selection' %>
           </div>
           <div class="col-md-3 form-group">
             <%= f.label '# of visits' %>
@@ -74,7 +74,7 @@
         <div class="row">
           <div class="col-md-3">
             <%= f.label 'Type of establishment' %>
-            <%= f.select :food_type_id, options_for_select(FoodType.where(is_deleted: false).collect {|p| [ p[:name], p[:id] ] }, selected: @branch.try(:food_type_id)), class: 'form-control' %>
+            <%= f.select :food_type_id, options_for_select(FoodType.where(is_deleted: false).collect {|p| [ p[:name], p[:id] ] }, selected: @branch.try(:food_type_id)), {include_blank: 'Select Food type'}, class: 'form-control dropdown_easy_selection' %>
           </div>
 
           <div class="col-md-3">

@@ -152,6 +152,14 @@ $(document).ready(function(){
         }
     });
 
+    $('.dropdown_easy_selection').multiselect({
+        // includeSelectAllOption: true,
+        enableFiltering: true,
+        enableCaseInsensitiveFiltering: true,
+        // enableClickableOptGroups: true,
+        maxHeight: 200,
+        buttonWidth: '200px'
+    });
 
     // new route page
     $("#route_state_id").change(function(){
@@ -546,6 +554,7 @@ $(document).ready(function(){
           $('#generate_report_button').attr('disabled', true);
         }
     });
+
 });
 
 function load_branches(area_ids)
