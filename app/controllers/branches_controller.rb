@@ -4,6 +4,7 @@ class BranchesController < ApplicationController
   def index
     authorize :branch
     if params[:type].present?
+      @type = params[:type]
       @branches = Branch.where(branch_status: params[:type]).includes(:company)
       if params[:type] == AppConstants::VISIT
         @statuses = [AppConstants::VISIT, AppConstants::LEAD, AppConstants::CONTRACTED]
