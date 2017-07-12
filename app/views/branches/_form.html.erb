@@ -34,7 +34,7 @@
           </div>
           <div class="col-md-3 form-group">
             <%= f.label 'Sale representative' %>
-            <%= f.select :representative, options_for_select(@sale_representatives.collect {|p| [ p[:name], p[:id] ] }, selected: @branch.try(:representative)), {include_blank: 'Select saler'}, class: 'form-control dropdown_easy_selection' %>
+            <%= f.select :representative, options_for_select(@sale_representatives.collect {|p| [ p[:name] || p[:email], p[:id] ] }, selected: @branch.try(:representative)), {include_blank: 'Select saler'}, class: 'form-control dropdown_easy_selection' %>
           </div>
           <div class="col-md-3 form-group">
             <%= f.label '# of visits' %>
