@@ -83,8 +83,8 @@ class Branch < ApplicationRecord
       csv << @columns
       branches.each do |branch|
         ar = []
-        ar << branch.area.name if @columns.include? 'area_id'
-        ar << branch.try(:representator).try(:name) || 'N/A' if @columns.include? 'representative'
+        ar << branch.area.try(:name) if @columns.include? 'area_id'
+        ar << branch.representator.try(:name) || branch.representator.try(:email) || 'N/A' if @columns.include? 'representative'
         ar << branch.branch_name if @columns.include? 'branch_name'
         ar << "#{branch.company.company_code}/#{branch.branch_code}" if @columns.include? 'branch_code'
         ar << branch.contact_name if @columns.include? 'contact_name'
@@ -127,8 +127,8 @@ class Branch < ApplicationRecord
       csv << @columns
       branches.each do |branch|
         ar = []
-        ar << branch.area.name if @columns.include? 'area_id'
-        ar << branch.try(:representator).try(:name) || 'N/A' if @columns.include? 'representative'
+        ar << branch.area.try(:name) if @columns.include? 'area_id'
+        ar << branch.representator.try(:name) || branch.representator.try(:email) || 'N/A' if @columns.include? 'representative'
         ar << branch.branch_name if @columns.include? 'branch_name'
         ar << "#{branch.company.company_code}/#{branch.branch_code}" if @columns.include? 'branch_code'
         ar << branch.contact_name if @columns.include? 'contact_name'
@@ -148,8 +148,8 @@ class Branch < ApplicationRecord
       csv << @columns
       branches.each do |branch|
         ar = []
-        ar << branch.area.name if @columns.include? 'area_id'
-        ar << branch.try(:representator).try(:name) || 'N/A' if @columns.include? 'representative'
+        ar << branch.area.try(:name) if @columns.include? 'area_id'
+        ar << branch.representator.try(:name) || branch.representator.try(:email) || 'N/A' if @columns.include? 'representative'
         ar << branch.branch_name if @columns.include? 'branch_name'
         ar << "#{branch.company.company_code}/#{branch.branch_code}" if @columns.include? 'branch_code'
         ar << branch.contact_name if @columns.include? 'contact_name'
