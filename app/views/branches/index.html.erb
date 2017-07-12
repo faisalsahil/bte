@@ -31,7 +31,7 @@
                 <% if @type.present? && @type == 'contracted' %>
                   <td><%= "#{branch.company.company_code}/#{branch.branch_code}" %></td>
                 <% end %>
-                <td><%= branch.representator.name || branch.representator.name %></td>
+                <td><%= branch.representator.try(:name) || branch.representator.try(:email) %></td>
                 <td><%= branch.branch_name %></td>
 
                 <!--<td><%#= branch.contact_name %></td>-->
