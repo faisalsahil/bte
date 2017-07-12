@@ -26,7 +26,7 @@
           <td><%= branch.try(:area).try(:name) %></td>
         <% end %>
         <% if @columns.include? 'representative' %>
-          <td><%= branch.try(:representator).try(:name) || 'N/A' %></td>
+          <td><%= branch.try(:representator).try(:name) || branch.try(:representator).try(:email) || 'N/A' %></td>
         <% end %>
         <% if @columns.include? 'branch_name' %>
           <td><%= branch.branch_name  %></td>
