@@ -20,6 +20,12 @@ user.password_confirmation = 'admin123'
 user.save!
 
 
+states = ['Punjab', 'Sindh', 'KPK', 'Balochistan', 'FATA']
+
+
+states.each do |state|
+  State.create!(name: state)
+end
 
 
 

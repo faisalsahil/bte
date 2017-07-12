@@ -27,31 +27,50 @@ task :contracted_data => :environment do
       city.save!
     end
     
-    area = Area.find_by_name(row['Area']) || Area.new
-    if area.new_record?
-      area.name    = row['Area']
-      area.city_id = city.id
-      area.state_id= state.id
-      area.save!
+    if row['Area'].present?
+      area = Area.find_by_name(row['Area']) || Area.new
+      if area.new_record?
+        area.name    = row['Area']
+        area.city_id = city.id
+        area.state_id= state.id
+        area.save!
+      end
     end
     
-    storage_type = StorageType.find_by_name(row['Storage Tin/Drum']) || StorageType.new
-    if storage_type.new_record?
-      storage_type.name = row['Storage Tin/Drum']
-      storage_type.save!
+    if row['Storage Tin/Drum'].present?
+      storage_type = StorageType.find_by_name(row['Storage Tin/Drum']) || StorageType.new
+      if storage_type.new_record?
+        storage_type.name = row['Storage Tin/Drum']
+        storage_type.save!
+      end
     end
     
-    food_type = FoodType.find_by_name(row['Type']) || FoodType.new
-    if food_type.new_record?
-      food_type.name = row['Type']
-      food_type.save!
+    if row['Type'].present?
+      food_type = FoodType.find_by_name(row['Type']) || FoodType.new
+      if food_type.new_record?
+        food_type.name = row['Type']
+        food_type.save!
+      end
     end
-    
+
+    if row['FSO Name'].present?
+      email= "#{row['FSO Name'].downcase.gsub(' ', '_')}@gmail.com"
+      role = Role.find_by_name('saler')
+      user = User.find_by_email(email) || User.new
+      if user.new_record?
+        user.name     = row['FSO Name']
+        user.email    = email
+        user.password = '1234567890'
+        user.password_confirmation = '1234567890'
+        user.role_id  = role.id
+        user.save!
+      end
+    end
     # ========================================================================
     
     # ================  Branch  start  ========================================
     branch = Branch.new
-    branch.company_id   = company.id
+    branch.company_id   = company ? company.id : nil
     branch.branch_name  = row['Name']
     branch.contact_name = row['Outlet Contact Name']
     branch.contact_phone= row['Outlet Contact Phone']
@@ -60,13 +79,14 @@ task :contracted_data => :environment do
     branch.street      = row['Outlets/pickup Address']
     branch.created_at   = row['Lead creation date']
     branch.zip          = 54000
-    branch.area_id      = area.id
-    branch.storage_type_id = storage_type.id
-    branch.food_type_id    = food_type.id
+    branch.area_id      = area ? area.id : nil
+    branch.storage_type_id = storage_type ? storage_type.id : nil
+    branch.food_type_id    = food_type ? food_type.id : nil
     branch.city_id       = city.id
     branch.state_id      = state.id
     branch.branch_status = 'contracted'
-    # branch.representative= user.id
+    branch.representative= user ? user.id : nil
+    branch.rate_per_kg   = row['Rate']
     branch.save(validate: false)
     branch.update_status_and_code
     # ================  Branch  end  ========================================
