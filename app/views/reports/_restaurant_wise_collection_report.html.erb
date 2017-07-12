@@ -43,8 +43,8 @@
       <tbody>
       <% @branches&.each do |branch| %>
           <tr>
-            <td><%= branch.area.name %></td>
-            <td><%= branch.try(:representator).try(:name) || 'N/A' %></td>
+            <td><%= branch.area.try(:name) %></td>
+            <td><%= branch.representator.try(:name) || branch.representator.try(:email) || 'N/A' %></td>
             <td><%= branch.branch_name  %></td>
             <td><%= "#{branch.try(:company).try(:company_code) || nil}/#{branch.branch_code}" %></td>
             <td><%= branch.contact_name %></td>
