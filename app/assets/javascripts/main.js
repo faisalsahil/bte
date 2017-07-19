@@ -377,22 +377,26 @@ $(document).ready(function(){
 
     //  branches index page==============================================
     $(".branch_change_status").change(function(){
-        alert($(this));
-        var branch_id = $(this).parent().parent().attr('id');
-        var status    = $(this).val();
-        $.ajax({
-            url: '/branches/'+ branch_id +'/update_branch_status',
-            dataType:'JSON',
-            type: 'post',
-            data:{
-                status: status
-            },
-            success:function(data){
-               location.reload();
-            },
-            error:function(){
-            }
-        });
+        if (confirm('Are you sure to change the status?')) {
+            var branch_id = $(this).parent().parent().attr('id');
+            var status    = $(this).val();
+            $.ajax({
+                url: '/branches/'+ branch_id +'/update_branch_status',
+                dataType:'JSON',
+                type: 'post',
+                data:{
+                    status: status
+                },
+                success:function(data){
+                    location.reload();
+                },
+                error:function(){
+                }
+            });
+        } else {
+            return false;
+        }
+
     });
 
     // Add assignment====================================================
