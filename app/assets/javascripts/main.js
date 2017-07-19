@@ -395,11 +395,6 @@ $(document).ready(function(){
         });
     });
 
-    $('#branches_index_table').on( 'draw.dt', function () {
-        update_selectopt();
-    });
-
-
     // Add assignment====================================================
     $('#assignment_route_id').change(function(){
         $('#route_branches_list').html('');
