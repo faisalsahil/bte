@@ -6,8 +6,11 @@ $(document).ready(function(){
 
     // branches index
     $('#branches_index_table').DataTable({
-        "pageLength": 50,
+        "lengthMenu": [ [-1, 50, 25, 10], ["All", 50, 25, 10] ],
         "aaSorting": [[ 1, "asc" ]]
+        // "fnDrawCallback": function(){
+        //     console.log("fnDrawCallback");
+        // }
     });
 
     $('#branches').sortable({
@@ -390,6 +393,10 @@ $(document).ready(function(){
             error:function(){
             }
         });
+    });
+
+    $('#branches_index_table').on( 'draw.dt', function () {
+        update_selectopt();
     });
 
 
