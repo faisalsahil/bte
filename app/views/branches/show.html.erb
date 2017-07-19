@@ -1,60 +1,53 @@
 <ul class="breadcrumb">
   <li><p>YOU ARE HERE</p></li>
-  <li><a href="#" class="active">New Branch</a></li>
+  <li><a href="#" class="active">Branch details</a></li>
 </ul>
 <div class="row">
   <div class="col-md-12">
     <div class="grid simple ">
       <div class="grid-body no-border">
-        <p>
-          <strong>Company:</strong>
-          <%= @branch.company.company_name %>
-        </p>
 
-        <p>
-          <strong>Branch name:</strong>
-          <%= @branch.branch_name %>
-        </p>
+        <div class="row">
+          <div class="col-md-4">
+            <fieldset class="fieldset-border">
+              <legend class="fieldset-border">Branch details</legend>
+              <b>Company:</b>        <%= @branch.company.company_name %><br>
+              <b>Area:</b>           <%= @branch.try(:area).try(:name) || 'N/A' %><br>
+              <b>Branch name:</b>    <%= @branch.branch_name || 'N/A' %><br>
+              <b>Sale Person:</b> <%= @branch.representator.try(:name) || @branch.representator.try(:email) %><br>
+              <b>Status:</b>       <%= @branch.branch_status %><br>
+              <% if @branch_status == 'contracted' %>
+                  <b>Code (c/B):</b>  <%= "#{@branch.company.company_code}/#{@branch.branch_code}" %>
+              <% end %>
+            </fieldset>
+          </div>
+          <div class="col-md-4">
+            <fieldset class="fieldset-border">
+              <legend class="fieldset-border">Contact details</legend>
+              <b>Contact name:</b>   <%= @branch.contact_name || 'N/A' %><br>
+              <b>Contact email:</b>  <%= @branch.contact_email || 'N/A' %><br>
+              <b>Contact#:</b>       <%= @branch.contact_phone || 'N/A' %><br>
+            </fieldset>
+          </div>
+          <div class="col-md-4">
+            <fieldset class="fieldset-border">
+              <legend class="fieldset-border">Misc details</legend>
+              <b>Type of food:</b>     <%= @branch.try(:food_type).try(:name) || 'N/A' %><br>
+              <b>Storage type:</b>     <%= @branch.try(:storage_type).try(:name) || 'N/A' %><br>
+              <b>Monthly oil used:</b> <%= @branch.monthly_oil_used || 'N/A' %><br>
+              <b>Rate/KG:</b>     <%= @branch.rate_per_kg || 'N/A' %><br>
+            </fieldset>
+          </div>
+        </div>
 
-        <p>
-          <strong>Contact name:</strong>
-          <%= @branch.contact_name %>
-        </p>
+        <div class="">
+          <fieldset class="fieldset-border">
+            <legend class="fieldset-border">Misc details</legend>
+            <b>Address:</b>     <%= @branch.address %><br>
+          </fieldset>
+        </div>
 
-        <p>
-          <strong>Contact email:</strong>
-          <%= @branch.contact_email %>
-        </p>
 
-        <p>
-          <strong>Contact phone:</strong>
-          <%= @branch.contact_phone %>
-        </p>
-
-        <p>
-          <strong>Type of establishment:</strong>
-          <%= @branch.try(:food_type).try(:name) %>
-        </p>
-
-        <p>
-          <strong>Monthly oil used:</strong>
-          <%= @branch.monthly_oil_used %>
-        </p>
-
-        <p>
-          <strong>Storage type:</strong>
-          <%= @branch.try(:storage_type).try(:name) %>
-        </p>
-
-        <p>
-          <strong>Rate:</strong>
-          <%= @branch.rate_per_kg %>
-        </p>
-
-        <p>
-          <strong>Full address:</strong>
-          <%= @branch.address %>
-        </p>
         <%= link_to 'Back', branches_path, class: 'btn btn-mini btn-default' %>
         <%= link_to 'Edit', edit_branch_path(@branch), class: 'btn btn-mini btn-primary' %>
       </div>
