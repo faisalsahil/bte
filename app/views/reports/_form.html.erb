@@ -18,7 +18,7 @@
         </div>
 
         <div class="form-group hidden" id="month_div">
-          Select Month:<%= text_field_tag :month_wise, nil, class: 'datepicker1 form-control', placeholder: 'optional' %>
+          Select Month:<%= text_field_tag :month_wise, Date.today.strftime("%m/%Y"), class: 'datepicker1 form-control', placeholder: 'optional' %>
         </div>
 
         <div class="form-group">
@@ -38,17 +38,5 @@
           todayHighlight: true,
           toggleActive: true
       });
-      $('#report_type').change(function(){
-         if ($('#report_type').val() == 'month_wise_collection_report')
-         {
-            $('#from_date_div').addClass('hidden');
-            $('#to_date_div').addClass('hidden');
-            $('#month_div').removeClass('hidden');
-         }else{
-             $('#from_date_div').removeClass('hidden');
-             $('#to_date_div').removeClass('hidden');
-             $('#month_div').addClass('hidden');
-         }
-      })
   })
 </script>

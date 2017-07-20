@@ -559,6 +559,21 @@ $(document).ready(function(){
         }else{
           $('#generate_report_button').attr('disabled', true);
         }
+
+        if ($('#report_type').val() == 'month_wise_collection_report')
+        {
+            $('#from_date_div').addClass('hidden');
+            $('#to_date_div').addClass('hidden');
+            $('#month_div').removeClass('hidden');
+        }else{
+            $('#from_date_div').removeClass('hidden');
+            $('#to_date_div').removeClass('hidden');
+            $('#month_div').addClass('hidden');
+        }
+    });
+
+    $('#generate_report_button').click(function () {
+        $('#generate_report_button').text('Please wait...');
     });
 
 });

@@ -8,7 +8,7 @@ class ReportsController < ApplicationController
     @from_date = params[:from_date].try(:to_date)
     @to_date   = params[:to_date].try(:to_date)
     @type      = params[:report_type]
-    @month_year= params[:month_wise].try(:to_date)
+    @month_year= params[:month_wise].try(:to_date) || Date.today.strftime("%m/%Y")
     
     if @type == AppConstants::Lead_REPORT
       @branches = lead_report(params)
