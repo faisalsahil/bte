@@ -3,7 +3,7 @@ class FoodTypesController < ApplicationController
 
   def index
     authorize :food_type
-    @food_types = FoodType.all
+    @food_types = FoodType.where.not(is_deleted: true)
   end
 
   def new

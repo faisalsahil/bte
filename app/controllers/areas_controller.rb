@@ -3,7 +3,7 @@ class AreasController < ApplicationController
 
   def index
     authorize :area
-    @areas = Area.all
+    @areas = Area.where.not(is_deleted: true)
   end
 
   def new

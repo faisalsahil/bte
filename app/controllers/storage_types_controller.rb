@@ -3,7 +3,7 @@ class StorageTypesController < ApplicationController
   
   def index
     authorize :storage_type
-    @storage_types = StorageType.all
+    @storage_types = StorageType.where.not(is_deleted: true)
   end
   
   def new

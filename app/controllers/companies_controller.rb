@@ -4,7 +4,7 @@ class CompaniesController < ApplicationController
 
   def index
     authorize :company
-    @companies = Company.all
+    @companies = Company.where.not(is_deleted: true)
   end
 
   def new

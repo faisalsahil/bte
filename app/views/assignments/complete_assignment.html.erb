@@ -21,7 +21,7 @@
                     <th>Voucher#</th>
                     <th>BranchName</th>
                     <th>Code (C/B)</th>
-                    <th>Cont. #</th>
+                    <!--<th>Cont. #</th>-->
                     <th>Actions</th>
                     <th>Comment</th>
                     </thead>
@@ -36,7 +36,7 @@
                               </td>
                               <td><%= branch.branch_name %></td>
                               <td><%= "#{branch.try(:company).try(:company_code)}/#{branch.branch_code}" %></td>
-                              <td><%= branch.contact_phone %></td>
+                              <!--<td><%#= branch.contact_phone %></td>-->
                               <td>
                                 <%= form_route_branch.text_field :quantity, placeholder: 'qnty (kg)', style: 'width:17%;', class: 'route_quantity' %>
                                 <%= form_route_branch.select :transfer_to, options_for_select(@routes.collect {|p| [ "Route-#{p[:id].to_s}", p[:id] ] }, form_route_branch.object.transfer_to ), {:include_blank => 'Transfer to'}, {style: 'width:18%;', class: 'route_transfer_to'} %>
