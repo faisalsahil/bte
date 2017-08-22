@@ -77,33 +77,28 @@
           Address Info
         </div>
         <div class="panel-body">
-
-          <div class="col-md-3">
-            <%= f.select :state_id, options_for_select(@states.collect { |p| [p[:name], p[:id]] }, selected: @branch.state_id), { include_blank: 'Select sate' }, class: 'form-control' %>
+          <div class="row">
+            <div class="col-md-3">
+              <%= f.select :state_id, options_for_select(@states.collect { |p| [p[:name], p[:id]] }, selected: @branch.state_id), { include_blank: 'Select sate' }, class: 'form-control' %>
+            </div>
+            <div class="col-md-3">
+              <%= f.select :city_id, options_for_select(@cities.collect { |p| [p[:name], p[:id], { parent_id: p.state_id }] }, selected: @branch.city_id), { include_blank: 'Select city' }, class: 'form-control' %>
+            </div>
+            <div class="col-md-3">
+              <%= f.select :area_id, options_for_select(@areas.collect { |p| [p[:name], p[:id], { parent_id: p.city_id }] }, selected: @branch.area_id), { include_blank: 'Select area' }, class: 'form-control' %>
+            </div>
+            <div class="col-md-3">
+              <%= f.text_field :area_name, placeholder: 'Other Area' %>
+            </div>
           </div>
 
-          <div class="col-md-3">
-            <% if @branch.city_id.present? %>
-                <%= f.select :city_id, options_for_select(@branch.state.cities.collect { |p| [p[:name], p[:id]] }, selected: @branch.city_id), { include_blank: 'Select city' }, class: 'form-control' %>
-            <% else %>
-                <select name="branch[city_id]" id="branch_city_id" class="hidden"></select>
-            <% end %>
-          </div>
-
-          <div class="col-md-3">
-            <% if @branch.area_id.present? %>
-                <%= f.select :area_id, options_for_select(@areas.collect { |p| [p[:name], p[:id]] }, selected: @branch.area_id), { include_blank: 'Select area' }, class: 'form-control' %>
-            <% else %>
-                <select name="branch[area_id]" id="branch_area_id" class="hidden"></select>
-            <% end %>
-          </div>
-
-          <div class="col-md-3">
-            <% if @branch.area_id.present? %>
-                <%= f.text_field :street, placeholder: 'street' %>
-            <% else %>
-                <%= f.text_field :street, placeholder: 'street', class: 'hidden' %>
-            <% end %>
+          <div class="row">
+            <div class="col-md-3">
+              <%= f.text_field :street, placeholder: 'street' %>
+            </div>
+            <div class="col-md-3">
+              <%= f.text_field :zip, placeholder: 'zip' %>
+            </div>
           </div>
 
           <div class="col-md-3">
