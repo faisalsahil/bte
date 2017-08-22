@@ -32,6 +32,7 @@
                     <%= f.select :site_id, options_for_select(Site.all.collect {|p| [ p[:name], p[:id] ] }), class: 'form-control', style: 'width: 30%;', class: 'form-control' %>
                   </div>
               <% else %>
+                  <%= f.hidden_field :site_id, value: @current_user_site.id %>
                   <div class="form-group">
                     <%= f.label 'Role' %>
                     <%= f.select :role_id, options_for_select(Role.where(name: AppConstants::ROLES).collect {|p| [ p[:name], p[:id] ] }, 3), class: 'form-control', style: 'width: 30%;', class: 'form-control' %>
