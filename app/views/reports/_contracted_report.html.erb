@@ -9,6 +9,8 @@
 
 <% @areas = Area.where(id: @branches.pluck(:area_id))
    @reps  = User.where(id: @branches.pluck(:representative))
+   @cities = City.where(id: @branches.pluck(:city_id))
+  @companies = Company.where(id: @branches.pluck(:company_id))
 %>
 
 <% if @branches.present? %>
@@ -21,38 +23,46 @@
       <thead>
       <tr>
         <th>
+
+        </th>
+        <th>
+          <%= select_tag :city_wise, options_for_select(@cities.collect {|p| [ p[:name], p[:id] ] }), {include_blank: 'filter city', } %>
+        </th>
+        <th>
           <%= select_tag :area_wise, options_for_select(@areas.collect {|p| [ p[:name], p[:id] ] }), {include_blank: 'filter area', } %>
         </th>
         <th>
-          <%= select_tag :sale_rep_wise, options_for_select(@reps.collect {|p| [ p[:name], p[:id] ] }), {include_blank: 'filter reps'} %>
+          <%= select_tag :company_wise, options_for_select(@companies.collect {|p| [ p[:company_name], p[:id] ] }), {include_blank: 'filter company'} %>
         </th>
       </tr>
       <tr>
+        <th>Date</th>
+        <th>City</th>
         <th>Area</th>
+        <th>Company</th>
         <th>Branch</th>
-        <th>Code</th>
         <th>Cont.name</th>
         <th>Cont#</th>
-        <th>Oil used</th>
-        <th>Collection</th>
-        <th>Rate/Kg</th>
         <th>Address</th>
-        <th>Add Note</th>
+        <% if @current_user_role != AppConstants::PFA %>
+          <th>Add Note</th>
+        <% end %>
       </tr>
       </thead>
       <tbody>
       <% @branches&.each do |branch| %>
           <tr>
+            <td><%= branch.created_at.to_date.strftime('%d/%m/%Y') %></td>
+            <td><%= branch.try(:city).try(:name) %></td>
             <td><%= branch.try(:area).try(:name) %></td>
+            <td><%= branch.try(:company).try(:company_name)  || 'N/A' %></td>
             <td><%= branch.branch_name  %></td>
-            <td><%= "#{branch.try(:company).try(:company_code) || nil}/#{branch.branch_code}" %></td>
             <td><%= branch.contact_name %></td>
             <td><%= branch.contact_phone %></td>
-            <td><%= branch.monthly_oil_used %></td>
-            <td><%= branch.total_collection %></td>
-            <td><%= branch.rate_per_kg %></td>
             <td><%= branch.address %></td>
-            <td><%= link_to 'Notes', branch_notes_path(branch), class: 'btn btn-mini btn-primary' %></td>
+            <% if @current_user_role != AppConstants::PFA %>
+              <td><%= link_to 'Notes', branch_notes_path(branch), class: 'btn btn-mini btn-primary' %></td>
+            <% end %>
           </tr>
       <% end %>
       </tbody>
@@ -77,7 +87,8 @@
 
         $('#pdf-contracted').click(function(){
             var area_wise       = $('#area_wise').val();
-            var sale_rep_wise   = $('#sale_rep_wise').val();
+            var city_wise       = $('#city_wise').val();
+            var company_wise    = $('#company_wise').val();
             var from_date       = $('#from_date').val();
             var to_date         = $('#to_date').val();
             var report_type     = $('#report_type').val();
@@ -87,23 +98,26 @@
                 '&to_date='+ to_date +
                 '&report_type='+ report_type +
                 '&area_wise=' + area_wise +
-                '&sale_rep_wise=' + sale_rep_wise +
+                '&city_wise=' + city_wise +
+                '&company_wise=' + company_wise +
                 '&columns=' +  $('#lead_report_columns').val();
         });
 
         $('#excel-contracted').click(function(){
             var area_wise       = $('#area_wise').val();
-            var sale_rep_wise   = $('#sale_rep_wise').val();
+            var city_wise       = $('#city_wise').val();
+            var company_wise    = $('#company_wise').val();
             var from_date       = $('#from_date').val();
             var to_date         = $('#to_date').val();
             var report_type     = $('#report_type').val();
 
-            var origin = window.location.origin
+            var origin = window.location.origin;
             window.location.href = origin + '/reports/generate_report.xls?from_date='+ from_date +
                 '&to_date='+ to_date +
                 '&report_type='+ report_type +
                 '&area_wise=' + area_wise +
-                '&sale_rep_wise=' + sale_rep_wise +
+                '&city_wise=' + city_wise +
+                '&company_wise=' + company_wise +
                 '&columns=' +  $('#lead_report_columns').val();
         });
     });

@@ -113,6 +113,7 @@ class Ability
     can [:new, :create, :edit, :update, :destroy, :get_area_branches], Area
     can :manage, :reports_controller
     can [:get_state_cities, :get_city_areas], City
+    
     can [:index], ProductSale, {site_id: user.site_id}
     can [:new, :create, :edit, :update, :destroy], ProductSale
   end

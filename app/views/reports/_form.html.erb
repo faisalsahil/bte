@@ -1,38 +1,50 @@
 <br/>
 <div class="panel panel-primary">
   <div class="panel-heading">
-    Generate Report
+
+    <% if @current_user_role == AppConstants::PFA %>
+      <% if @type == AppConstants::CONTRACTED_REPORT %>
+          <strong><%= 'Contracted Report' %></strong>
+      <% elsif @type == AppConstants::COLLECTED_OIL_REPORT %>
+          <strong><%= 'Collected Oil Report' %></strong>
+      <% elsif @type == AppConstants::PROOF_OF_SALE_REPORT %>
+          <strong><%= 'Proof of Sale Report' %></strong>
+      <% end %>
+    <% else %>
+      Generate Report
+    <% end %>
   </div>
   <div class="panel-body">
-    <%= form_tag('/reports/generate_report', multipart: true, method: :post, class: 'form-inline', remote: true) do |f|  %>
+    <%= form_tag('/reports/generate_report', multipart: true, method: :post, class: 'form-inline', remote: true) do |f| %>
         <div class="form-group">
-          <% if @current_user_role == AppConstants::PFA
-              report_array = AppConstants::PFA_REPORT_VISIBLE
-            else
-              report_array = AppConstants::REPORTS
-            end
-          %>
-          Select Type: <%= select_tag :report_type, options_for_select(report_array.collect {|p| [ p[:name], p[:id] ] }, @type), {include_blank: 'Select report', class: 'form-control'} %>
+          <% if @current_user_role == AppConstants::PFA %>
+              <%= hidden_field_tag :report_type, @type %>
+          <% else %>
+              Select Type: <%= select_tag :report_type, options_for_select(AppConstants::REPORTS.collect { |p| [p[:name], p[:id]] }, @type), { include_blank: 'Select report', class: 'form-control' } %>
+          <% end %>
         </div>
 
         <div class="form-group hidden" id="contract_type_div">
-          Select Truck:<%= select_tag :contract_type, options_for_select(AppConstants::CONTRACT_STATUS), class: 'form-control' %>
+          Select
+          Truck:<%= select_tag :contract_type, options_for_select(AppConstants::CONTRACT_STATUS), class: 'form-control' %>
         </div>
 
         <div class="form-group" id="from_date_div">
           From date: <%= text_field_tag :from_date, nil, class: 'datepicker form-control', placeholder: 'optional' %>
         </div>
 
-        <div class="form-group"  id="to_date_div">
+        <div class="form-group" id="to_date_div">
           To date:<%= text_field_tag :to_date, nil, class: 'datepicker form-control', placeholder: 'optional' %>
         </div>
 
         <div class="form-group hidden" id="month_div">
-          Select Month:<%= text_field_tag :month_wise, Date.today.strftime("%m/%Y"), class: 'datepicker1 form-control', placeholder: 'optional' %>
+          Select
+          Month:<%= text_field_tag :month_wise, Date.today.strftime("%m/%Y"), class: 'datepicker1 form-control', placeholder: 'optional' %>
         </div>
 
         <div class="form-group hidden" id="contract_type_div">
-          Select Type:<%= select_tag :contract_type, options_for_select(AppConstants::CONTRACT_STATUS), class: 'form-control' %>
+          Select
+          Type:<%= select_tag :contract_type, options_for_select(AppConstants::CONTRACT_STATUS), class: 'form-control' %>
         </div>
 
         <div class="form-group">
@@ -43,14 +55,14 @@
 </div>
 
 <script type="text/javascript">
-  $(document).ready(function(){
-      $('.datepicker1').datepicker({
-          format: "mm/yyyy",
-          viewMode: "months",
-          minViewMode: "months",
-          autoclose: true,
-          todayHighlight: true,
-          toggleActive: true
-      });
-  })
+    $(document).ready(function () {
+        $('.datepicker1').datepicker({
+            format: "mm/yyyy",
+            viewMode: "months",
+            minViewMode: "months",
+            autoclose: true,
+            todayHighlight: true,
+            toggleActive: true
+        });
+    })
 </script>

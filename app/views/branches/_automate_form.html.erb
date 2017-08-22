@@ -20,14 +20,20 @@
           <div class="row">
             <div class="col-md-3 form-group">
               <%= f.label 'Company' %>
-              <%= f.select :company_id, options_for_select(@companies.collect { |p| [p[:company_name], p[:id]] }, selected: @branch.company_id), { include_blank: 'Select company' }, class: 'form-control dropdown_easy_selection' %>
+              <%= f.select :company_id, options_for_select(@companies.collect { |p| [p[:company_name], p[:id]] }, selected: @branch.company_id), { include_blank: 'Select company' }, class: 'form-control ' %>
             </div>
+
+            <div class="col-md-3 form-group">
+              <%= f.text_field :company_name, placeholder: 'Other Company', style: 'margin-top: 11%;' %>
+            </div>
+
+
             <div class="col-md-3">
               <%= f.label 'Branch name' %>
               <%= f.text_field :branch_name, class: 'form-control', placeholder: 'branch name' %>
             </div>
             <div class="col-md-3 form-group">
-              <%= f.label 'Status' %>
+              <%= f.label 'Contract type' %>
               <%= f.select :contract_type, options_for_select(AppConstants::CONTRACT_STATUS), class: 'form-control' %>
             </div>
 
@@ -39,7 +45,8 @@
             </div>
             <div class="col-md-3 form-group">
               <%= f.label 'Sale representative' %>
-              <%= f.select :representative, options_for_select(@sale_representatives.collect { |p| [p[:name] || p[:email], p[:id]] }, selected: @branch.try(:representative)), { include_blank: 'Select saler' }, class: 'form-control dropdown_easy_selection' %>
+              <!--dropdown_easy_selection-->
+              <%= f.select :representative, options_for_select(@sale_representatives.collect { |p| [p[:name] || p[:email], p[:id]] }, selected: @branch.try(:representative)), { include_blank: 'Select saler' }, class: 'form-control ' %>
             </div>
             <div class="col-md-3 form-group">
               <%= f.label '# of visits' %>
@@ -95,7 +102,8 @@
           <div class="row">
             <div class="col-md-3">
               <%= f.label 'Type of establishment' %>
-              <%= f.select :food_type_id, options_for_select(@food_types.collect { |p| [p[:name], p[:id]] }, selected: @branch.try(:food_type_id)), { include_blank: 'Select Food type' }, class: 'form-control dropdown_easy_selection' %>
+              <!--dropdown_easy_selection-->
+              <%= f.select :food_type_id, options_for_select(@food_types.collect { |p| [p[:name], p[:id]] }, selected: @branch.try(:food_type_id)), { include_blank: 'Select Food type' }, class: 'form-control ' %>
             </div>
 
             <div class="col-md-3">

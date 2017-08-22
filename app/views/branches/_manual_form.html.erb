@@ -18,11 +18,19 @@
         </div>
         <div class="panel-body">
           <div class="row">
-            <%= f.hidden_field :company_id, value: @companies.first.id %>
+            <%#= f.hidden_field :company_id, value: @companies.first.id %>
             <%= f.hidden_field :branch_status, value: 'contracted' %>
             <%= f.hidden_field :visits_per_month, value: 5 %>
             <%= f.hidden_field :food_type_id, value: @food_types.first.id %>
             <%= f.hidden_field :storage_type_id, value: @storage_types.first.id %>
+            <div class="col-md-3 form-group">
+              <%= f.label 'Company' %>
+              <%= f.select :company_id, options_for_select(@companies.collect { |p| [p[:company_name], p[:id]] }, selected: @branch.company_id), { include_blank: 'Select company' }, class: 'form-control ' %>
+            </div>
+
+            <div class="col-md-3 form-group">
+              <%= f.text_field :company_name, placeholder: 'Other Company', style: 'margin-top: 11%;' %>
+            </div>
             <div class="col-md-3">
               <%= f.label 'Branch name' %>
               <%= f.text_field :branch_name, class: 'form-control', placeholder: 'branch name' %>

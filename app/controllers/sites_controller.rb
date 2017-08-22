@@ -18,20 +18,25 @@ class SitesController < ApplicationController
   
   def create
     @site = Site.new(site_params)
-    # Creating default recored
+    
     respond_to do |format|
       if @site.save
+        # Creating default record
         StorageType.create!(name: 'N/A', site_id: @site.id)
         FoodType.create!(name: 'N/A', site_id: @site.id)
-        Company.create!(company_name: 'N/A', site_id: @site.id)
+        # Company.create!(company_name: 'N/A', site_id: @site.id)
         Vehicle.create!(vehicle_type: 'N/A', vehicle_number: 'N/A', site_id: @site.id)
         driver_role = Role.find_by_name(AppConstants::DRIVER)
         helper_role = Role.find_by_name(AppConstants::HELPER)
+        admin_role  = Role.find_by_name(AppConstants::ADMIN)
         user        = User.new(name: "#{@site.name} driver", email: "#{@site.name}_driver@gmail.com", password: '123456789', password_confirmation: '123456789', site_id: @site.id, role_id: driver_role.id)
         user.save!
         user = User.new(name: "#{@site.name} helper", email: "#{@site.name}_helper@gmail.com", password: '123456789', password_confirmation: '123456789', site_id: @site.id, role_id: helper_role.id)
         user.save!
-        format.html { redirect_to @site, notice: 'Site was successfully created.' }
+        user = User.new(name: "#{@site.name}", email: "#{@site.name}_admin@gmail.com", password: 'admin123', password_confirmation: 'admin123', site_id: @site.id, role_id: admin_role.id)
+        user.save!
+        
+        format.html { redirect_to sites_path, notice: 'Site was successfully created.' }
         format.json { render :show, status: :created, location: @site }
       else
         format.html { render :new }
@@ -47,7 +52,7 @@ class SitesController < ApplicationController
       if @site.update(site_params)
         @site.product_sales.where(gd_number: '', quantity: nil).destroy_all
         @site.product_sales.each do |product_sale|
-          country      = ISO3166::Country[product_sale.country]
+          country = ISO3166::Country[product_sale.country]
           if country.present? && country.name.present?
             product_sale.country_name = country.name
             product_sale.save!

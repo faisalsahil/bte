@@ -71,18 +71,23 @@ class BranchesController < ApplicationController
   end
   
   def create
-    if params[:branch][:area_id].blank? && params[:branch][:area_name].present?
+    if params[:branch][:area_name].present?
       area          = Area.find_by_name_and_site_id(params[:branch][:area_name], @current_user_site.id) || Area.new(site_id: @current_user_site.id)
       area.state_id = params[:branch][:state_id]
       area.city_id  = params[:branch][:city_id]
       area.name     = params[:branch][:area_name]
       area.save if area.new_record?
-      @branch         = Branch.new(branch_params)
-      @branch.area_id = area.id
-    else
-      @branch = Branch.new(branch_params)
     end
     
+    if params[:branch][:company_name].present?
+      company              = Company.find_by_company_name_and_site_id(params[:branch][:company_name], @current_user_site.id) || Company.new(site_id: @current_user_site.id)
+      company.company_name = params[:branch][:company_name]
+      company.save if company.new_record?
+    end
+
+    @branch            = Branch.new(branch_params)
+    @branch.area_id    = area.id if area.present?
+    @branch.company_id = company.id if company.present?
     
     respond_to do |format|
       if @branch.save
@@ -161,6 +166,6 @@ class BranchesController < ApplicationController
   end
   
   def branch_params
-    params.require(:branch).permit(:company_id, :branch_name, :contract_type, :branch_code, :area_id, :contact_name, :rate_per_kg, :contact_email, :contact_phone, :number_of_outlets, :food_type_id, :monthly_oil_used, :storage_type_id, :city_id, :street, :state_id, :zip, :latitude, :longitude, :branch_status, :representative, :visits_per_month, :area_name)
+    params.require(:branch).permit(:company_id, :branch_name, :contract_type, :branch_code, :area_id, :contact_name, :rate_per_kg, :contact_email, :contact_phone, :number_of_outlets, :food_type_id, :monthly_oil_used, :storage_type_id, :city_id, :street, :state_id, :zip, :latitude, :longitude, :branch_status, :representative, :visits_per_month, :area_name, :company_name)
   end
 end

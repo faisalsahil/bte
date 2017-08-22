@@ -8,7 +8,7 @@ class Branch < ApplicationRecord
   reverse_geocoded_by :latitude, :longitude
   after_validation :reverse_geocode
 
-  attr_accessor :area_name
+  attr_accessor :area_name, :company_name
   
   has_many :route_branches
   has_many :routes, through: :route_branches
@@ -88,16 +88,13 @@ class Branch < ApplicationRecord
       csv << @columns
       branches.each do |branch|
         ar = []
+        ar << branch.created_at.to_date.strftime('%d/%m/%Y') if @columns.include? 'date'
+        ar << branch.try(:city).try(:name) if @columns.include? 'city'
         ar << branch.area.try(:name) if @columns.include? 'area_id'
-        ar << branch.representator.try(:name) || branch.representator.try(:email) || 'N/A' if @columns.include? 'representative'
+        ar << "#{branch.company.company_code}" if @columns.include? 'company'
         ar << branch.branch_name if @columns.include? 'branch_name'
-        ar << "#{branch.company.company_code}/#{branch.branch_code}" if @columns.include? 'branch_code'
         ar << branch.contact_name if @columns.include? 'contact_name'
         ar << branch.contact_phone if @columns.include? 'contact_phone'
-        ar << branch.monthly_oil_used if @columns.include? 'monthly_oil_used'
-        ar << branch.rate_per_kg if @columns.include? 'rate_per_kg'
-        ar << branch.visits_per_month if @columns.include? 'visits_per_month'
-        ar << branch.total_collection if @columns.include? 'total_collection'
         ar << branch.address if @columns.include? 'address'
         
         csv << ar
