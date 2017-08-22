@@ -23,6 +23,7 @@ class RoutesController < ApplicationController
   def new
     @route  = Route.new
     @states = State.all
+    @cities = City.all
   end
   
   def edit

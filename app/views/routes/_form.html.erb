@@ -7,11 +7,7 @@
         <%= f.select :state_id, options_for_select(@states.collect {|p| [ p[:name], p[:id] ] }, selected: @route.state_id), {include_blank: 'Select sate'} %>
       </div>
       <div class="col-md-3">
-        <% if @route.city_id.present? %>
-            <%= f.select :city_id, options_for_select(@route.state.cities.collect {|p| [ p[:name], p[:id] ] }, selected: @route.city_id), {include_blank: 'Select city'} %>
-        <% else %>
-            <select name="route[city_id]" id="route_city_id" class="hidden"></select>
-        <% end %>
+        <%= f.select :city_id, options_for_select(@cities.collect {|p| [ p[:name], p[:id], {parent_id: p[:state_id]} ] }, selected: @route.try(:city_id)), {include_blank: 'Select city'} %>
       </div>
       <div class="col-md-3">
         <% if @route_area_ids.present? %>

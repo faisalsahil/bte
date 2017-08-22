@@ -161,37 +161,10 @@ $(document).ready(function () {
     // new route page
     $("#route_state_id").change(function () {
         var state_id = $("#route_state_id").val();
-        $("#route_area").addClass('hidden');
-        $('#route_area').html('');
-        $("#select_branches").html('');
-
-        $("#route_city_id").addClass('hidden');
-        $select = $("#route_city_id");
-        $select.html('');
-        if (state_id > 0) {
-            $.ajax({
-                url: '/states/' + state_id + '/cities/get_state_cities',
-                dataType: 'JSON',
-                success: function (data) {
-                    if (data.status == true) {
-                        $select = $("#route_city_id");
-                        $select.html('');
-                        $select.html('<option value = "-1">Select city</option>');
-                        $.each(data.cities, function (key, val) {
-                            $select.append('<option value="' + val.id + '" name="' + val.id + '" >' + val.name + '</option>');
-                        })
-                        $("#route_city_id").removeClass('hidden');
-                    } else {
-                        $select = $("#route_city_id");
-                        $select.html('');
-                        $select.html('<option value = "-1">Select user</option>');
-                        $("#route_city_id").addClass('hidden');
-                    }
-                },
-                error: function () {
-                }
-            });
-        }
+        $("#route_city_id").val('');
+        $("#route_city_id").children('option').hide();
+        $("#route_city_id option[value=" + '' + "]").show();
+        $("#route_city_id option[parent_id=" + state_id + "]").show();
     });
 
     $("#route_city_id").change(function () {

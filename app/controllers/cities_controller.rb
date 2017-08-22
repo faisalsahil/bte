@@ -63,18 +63,18 @@ class CitiesController < ApplicationController
     end
   end
   
-  def get_state_cities
-    @state  = State.find_by_id(params[:state_id])
-    @cities = @state.cities.where(is_deleted: false)
-    respond_to do |format|
-      format.html {}
-      format.json { return render json: { status: true, cities: @cities } }
-    end
-  end
+  # def get_state_cities
+  #   @state  = State.find_by_id(params[:state_id])
+  #   @cities = @state.cities.where(is_deleted: false)
+  #   respond_to do |format|
+  #     format.html {}
+  #     format.json { return render json: { status: true, cities: @cities } }
+  #   end
+  # end
   
   def get_city_areas
     @city  = City.find_by_id(params[:id])
-    @areas = @city.areas.where(state_id: @city.state_id, is_deleted: false)
+    @areas = @city.areas.where(state_id: @city.state_id, is_deleted: false, site_id: @current_user_site.id)
     respond_to do |format|
       format.html {}
       format.json { return render json: { status: true, areas: @areas } }
