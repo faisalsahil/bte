@@ -76,9 +76,12 @@ class BranchesController < ApplicationController
       area.state_id = params[:branch][:state_id]
       area.city_id  = params[:branch][:city_id]
       area.save! if area.new_record?
-      params[:branch][:area_id] = area.id
+      @branch         = Branch.new(branch_params)
+      @branch.area_id = area.id
+    else
+      @branch = Branch.new(branch_params)
     end
-    @branch = Branch.new(branch_params)
+    
     
     respond_to do |format|
       if @branch.save
