@@ -30,6 +30,7 @@ class RoutesController < ApplicationController
     @branches       = @route.branches
     @areas          = @route.city.areas.where(state_id: @route.state_id)
     @states         = State.all
+    @cities         = City.all
     @branch_ids     = @branches.pluck(:id)
     @route_area_ids = Branch.where(id: @branch_ids).pluck(:area_id).uniq
     @route_areas    = Area.where(id: @route_area_ids).includes(:branches)
@@ -159,7 +160,7 @@ class RoutesController < ApplicationController
     route.site_id      = @current_user_site.id
     route.is_completed = true
     route.save(validate: false)
-
+    
     # add branch price
     route.route_branches.each do |route_branch|
       route_branch.price          = route_branch.try(:branch).try(:rate_per_kg)
@@ -167,7 +168,7 @@ class RoutesController < ApplicationController
       route_branch.save(validate: false)
     end
     route.route_branches.where(branch_id: nil).destroy_all
-
+    
     # Save Assignment
     assignment                   = Assignment.new
     assignment.assigned_at       = Date.today
@@ -175,11 +176,11 @@ class RoutesController < ApplicationController
     assignment.is_completed      = true
     assignment.assignment_status = AppConstants::COMPLETED
     assignment.site_id           = @current_user_site.id
-
-    driver_role = Role.find_by_name(AppConstants::DRIVER)
-    helper_role = Role.find_by_name(AppConstants::HELPER)
-    vehicle     = Vehicle.find_by_site_id(@current_user_site.id)
-
+    
+    driver_role           = Role.find_by_name(AppConstants::DRIVER)
+    helper_role           = Role.find_by_name(AppConstants::HELPER)
+    vehicle               = Vehicle.find_by_site_id(@current_user_site.id)
+    
     # assignment.driver_id  = User.where(role_id: driver_role.id, site_id: @current_user_site.id).first.id
     # assignment.helper_id  = User.where(role_id: helper_role.id, site_id: @current_user_site.id).first.id
     assignment.vehicle_id = vehicle.id
