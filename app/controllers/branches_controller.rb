@@ -23,7 +23,7 @@ class BranchesController < ApplicationController
         @statuses = [AppConstants::CONTRACTED]
       end
     else
-      @branches = Branch.where(branch_status: AppConstants::CONTRACTED).includes(:company)
+      @branches = @branches.where(branch_status: AppConstants::CONTRACTED).includes(:company)
       @statuses = [AppConstants::CONTRACTED]
     end
   end
