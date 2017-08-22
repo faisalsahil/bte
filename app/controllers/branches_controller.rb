@@ -72,7 +72,6 @@ class BranchesController < ApplicationController
   
   def create
     if params[:branch][:area_id].blank? && params[:branch][:area_name].present?
-      area          = Area.find_by_name(params[:branch][:area_name]) || Area.new(site_id: @current_user_site.id)
       area          = Area.find_by_name_and_site_id(params[:branch][:area_name], @current_user_site.id) || Area.new(site_id: @current_user_site.id)
       area.state_id = params[:branch][:state_id]
       area.city_id  = params[:branch][:city_id]
