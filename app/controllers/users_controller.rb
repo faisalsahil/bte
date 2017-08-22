@@ -17,10 +17,10 @@ class UsersController < ApplicationController
     # authorize :user
     if params[:user][:email].present? && params[:user][:password].present? && params[:user][:password_confirmation].present?
       user = User.new(user_params)
-      user.role_id = Role.find_by_name(AppConstants::ADMIN).id if @current_user_role == AppConstants::SUPER_ADMIN
-      user.site_id = @current_user_site.id
-      if user.save
-        redirect_to users_path
+      user.role_id = Role.find_by_name(AppConstants::ADMIN).id
+      user.site_id = params[:user][:site_id]
+      if user.save!
+        redirect_to root_url
       else
         flash[:error] = user.errors.messages
         render :new
