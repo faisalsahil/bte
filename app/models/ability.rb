@@ -99,7 +99,7 @@ class Ability
   
   def pfa(user)
     # can :manage, User, {site_id: user.site_id}
-    can [:new, :create], User
+    can [:new, :add_user, :block_unblock_user], User
     can :manage, Site
     
     
