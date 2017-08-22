@@ -10,7 +10,6 @@ class UsersController < ApplicationController
   end
   
   def new
-    authorize :user
     @user = User.new
   end
   

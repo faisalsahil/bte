@@ -26,7 +26,7 @@
                 <%= f.password_field :password_confirmation, class: 'form-control' %>
               </div>
 
-              <% if @current_user_role == AppConstants::SUPER_ADMIN %>
+              <% if @current_user_role == AppConstants::SUPER_ADMIN || @current_user_role == AppConstants::PFA %>
                   <div class="form-group">
                     <%= f.label 'Enter Site Name' %>
                     <%= f.select :site_id, options_for_select(Site.all.collect {|p| [ p[:name], p[:id] ] }), class: 'form-control', style: 'width: 30%;', class: 'form-control' %>

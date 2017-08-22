@@ -29,12 +29,12 @@ class SitesController < ApplicationController
         driver_role = Role.find_by_name(AppConstants::DRIVER)
         helper_role = Role.find_by_name(AppConstants::HELPER)
         admin_role  = Role.find_by_name(AppConstants::ADMIN)
-        user        = User.new(name: "#{@site.name} driver", email: "#{@site.name}_driver@gmail.com", password: '123456789', password_confirmation: '123456789', site_id: @site.id, role_id: driver_role.id)
+        user        = User.new(name: "#{@site.name} driver", email: "#{@site.name.delete(' ')}_driver@gmail.com", password: '123456789', password_confirmation: '123456789', site_id: @site.id, role_id: driver_role.id)
         user.save!
-        user = User.new(name: "#{@site.name} helper", email: "#{@site.name}_helper@gmail.com", password: '123456789', password_confirmation: '123456789', site_id: @site.id, role_id: helper_role.id)
+        user = User.new(name: "#{@site.name} helper", email: "#{@site.name.delete(' ')}_helper@gmail.com", password: '123456789', password_confirmation: '123456789', site_id: @site.id, role_id: helper_role.id)
         user.save!
-        user = User.new(name: "#{@site.name}", email: "#{@site.name}_admin@gmail.com", password: 'admin123', password_confirmation: 'admin123', site_id: @site.id, role_id: admin_role.id)
-        user.save!
+        # user = User.new(name: "#{@site.name}", email: "#{@site.name.delete(' ')}_admin@gmail.com", password: 'admin123', password_confirmation: 'admin123', site_id: @site.id, role_id: admin_role.id)
+        # user.save!
         
         format.html { redirect_to sites_path, notice: 'Site was successfully created.' }
         format.json { render :show, status: :created, location: @site }

@@ -4,6 +4,7 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.selected_class = 'active'
     
     if @current_user_role == AppConstants::SUPER_ADMIN
+      primary.item :users, content_tag(:i, "", :class => "fa fa-users") + "Add User", new_user_path, :highlights_on => /\/users/
       primary.item :sites, content_tag(:i, "", :class => "fa fa-users") + "Sites", sites_path, :highlights_on => /\/sites/
     end
     
@@ -63,24 +64,12 @@ SimpleNavigation::Configuration.run do |navigation|
         
         primary.item :product_sale, content_tag(:i, "", :class => "fa fa-users") + "Product Sale", product_sales_path, :highlights_on => /\/product_sales/
       else
-        if AppConstants::SETTING_ARRAY.include? @current_user_role
-          primary.item :settings, content_tag(:i, "", :class => "fa fa-users") + "Settings", "#" do |secondary|
-            secondary.dom_class = 'sub-menu'
-            secondary.item :storage_types, content_tag(:i, "", :class => "fa fa-users") + "Storage Types", storage_types_path, :highlights_on => /\/storage_types/
-            secondary.item :food_types, content_tag(:i, "", :class => "fa fa-users") + "Food Types", food_types_path, :highlights_on => /\/food_types/
-            secondary.item :companies, content_tag(:i, "", :class => "fa fa-users") + "Companies", companies_path, :highlights_on => /\/companies/
-            secondary.item :vehicles, content_tag(:i, "", :class => "fa fa-users") + "Vehicles", vehicles_path, :highlights_on => /\/vehicles/
-            secondary.item :billings, content_tag(:i, "", :class => "fa fa-users") + "Billings", billings_path, :highlights_on => /\/billings/
-          end
-        end
-  
         primary.item :new_branch, content_tag(:i, "", :class => "fa fa-users") + "Add Client", new_branch_path, :highlights_on => /\/branches/
         primary.item :add_collection, content_tag(:i, "", :class => "fa fa-users") + "Add Collection", new_factory_collection_path, :highlights_on => /\/factory_collections/
         primary.item :product_sale, content_tag(:i, "", :class => "fa fa-users") + "Product Sale", new_product_sale_path, :highlights_on => /\/product_sales/
       end
     elsif @current_user_role == AppConstants::PFA
-      # primary.item :sites, content_tag(:i, "", :class => "fa fa-users") + "Sites", sites_path, :highlights_on => /\/sites/
-      
+      primary.item :users, content_tag(:i, "", :class => "fa fa-users") + "Add User", new_user_path, :highlights_on => /\/users/
       if session[:current_user_site].present?
         if not session[:current_user_site]['is_automate_process']
           primary.item :new_branch, content_tag(:i, "", :class => "fa fa-users") + "Add Client", new_branch_path, :highlights_on => /\/branches/

@@ -45,7 +45,7 @@
               <li class="divider"></li>
               <% if @current_user_role == AppConstants::SUPER_ADMIN || @current_user_role == AppConstants::PFA %>
                 <li>
-                  <%= link_to 'Add Company', sites_path %>
+                  <%= link_to 'Add Company', new_site_path %>
                 </li>
               <% end %>
               <li>

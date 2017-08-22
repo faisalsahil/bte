@@ -98,7 +98,8 @@ class Ability
   end
   
   def pfa(user)
-    can :manage, User, {site_id: user.site_id}
+    # can :manage, User, {site_id: user.site_id}
+    can [:new, :create], User
     can :manage, Site
     
     

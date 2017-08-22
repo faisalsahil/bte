@@ -2,7 +2,9 @@
 <div class="panel panel-primary">
   <div class="panel-heading">
 
-    <% if @current_user_role == AppConstants::PFA %>
+    <% if @current_user_site.is_automate_process %>
+        Generate Report
+    <% else %>
       <% if @type == AppConstants::CONTRACTED_REPORT %>
           <strong><%= 'Contracted Report' %></strong>
       <% elsif @type == AppConstants::COLLECTED_OIL_REPORT %>
@@ -10,17 +12,16 @@
       <% elsif @type == AppConstants::PROOF_OF_SALE_REPORT %>
           <strong><%= 'Proof of Sale Report' %></strong>
       <% end %>
-    <% else %>
-      Generate Report
     <% end %>
   </div>
   <div class="panel-body">
     <%= form_tag('/reports/generate_report', multipart: true, method: :post, class: 'form-inline', remote: true) do |f| %>
         <div class="form-group">
-          <% if @current_user_role == AppConstants::PFA %>
+          <% if @current_user_site.is_automate_process %>
+              Select Type: <%= select_tag :report_type, options_for_select(AppConstants::REPORTS.collect { |p| [p[:name], p[:id]] }, @type), { include_blank: 'Select report', class: 'form-control' } %>
               <%= hidden_field_tag :report_type, @type %>
           <% else %>
-              Select Type: <%= select_tag :report_type, options_for_select(AppConstants::REPORTS.collect { |p| [p[:name], p[:id]] }, @type), { include_blank: 'Select report', class: 'form-control' } %>
+              <%= hidden_field_tag :report_type, @type %>
           <% end %>
         </div>
 
