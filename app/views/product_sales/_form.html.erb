@@ -6,6 +6,7 @@
         <th>GD#</th>
         <th>Quantity</th>
         <th>Attachment</th>
+        <th>Tax Return Attachment</th>
         <th>Remarks</th>
       </thead>
       <tbody>
@@ -16,6 +17,7 @@
               <td><%= product_sale.text_field :gd_number, class: 'sale_gd_number' %></td>
               <td><%= product_sale.text_field :quantity, placeholder: 'KG', class: 'sale_quantity' %></td>
               <td><%= product_sale.file_field :attachment, class: 'sale_attachment' %></td>
+              <td><%= product_sale.file_field :income_tax_return_file, class: 'tax_return_attachment' %></td>
               <td><%= product_sale.text_field :remarks %></td>
             </tr>
         <% end %>

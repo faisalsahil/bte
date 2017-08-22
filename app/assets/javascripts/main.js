@@ -597,8 +597,9 @@ $(document).ready(function () {
             var gd_number = $this.find(".sale_gd_number").val().length;
             var quantity  = $this.find(".sale_quantity").val().length;
             var image     = $this.find(".sale_attachment").val().length;
-            if (date > 0 || country > 0 || gd_number > 0 || quantity > 0 || image > 0) {
-                if (date > 0 && country > 0 && gd_number > 0 && quantity > 0 && image > 0) {
+            var tax_image = $this.find(".tax_return_attachment").val().length;
+            if (date > 0 || country > 0 || gd_number > 0 || quantity > 0 || image > 0 || tax_image > 0) {
+                if (date > 0 && country > 0 && gd_number > 0 && quantity > 0 && image > 0 && tax_image > 0) {
                     status = true;
                 }else{
                     status = false;

@@ -37,7 +37,7 @@ class CompaniesController < ApplicationController
       area.name     = params[:company][:branches_attributes]["0"][:area_name]
       area.save if area.new_record?
       # params[:company][:branches_attributes]["0"][:area_id] = area.id
-      binding.pry
+      
       @company                = Company.new(company_params)
       @company.branches.first.area_id = area.id
     else
@@ -45,7 +45,7 @@ class CompaniesController < ApplicationController
     end
     
     @company.site_id = current_user.site_id
-    binding.pry
+    
     respond_to do |format|
       if @company.save
         if params[:company][:save_branch_as_nested].present?

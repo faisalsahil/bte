@@ -16,7 +16,7 @@
         <%= render 'report_block', block_color: 'purple', title: 'Urgent Action', title_1: 'Tot. Actions', count_1: @total_notes, title_2: 'Unresolved count', count_2: @total_unresolved_notes, type: AppConstants::URGENT_ACTION_REPORT  %>
       </div>
       <div class="row 2col">
-        <%= render 'report_block', block_color: 'blue', title: 'Proof of Sale', title_1: 'Tot. Sale', count_1: @total_sold, title_2: 'Current Stock', count_2: @total_collected - @total_sold, type: AppConstants::CONTRACTED_REPORT %>
+        <%= render 'report_block', block_color: 'blue', title: 'Proof of Sale', title_1: 'Tot. Sale', count_1: @total_sold, title_2: 'Current Stock', count_2: @total_collected - @total_sold, type: AppConstants::PROOF_OF_SALE_REPORT %>
       </div>
   <% end %>
 

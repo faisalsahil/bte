@@ -59,6 +59,6 @@ def create
     end
 
     def product_sale_params
-      params.require(:product_sale).permit(:sale_date, :country, :gd_number, :quantity, :attachment, :remarks, :stock_in_hand, :site_id)
+      params.require(:product_sale).permit(:sale_date, :country, :gd_number, :quantity, :attachment, :remarks, :stock_in_hand, :site_id, :income_tax_return_file)
     end
 end
