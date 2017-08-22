@@ -19,7 +19,6 @@
         <div class="form-group">
           <% if @current_user_site.is_automate_process %>
               Select Type: <%= select_tag :report_type, options_for_select(AppConstants::REPORTS.collect { |p| [p[:name], p[:id]] }, @type), { include_blank: 'Select report', class: 'form-control' } %>
-              <%= hidden_field_tag :report_type, @type %>
           <% else %>
               <%= hidden_field_tag :report_type, @type %>
           <% end %>
