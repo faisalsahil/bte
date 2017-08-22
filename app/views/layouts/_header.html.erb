@@ -43,9 +43,11 @@
           </a>
             <ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options">
               <li class="divider"></li>
-              <li>
-                <%= link_to 'Add', sites_path %>
-              </li>
+              <% if @current_user_role == AppConstants::SUPER_ADMIN || @current_user_role == AppConstants::PFA %>
+                <li>
+                  <%= link_to 'Add Company', sites_path %>
+                </li>
+              <% end %>
               <li>
                 <%= link_to 'Edit account', edit_user_registration_path %>
               </li>
