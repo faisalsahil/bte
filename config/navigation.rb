@@ -76,7 +76,7 @@ SimpleNavigation::Configuration.run do |navigation|
   
         primary.item :new_branch, content_tag(:i, "", :class => "fa fa-users") + "Add Client", new_branch_path, :highlights_on => /\/branches/
         primary.item :add_collection, content_tag(:i, "", :class => "fa fa-users") + "Add Collection", new_factory_collection_path, :highlights_on => /\/factory_collections/
-        primary.item :product_sale, content_tag(:i, "", :class => "fa fa-users") + "Product Sale", product_sales_path, :highlights_on => /\/product_sales/
+        primary.item :product_sale, content_tag(:i, "", :class => "fa fa-users") + "Product Sale", new_product_sale_path, :highlights_on => /\/product_sales/
       end
     elsif @current_user_role == AppConstants::PFA
       # primary.item :sites, content_tag(:i, "", :class => "fa fa-users") + "Sites", sites_path, :highlights_on => /\/sites/
