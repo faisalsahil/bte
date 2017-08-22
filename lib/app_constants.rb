@@ -21,6 +21,9 @@ module AppConstants
   COMPLETED       = 'completed'
   CONTRACT_STATUS = ['Large', 'Medium', 'Small']
   
+  ROLES  = [AppConstants::DRIVER, AppConstants::HELPER, AppConstants::FACTORY, AppConstants::SALER, AppConstants::ACCOUNTANT]
+  
+  
   Lead_REPORT                       = 'lead_report'
   VISIT_REPORT                      = 'visit_report'
   CONTRACTED_REPORT                 = 'contracted_report'

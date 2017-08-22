@@ -34,7 +34,7 @@
               <% else %>
                   <div class="form-group">
                     <%= f.label 'Role' %>
-                    <%= f.select :role_id, options_for_select(Role.where.not(name: nil).collect {|p| [ p[:name], p[:id] ] }, 3), class: 'form-control', style: 'width: 30%;', class: 'form-control' %>
+                    <%= f.select :role_id, options_for_select(Role.where(name: AppConstants::ROLES).collect {|p| [ p[:name], p[:id] ] }, 3), class: 'form-control', style: 'width: 30%;', class: 'form-control' %>
                   </div>
               <% end %>
 
