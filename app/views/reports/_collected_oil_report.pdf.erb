@@ -1,0 +1,51 @@
+<br/>
+<div class="well-sm">
+  <span class="pull-right"><strong>Date:</strong>  <%= Date.today.strftime('%d/%m/%Y') %></span>
+  <h3>Collected <Oil></Oil> Report</h3>
+  <% if @from_date.present? && @to_date.present? %>
+      <strong>Date:</strong>  <%= @from_date.to_date.strftime('%d/%m/%Y')%><strong> - </strong><%= @to_date.to_date.strftime('%d/%m/%Y') %>
+  <% elsif @from_date.present? %>
+      <strong>Date:</strong>  <%= @from_date.to_date.strftime('%d/%m/%Y')%><strong> - </strong> Now
+  <% elsif @to_date.present? %>
+      <strong>Date:</strong> Start <strong> - </strong><%= @to_date.to_date.strftime('%d/%m/%Y') %>
+  <% end %>
+</div>
+<br/>
+<table class="table table-striped">
+  <thead>
+  <% @columns = @data[:columns].split(',') %>
+  <% @columns&.each do |column| %>
+      <th><%= column.humanize %></th>
+  <% end %>
+  </thead>
+  <tbody>
+  <% @branches&.each do |branch| %>
+      <tr>
+        <% if @columns.include? 'area_id' %>
+            <td><%= branch.try(:area).try(:name) %></td>
+        <% end %>
+        <% if @columns.include? 'company_name' %>
+            <td><%= "#{branch.try(:company).try(:company_name)}" || 'N/A' %></td>
+        <% end %>
+        <% if @columns.include? 'branch_name' %>
+            <td><%= branch.branch_name  %></td>
+        <% end %>
+        <% if @columns.include? 'branch_code' %>
+            <td><%= "#{branch.company.company_code}/#{branch.branch_code}" %></td>
+        <% end %>
+        <% if @columns.include? 'contact_name' %>
+            <td style="width:20%;"><%= branch.contact_name %></td>
+        <% end %>
+        <% if @columns.include? 'contact_phone' %>
+            <td><%= branch.contact_phone %></td>
+        <% end %>
+        <% if @columns.include? 'total_collection' %>
+            <td><%= Branch.total_restaurant_collection(branch, @from_date, @to_date) %></td>
+        <% end %>
+        <% if @columns.include? 'address' %>
+            <td><%= branch.address %></td>
+        <% end %>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

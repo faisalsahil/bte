@@ -76,7 +76,7 @@ class ReportsController < ApplicationController
     end
     
     if @type == AppConstants::COLLECTED_OIL_REPORT
-      
+      @branches = collected_oil_report(params)
     end
     
     
@@ -153,6 +153,10 @@ class ReportsController < ApplicationController
 
         if @type == AppConstants::TRUCK_REPORT
           send_data Vehicle.to_csv(@truck_report_data)
+        end
+
+        if @type == AppConstants::COLLECTED_OIL_REPORT
+          send_data Branch.collected_oil_to_csv(@branches, @data[:columns], @from_date, @to_date)
         end
 
         
@@ -353,5 +357,19 @@ class ReportsController < ApplicationController
     end
     
     truck_report_data
+  end
+  
+  def collected_oil_report(params)
+    company_ids = Company.where(site_id: @current_user_site.id).pluck(:id)
+    @branches   = Branch.where(branch_status: AppConstants::CONTRACTED, company_id: company_ids)
+
+    if params[:area_wise].present?
+      @branches = @branches.where(area_id: params[:area_wise])
+    end
+
+    if params[:company_wise].present?
+      @branches = @branches.where(company_id: params[:company_wise])
+    end
+    @branches
   end
 end

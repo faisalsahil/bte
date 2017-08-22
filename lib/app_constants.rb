@@ -57,7 +57,7 @@ module AppConstants
   ]
   PFA_REPORT_VISIBLE= [
       { name: 'Contracted report', id: CONTRACTED_REPORT },
-      {name: 'Collected oil to date report', id: COLLECTED_OIL_REPORT},
+      {name: 'Collected oil report', id: COLLECTED_OIL_REPORT},
       { name: 'Proof of Sale report', id: PROOF_OF_SALE_REPORT }
   ]
   LEAD_REPORT_HEADER = [
@@ -137,6 +137,16 @@ module AppConstants
       { name: 'GD#', id: 'gd_number' },
       { name: 'Quantity', id: 'quantity' },
       { name: 'Remarks', id: 'remarks' }
+  ]
+  COLLECTED_REPORT_HEADER = [
+      { name: 'Area', id: 'area_id' },
+      { name: 'Company', id: 'company_name' },
+      { name: 'Branch name', id: 'branch_name' },
+      { name: 'Code', id: 'branch_code' },
+      { name: 'Contact name', id: 'contact_name' },
+      { name: 'Contact #', id: 'contact_phone' },
+      { name: 'Collection', id: 'total_collection' },
+      { name: 'Address', id: 'address' }
   ]
   
   SETTING_ARRAY  = ['Super admin', 'admin']

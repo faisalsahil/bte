@@ -53,7 +53,7 @@ class Branch < ApplicationRecord
   end
   
   def total_collection
-    self.route_branches.sum(:quantity)
+    self.route_branches.where(is_deleted: false, transfer_to: nil).sum(:quantity)
   end
   
   def self.total_month_collection(branch, date)
@@ -204,6 +204,26 @@ class Branch < ApplicationRecord
         ar << note.completed_notes if @columns.include? 'completed_notes'
         ar << note.branch.address if @columns.include? 'address'
         
+        csv << ar
+      end
+    end
+  end
+  
+  def self.collected_oil_to_csv(branches, columns = {}, from_date, to_date)
+    @columns = columns.split(',')
+    CSV.generate do |csv|
+      csv << @columns
+      branches.each do |branch|
+        ar = []
+        ar << branch.area.try(:name) if @columns.include? 'area_id'
+        ar << "#{branch.try(:company).try(:company_name)}" || 'N/A' if @columns.include? 'company_name'
+        ar << branch.branch_name if @columns.include? 'branch_name'
+        ar << "#{branch.company.company_code}/#{branch.branch_code}" if @columns.include? 'branch_code'
+        ar << branch.contact_name if @columns.include? 'contact_name'
+        ar << branch.contact_phone if @columns.include? 'contact_phone'
+        ar << Branch.total_restaurant_collection(branch, from_date, to_date) if @columns.include? 'total_collection'
+        ar << branch.address if @columns.include? 'address'
+      
         csv << ar
       end
     end

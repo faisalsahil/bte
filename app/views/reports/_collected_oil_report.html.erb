@@ -1,0 +1,113 @@
+<% if @branches.present? %>
+    <%= link_to 'Export excel', 'javascript:void(0)', class: 'pull-right btn btn-mini btn-primary', id:'excel_collected_oil', style:'margin-left: 2px;' %>
+    <%= link_to 'download pdf', 'javascript:void(0)', class:'pull-right btn btn-mini btn-success', id:'pdf_collected_oil' %>
+<% end %>
+
+<% hidden_field_tag :from_date, @from_date %>
+<% hidden_field_tag :to_date, @to_date %>
+<% hidden_field_tag :report_type, @type %>
+
+<%
+    area_ids    = @branches.pluck(:area_id).uniq
+    @areas      = Area.where(id: area_ids)
+    company_ids = @branches.pluck(:company_id).try(:uniq)
+    @companies  = Company.where(id: company_ids)
+%>
+
+<% if @branches.present? %>
+    <select name='lead_report_columns[]' id="lead_report_columns" multiple='multiple'>
+      <% AppConstants::COLLECTED_REPORT_HEADER.each do |column| %>
+          <option value='<%= "#{column[:id]}" %>' selected='selected'><%= column[:name] %></option>
+      <% end %>
+    </select>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>
+          <%= select_tag :area_wise, options_for_select(@areas.collect {|p| [ p[:name], p[:id] ] }), {include_blank: 'filter area', } %>
+        </th>
+        <th>
+          <%= select_tag :company_wise, options_for_select(@companies.collect {|p| [ p[:company_name], p[:id] ] }), {include_blank: 'filter company'} %>
+        </th>
+      </tr>
+      <tr>
+        <th>Area</th>
+        <th>Company</th>
+        <th>Branch</th>
+        <th>Code</th>
+        <th>Cont.name</th>
+        <th>Cont#</th>
+        <th>Collection</th>
+        <th>Address</th>
+        <th>Add Note</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @branches&.each do |branch| %>
+          <tr>
+            <td><%= branch.try(:area).try(:name) %></td>
+            <td><%= "#{branch.try(:company).try(:company_name)}" %></td>
+            <td><%= branch.branch_name  %></td>
+            <td><%= "#{branch.try(:company).try(:company_code) || nil}/#{branch.branch_code}" %></td>
+            <td><%= branch.contact_name %></td>
+            <td><%= branch.contact_phone %></td>
+            <td><%= Branch.total_restaurant_collection(branch, @from_date, @to_date) %></td>
+            <td><%= branch.address %></td>
+            <td><%= link_to 'Notes', branch_notes_path(branch), class: 'btn btn-mini btn-primary' %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+<% else %>
+    <h3>No record found.</h3>
+<% end %>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.list-data-table').DataTable({
+            "pageLength": 50
+        });
+
+        $('#lead_report_columns').multiselect({
+            includeSelectAllOption: true,
+            enableFiltering: true,
+            enableClickableOptGroups: true,
+            maxHeight: 200,
+            buttonWidth: '250px'
+        });
+
+        $('#pdf_collected_oil').click(function(){
+            var area_wise       = $('#area_wise').val();
+            var company_wise    = $('#company_wise').val();
+            var from_date       = $('#from_date').val();
+            var to_date         = $('#to_date').val();
+            var report_type     = $('#report_type').val();
+
+            var origin = window.location.origin
+            window.location.href = origin + '/reports/generate_report.pdf?from_date='+ from_date +
+                '&to_date='+ to_date +
+                '&report_type='+ report_type +
+                '&area_wise=' + area_wise +
+                '&company_wise=' + company_wise +
+                '&columns=' +  $('#lead_report_columns').val();
+        });
+
+        $('#excel_collected_oil').click(function(){
+            var area_wise       = $('#area_wise').val();
+            var company_wise    = $('#company_wise').val();
+            var from_date       = $('#from_date').val();
+            var to_date         = $('#to_date').val();
+            var report_type     = $('#report_type').val();
+
+            var origin = window.location.origin
+            window.location.href = origin + '/reports/generate_report.xls?from_date='+ from_date +
+                '&to_date='+ to_date +
+                '&report_type='+ report_type +
+                '&area_wise=' + area_wise +
+                '&company_wise=' + company_wise +
+                '&columns=' +  $('#lead_report_columns').val();
+        });
+    });
+</script>
+
+
