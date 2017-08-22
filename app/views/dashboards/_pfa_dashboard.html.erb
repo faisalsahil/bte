@@ -1,0 +1,35 @@
+
+<div class="page-title">
+  <h3>Dashboard </h3>
+</div>
+<div id="container">
+  <div class="row 2col">
+    <% colors = ['blue', 'green', 'red', 'purple'] %>
+    <% @sites.each_with_index do |site, index| %>
+        <% total_contracts_count, total_oil_collected = Site.site_data_for_pfa_dashboard(site) %>
+      <div class="col-md-3 col-sm-6 spacing-bottom-sm spacing-bottom">
+        <div class="tiles added-margin <%= "#{colors[index]}" %>">
+          <div class="tiles-body">
+            <div class="heading">
+              <%= link_to "#{site.name}", root_url({site_id: site.id}), class: 'href-heading_size' %>
+            </div>
+            <div class="">
+              <span class="animate-number">Tot contracts:</span>
+              <span class="animate-number"><%= total_contracts_count %></span>
+            </div>
+            <div class="">
+              <span class="animate-number">Tot. collection:</span>
+              <span class="animate-number"><%= total_oil_collected %></span>
+            </div>
+            <div class="description">
+              <i class="glyphicon glyphicon-circle-arrow-up"></i>
+              <span class="text-white mini-description ">&nbsp;increasing
+                <span class="blend">day by day</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

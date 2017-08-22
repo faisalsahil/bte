@@ -1,0 +1,30 @@
+<%= form_for(@site, url: site_product_sale_site_path(@current_user_site.id), :html=> {method: 'put', multipart: true, class: 'form-horizontal', id: 'product_sale_form'}) do |f| %>
+    <table class="table table-striped">
+      <thead>
+        <th>Date</th>
+        <th>Country</th>
+        <th>GD#</th>
+        <th>Quantity</th>
+        <th>Attachment</th>
+        <th>Remarks</th>
+      </thead>
+      <tbody>
+        <%= f.fields_for :product_sales do |product_sale| %>
+            <tr class="product_sale_tr">
+              <td><%= product_sale.text_field :sale_date, class: 'datepicker', placeholder: 'Select date', id: 'sale_date' %></td>
+              <td><%= product_sale.country_select :country, {include_blank: true}, { class: 'country-select-box'}  %></td>
+              <td><%= product_sale.text_field :gd_number, class: 'sale_gd_number' %></td>
+              <td><%= product_sale.text_field :quantity, placeholder: 'KG', class: 'sale_quantity' %></td>
+              <td><%= product_sale.file_field :attachment, class: 'sale_attachment' %></td>
+              <td><%= product_sale.text_field :remarks %></td>
+            </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <div>
+      <%= f.submit 'submit', class: 'btn btn-mini btn-primary' %>
+      <div id="error_explanation" class="hidden route_assignment_error_notification" style="margin-top:5px;">
+        <span>You should fill atleast one complete record.</span>
+      </div>
+    </div>
+<% end %>

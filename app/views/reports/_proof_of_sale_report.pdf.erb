@@ -1,0 +1,42 @@
+<br/>
+<div class="well-sm">
+  <span class="pull-right"><strong>Date:</strong>  <%= Date.today.strftime('%d/%m/%Y') %></span>
+  <h3>Proof of Sale Report</h3>
+  <% if @from_date.present? && @to_date.present? %>
+      <strong>Date:</strong>  <%= @from_date.to_date.strftime('%d/%m/%Y')%><strong> - </strong><%= @to_date.to_date.strftime('%d/%m/%Y') %>
+  <% elsif @from_date.present? %>
+      <strong>Date:</strong>  <%= @from_date.to_date.strftime('%d/%m/%Y')%><strong> - </strong> Now
+  <% elsif @to_date.present? %>
+      <strong>Date:</strong> Start <strong> - </strong><%= @to_date.to_date.strftime('%d/%m/%Y') %>
+  <% end %>
+</div>
+<br/>
+<table class="table table-striped">
+  <thead>
+  <% @columns = @data[:columns].split(',') %>
+  <% @columns&.each do |column| %>
+      <th><%= column.humanize %></th>
+  <% end %>
+  </thead>
+  <tbody>
+    <% @product_sales&.each do |product_sale| %>
+        <tr>
+          <% if @columns.include? 'date' %>
+              <td><%= product_sale.sale_date.to_date.strftime('%d/%m/%Y') %></td>
+          <% end %>
+          <% if @columns.include? 'country_name' %>
+              <td><%= product_sale.country_name || product_sale.country %></td>
+          <% end %>
+          <% if @columns.include? 'gd_number' %>
+              <td><%= product_sale.gd_number %></td>
+          <% end %>
+          <% if @columns.include? 'quantity' %>
+              <td><%= product_sale.quantity %></td>
+          <% end %>
+          <% if @columns.include? 'remarks' %>
+              <td><%= product_sale.remarks %></td>
+          <% end %>
+        </tr>
+    <% end %>
+  </tbody>
+</table>

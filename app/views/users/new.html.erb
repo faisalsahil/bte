@@ -4,8 +4,7 @@
 </ul>
 <div class="row">
   <div class="col-md-12">
-    <div class="grid simple ">
-      <div class="grid-body no-border">
+    <div class="grid-body no-border">
         <div class="">
           <%= form_for(User.new, url: add_user_users_path, method: 'post', :html => {:class => 'form-horizontal' }) do |f| %>
 
@@ -26,14 +25,22 @@
                 <%= f.label :password_confirmation %>
                 <%= f.password_field :password_confirmation, class: 'form-control' %>
               </div>
-              <div class="form-group">
-                <%= f.label 'Role' %>
-                <%= f.select :role_id, options_for_select(Role.all.collect {|p| [ p[:name], p[:id] ] }, 3), class: 'form-control', style: 'width: 30%;', class: 'form-control' %>
-              </div>
+
+              <% if @current_user_role == AppConstants::SUPER_ADMIN %>
+                  <div class="form-group">
+                    <%= f.label 'Enter Site Name' %>
+                    <%= f.select :site_id, options_for_select(Site.all.collect {|p| [ p[:name], p[:id] ] }), class: 'form-control', style: 'width: 30%;', class: 'form-control' %>
+                  </div>
+              <% else %>
+                  <div class="form-group">
+                    <%= f.label 'Role' %>
+                    <%= f.select :role_id, options_for_select(Role.where.not(name: nil).collect {|p| [ p[:name], p[:id] ] }, 3), class: 'form-control', style: 'width: 30%;', class: 'form-control' %>
+                  </div>
+              <% end %>
+
               <%= f.submit 'Sign up', :class => 'btn btn-sm btn-primary right' %>
           <% end %>
         </div>
       </div>
-    </div>
   </div>
 </div>

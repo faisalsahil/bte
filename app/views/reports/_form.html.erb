@@ -6,7 +6,17 @@
   <div class="panel-body">
     <%= form_tag('/reports/generate_report', multipart: true, method: :post, class: 'form-inline', remote: true) do |f|  %>
         <div class="form-group">
-          Select Type: <%= select_tag :report_type, options_for_select(AppConstants::REPORTS.collect {|p| [ p[:name], p[:id] ] }), {include_blank: 'Select report', class: 'form-control'} %>
+          <% if @current_user_role == AppConstants::PFA
+              report_array = AppConstants::PFA_REPORT_VISIBLE
+            else
+              report_array = AppConstants::REPORTS
+            end
+          %>
+          Select Type: <%= select_tag :report_type, options_for_select(report_array.collect {|p| [ p[:name], p[:id] ] }, @type), {include_blank: 'Select report', class: 'form-control'} %>
+        </div>
+
+        <div class="form-group hidden" id="contract_type_div">
+          Select Truck:<%= select_tag :contract_type, options_for_select(AppConstants::CONTRACT_STATUS), class: 'form-control' %>
         </div>
 
         <div class="form-group" id="from_date_div">
@@ -21,8 +31,12 @@
           Select Month:<%= text_field_tag :month_wise, Date.today.strftime("%m/%Y"), class: 'datepicker1 form-control', placeholder: 'optional' %>
         </div>
 
+        <div class="form-group hidden" id="contract_type_div">
+          Select Type:<%= select_tag :contract_type, options_for_select(AppConstants::CONTRACT_STATUS), class: 'form-control' %>
+        </div>
+
         <div class="form-group">
-          <button type="submit" class="btn btn-primary" id="generate_report_button" disabled="true">Generate</button>
+          <button type="submit" class="btn btn-primary" id="generate_report_button">Generate</button>
         </div>
     <% end %>
   </div>

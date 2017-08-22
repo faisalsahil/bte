@@ -12,6 +12,7 @@
 
   <div class="form-inputs">
     <%= f.label :comment%>
+    <%= f.hidden_field :site_id,value:  @current_user_site.id %>
     <%= f.text_area :comment, size: "50x10", placeholder: 'Enter comment here...' %>
   </div>
   <% if not @note.new_record? %>

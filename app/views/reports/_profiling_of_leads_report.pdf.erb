@@ -1,0 +1,54 @@
+<br/>
+<div class="well-sm">
+  <span class="pull-right"><strong>Date:</strong>  <%= Date.today.strftime('%d/%m/%Y') %></span>
+  <h3>Profiling of Leads Report</h3>
+  <strong>Type:</strong>  <%= @contract_type %>
+</div>
+<br/>
+<table class="table table-striped">
+  <thead>
+  <% @columns = @data[:columns].split(',') %>
+  <% @columns&.each do |column| %>
+      <th><%= column.humanize %></th>
+  <% end %>
+  </thead>
+  <tbody>
+  <% @branches&.each do |branch| %>
+      <tr>
+        <% if @columns.include? 'area_id' %>
+            <td><%= branch.try(:area).try(:name) %></td>
+        <% end %>
+        <% if @columns.include? 'representative' %>
+            <td><%= branch.try(:representator).try(:name) || 'N/A' %></td>
+        <% end %>
+        <% if @columns.include? 'branch_name' %>
+            <td><%= branch.branch_name  %></td>
+        <% end %>
+        <% if @columns.include? 'branch_code' %>
+            <td><%= "#{branch.company.company_code}/#{branch.branch_code}" %></td>
+        <% end %>
+        <% if @columns.include? 'contact_name' %>
+            <td style="width:20%;"><%= branch.contact_name %></td>
+        <% end %>
+        <% if @columns.include? 'contact_phone' %>
+            <td><%= branch.contact_phone %></td>
+        <% end %>
+        <% if @columns.include? 'monthly_oil_used' %>
+            <td><%= branch.monthly_oil_used %></td>
+        <% end %>
+        <% if @columns.include? 'rate_per_kg' %>
+            <td><%= branch.rate_per_kg %></td>
+        <% end %>
+        <% if @columns.include? 'visits_per_month' %>
+            <td><%= branch.visits_per_month %></td>
+        <% end %>
+        <% if @columns.include? 'total_collection' %>
+            <td><%= branch.total_collection %></td>
+        <% end %>
+        <% if @columns.include? 'address' %>
+            <td><%= branch.address %></td>
+        <% end %>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

@@ -4,10 +4,12 @@
 </ul>
 <div class="row">
   <div class="col-md-12">
-    <div class="grid simple ">
-      <div class="grid-body no-border">
-        <%= render 'form', branch: @branch %>
-      </div>
+    <div class="grid-body no-border">
+      <% if @current_user_site.is_automate_process %>
+          <%= render 'automate_form', branch: @branch %>
+      <% else %>
+          <%= render 'automate_form', branch: @branch %>
+      <% end %>
     </div>
   </div>
 </div>

@@ -1,0 +1,17 @@
+<ul class="breadcrumb">
+  <li><p>YOU ARE HERE</p></li>
+  <li><a href="#" class="active">Add Sale</a></li>
+  <br/><br/>
+  <span><strong>Total Collection:</strong> <%= @total_collected %></span>
+  <br/>
+  <span><strong>Total Sold:</strong> <%= @total_sold %></span>
+  <br/>
+  <span><strong>Stock:</strong><b id="total_stock"><%= @total_collected -  @total_sold %></b></span>
+</ul>
+<div class="row">
+  <div class="col-md-12">
+    <div class="grid-body no-border">
+      <%= render 'form',site: @site %>
+    </div>
+  </div>
+</div>

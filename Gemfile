@@ -6,11 +6,17 @@ gem 'bootstrap-sass'
 
 gem 'bootstrap-wysihtml5-rails'
 
+gem 'cancancan', '~> 2.0'
+
 gem 'coffee-rails'
 
 gem 'compass-rails'
 
 gem 'carrierwave-dropbox'
+
+gem 'country_select'
+
+gem 'city-state'
 
 gem 'devise'
 
@@ -77,6 +83,7 @@ gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
 
 group :development do
+  gem 'erb2haml'
   gem 'annotate'
   gem 'awesome_print'
   gem 'better_errors'

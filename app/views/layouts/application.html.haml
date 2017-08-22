@@ -1,0 +1,44 @@
+!!!
+%html
+  %head
+    %title SaafPunjab
+    = csrf_meta_tags
+    %meta{:content => "text/html;charset=UTF-8", "http-equiv" => "content-type"}/
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no", :name => "viewport"}/
+    %meta{:content => "", :name => "description"}/
+    %meta{:content => "", :name => "author"}/
+    = stylesheet_link_tag    'application', media: 'all'
+    = javascript_include_tag 'application'
+  %body
+    = render :partial => "layouts/header"
+    .page-container.row
+      #main-menu.page-sidebar
+        #main-menu-wrapper.page-sidebar-wrapper.scrollbar-dynamic
+          .user-info-wrapper
+            .user-info
+              .greeting
+                - if @current_user_site.present?
+                  = link_to @current_user_site.name, root_url({site_id: @current_user_site.id}) ||  ''
+                %br
+              %br
+          = render 'layouts/navigation'
+      / <div class="footer-widget">
+      / <div class="progress transparent progress-small no-radius no-margin">
+      / </div>
+      / </div>
+      .page-content
+        #portlet-config.modal.hide
+          .modal-header
+            %button.close{"data-dismiss" => "modal", :type => "button"}
+            %h3 Widget Settings
+          .modal-body Widget settings form goes here
+        .clearfix
+        .content
+          = render :partial => "layouts/messages"
+          = yield
+          %br
+          %br
+          .footer-widget
+            .progress.transparent.progress-small.no-radius.no-margin
+              = render :partial => "layouts/footer"

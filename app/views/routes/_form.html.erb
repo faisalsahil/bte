@@ -4,7 +4,7 @@
   <div class="form-inputs row">
 
       <div class="col-md-3">
-        <%= f.select :state_id, options_for_select(State.all.collect {|p| [ p[:name], p[:id] ] }, selected: @route.state_id), {include_blank: 'Select sate'} %>
+        <%= f.select :state_id, options_for_select(@states.collect {|p| [ p[:name], p[:id] ] }, selected: @route.state_id), {include_blank: 'Select sate'} %>
       </div>
       <div class="col-md-3">
         <% if @route.city_id.present? %>

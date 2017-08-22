@@ -1,0 +1,23 @@
+<div class="page-title">
+  <h3>Dashboard </h3>
+</div>
+<div id="container">
+  <% if @current_user_role == AppConstants::PFA %>
+      <div class="row 2col">
+        <%= render 'report_block', block_color: 'blue', title: 'Contracts', title_1: 'Tot. contracts', count_1: @total_contracts_count, title_2: 'Current Month', count_2: @current_month_contracts_count, type: AppConstants::CONTRACTED_REPORT %>
+        <%= render 'report_block', block_color: 'red', title: 'Oil Collection', title_1: 'Tot. collection', count_1: @total_oil_collected, title_2: 'Current Month', count_2: @current_month_oil_collected, type: AppConstants::COLLECTED_OIL_TO_DATE_REPORT %>
+        <%= render 'report_block', block_color: 'green', title: 'Proof of Sale', title_1: 'Tot. Sale', count_1: @total_sold, title_2: 'Current Stock', count_2: @total_collected - @total_sold, type: AppConstants::CONTRACTED_REPORT %>
+      </div>
+  <% else %>
+      <div class="row 2col">
+        <%= render 'report_block', block_color: 'blue', title: 'Contracts', title_1: 'Tot. contracts', count_1: @total_contracts_count, title_2: 'Current Month', count_2: @current_month_contracts_count, type: AppConstants::CONTRACTED_REPORT %>
+        <%= render 'report_block', block_color: 'green', title: 'Leads', title_1: 'Tot. leads', count_1: @total_leads_count, title_2: 'Current Month', count_2: @current_month_leads_count, type: AppConstants::Lead_REPORT  %>
+        <%= render 'report_block', block_color: 'red', title: 'Oil Collection', title_1: 'Tot. collection', count_1: @total_oil_collected, title_2: 'Current Month', count_2: @current_month_oil_collected, type: AppConstants::COLLECTED_OIL_TO_DATE_REPORT %>
+        <%= render 'report_block', block_color: 'purple', title: 'Urgent Action', title_1: 'Tot. Actions', count_1: @total_notes, title_2: 'Unresolved count', count_2: @total_unresolved_notes, type: AppConstants::URGENT_ACTION_REPORT  %>
+      </div>
+      <div class="row 2col">
+        <%= render 'report_block', block_color: 'blue', title: 'Proof of Sale', title_1: 'Tot. Sale', count_1: @total_sold, title_2: 'Current Stock', count_2: @total_collected - @total_sold, type: AppConstants::CONTRACTED_REPORT %>
+      </div>
+  <% end %>
+
+</div>

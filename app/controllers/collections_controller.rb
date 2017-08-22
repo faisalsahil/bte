@@ -1,4 +1,5 @@
 class CollectionsController < ApplicationController
+  load_and_authorize_resource
   
   def new
     @schedule_branch = ScheduleBranch.find_by_id(params[:schedule_branch_id])

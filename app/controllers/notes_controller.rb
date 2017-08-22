@@ -1,4 +1,6 @@
 class NotesController < ApplicationController
+  load_and_authorize_resource
+  
   before_action :set_branch, only: [:index, :new, :create, :edit, :update, :destroy]
   
   def index
@@ -55,6 +57,6 @@ class NotesController < ApplicationController
     end
 
     def note_params
-      params.require(:note).permit(:branch_id, :comment, :completed_notes)
+      params.require(:note).permit(:branch_id, :comment, :completed_notes, :site_id)
     end
 end

@@ -1,0 +1,33 @@
+<br/>
+<div class="well-sm">
+  <span class="pull-right"><strong>Date:</strong>  <%= Date.today.strftime('%d/%m/%Y') %></span>
+  <h3>Vehicle Report</h3>
+  <% if @from_date.present? && @to_date.present? %>
+      <strong>Date:</strong>  <%= @from_date.to_date.strftime('%d/%m/%Y')%><strong> - </strong><%= @to_date.to_date.strftime('%d/%m/%Y') %>
+  <% elsif @from_date.present? %>
+      <strong>Date:</strong>  <%= @from_date.to_date.strftime('%d/%m/%Y')%><strong> - </strong> Now
+  <% elsif @to_date.present? %>
+      <strong>Date:</strong> Start <strong> - </strong><%= @to_date.to_date.strftime('%d/%m/%Y') %>
+  <% end %>
+</div>
+<br/>
+<table class="table table-striped route_list_data">
+  <thead>
+  <tr>
+    <th>Vehicle</th>
+    <th>Vehicle#</th>
+    <th>Tot Oil Collected</th>
+    <th>Tot Restaurant visit</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @truck_report_data&.each do |truck_data| %>
+      <tr>
+        <td><%= truck_data[:vehicle].vehicle_type %></td>
+        <td><%= truck_data[:vehicle].vehicle_number %></td>
+        <td><%= truck_data[:total_oil_collected] %></td>
+        <td><%= truck_data[:total_branches_visited] %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

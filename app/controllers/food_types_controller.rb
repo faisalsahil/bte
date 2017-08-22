@@ -1,23 +1,24 @@
 class FoodTypesController < ApplicationController
+  load_and_authorize_resource
+  
   before_action :set_food_type, only: [:show, :edit, :update, :destroy]
-
+  
   def index
-    authorize :food_type
-    @food_types = FoodType.where.not(is_deleted: true)
+    @food_types = @food_types.where.not(is_deleted: true)
   end
-
+  
   def new
     authorize :food_type
     @food_type = FoodType.new
   end
-
+  
   def edit
     authorize :food_type
   end
-
+  
   def create
-    @food_type = FoodType.new(food_type_params)
-
+    @food_type         = FoodType.new(food_type_params)
+    @food_type.site_id = current_user.site_id
     respond_to do |format|
       if @food_type.save
         format.html { redirect_to food_types_path, notice: 'Food type was successfully created.' }
@@ -28,7 +29,7 @@ class FoodTypesController < ApplicationController
       end
     end
   end
-
+  
   def update
     respond_to do |format|
       if @food_type.update(food_type_params)
@@ -43,26 +44,26 @@ class FoodTypesController < ApplicationController
   
   def destroy
     authorize :food_type
-    if  @food_type.is_deleted
+    if @food_type.is_deleted
       @food_type.is_deleted = false
-      notice = 'Food type was successfully undo.'
+      notice                = 'Food type was successfully undo.'
     else
       @food_type.is_deleted = true
-      notice = 'Food type was successfully destroyed.'
+      notice                = 'Food type was successfully destroyed.'
     end
     @food_type.save!
     respond_to do |format|
-      format.html { redirect_to food_types_url, notice:  notice}
+      format.html { redirect_to food_types_url, notice: notice }
       format.json { head :no_content }
     end
   end
-
+  
   private
-    def set_food_type
-      @food_type = FoodType.find(params[:id])
-    end
-
-    def food_type_params
-      params.require(:food_type).permit(:name)
-    end
+  def set_food_type
+    @food_type = FoodType.find(params[:id])
+  end
+  
+  def food_type_params
+    params.require(:food_type).permit(:name)
+  end
 end

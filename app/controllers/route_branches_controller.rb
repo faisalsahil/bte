@@ -1,4 +1,5 @@
 class RouteBranchesController < ApplicationController
+  load_and_authorize_resource
   
   def sort
     route_branches = params[:route_branch]

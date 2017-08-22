@@ -1,0 +1,33 @@
+<ul class="breadcrumb">
+  <li><p>YOU ARE HERE</p></li>
+  <li><a href="#" class="active">Product Sales</a></li>
+  <%= link_to 'New Sale', new_product_sale_path, class:'btn btn-mini btn-primary pull-right' %>
+</ul>
+<br/>
+<div class="row">
+  <div class="col-md-12">
+    <div class="grid-body no-border">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Sale date</th>
+            <th>Country</th>
+            <th>Gd number</th>
+            <th>Quantity</th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <% @product_sales.each do |product_sale| %>
+              <tr>
+                <td><%= product_sale.sale_date %></td>
+                <td><%= product_sale.country_name %></td>
+                <td><%= product_sale.gd_number %></td>
+                <td><%= product_sale.quantity %></td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+  </div>
+</div>

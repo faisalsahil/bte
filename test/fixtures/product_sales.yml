@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sale_date: 2017-08-15
+  country: MyString
+  gd_number: MyString
+  quantity: 1.5
+  attachment: MyString
+  remarks: MyText
+  stock_in_hand: 1.5
+  site_id: 1
+
+two:
+  sale_date: 2017-08-15
+  country: MyString
+  gd_number: MyString
+  quantity: 1.5
+  attachment: MyString
+  remarks: MyText
+  stock_in_hand: 1.5
+  site_id: 1

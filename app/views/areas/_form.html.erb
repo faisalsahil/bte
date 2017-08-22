@@ -11,7 +11,7 @@
     <% end %>
 
   <div class="form-group">
-    <%= f.select :state_id, options_for_select(State.all.collect {|p| [ p[:name], p[:id] ] }, @area.state_id), :include_blank => true, class: 'form-control' %>
+    <%= f.select :state_id, options_for_select(@states.collect {|p| [ p[:name], p[:id] ] }, @area.state_id), :include_blank => true, class: 'form-control' %>
     <% if @area.city_id.present? %>
        <%= f.select :city_id, options_for_select(@cities.collect {|p| [ p[:name], p[:id] ] }, @area.city_id), class: 'form-control' %>
     <% else %>

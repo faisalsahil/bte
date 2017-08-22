@@ -1,2 +1,0 @@
-json.extract! branch, :id, :company_id, :branch_name, :contact_name, :contact_email, :contact_phone, :number_of_outlets, :type_of_establishment, :monthly_oil_used, :storage_type, :full_address, :created_at, :updated_at
-json.url branch_url(branch, format: :json)

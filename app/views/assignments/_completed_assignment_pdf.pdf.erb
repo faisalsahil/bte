@@ -22,7 +22,7 @@
     %>
     <% @route_branches.each do |route_branch| %>
         <tr>
-          <td><%= "Route-#{route_branch.route_id}/#{route_branch.id} "%></td>
+          <td><%= "Route-#{route_branch.route_id}/#{route_branch.id}"%></td>
           <td><%= route_branch.branch.branch_name %></td>
           <td><%= "#{route_branch.branch.company.company_code}/#{route_branch.branch.branch_code}" %></td>
           <td><%= route_branch.quantity %></td>

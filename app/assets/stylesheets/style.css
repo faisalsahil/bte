@@ -5591,7 +5591,7 @@ form legend,
   padding: 1px 4px;
 }
 .tiles .heading {
-  font-size: 25px;
+  font-size: 15px;
   display: block;
   font-family: 'Open Sans';
   font-weight: 600;
@@ -6902,6 +6902,9 @@ code:hover {
   -moz-border-radius: 3px;
   border-radius: 3px;
 }
+.table td {
+    text-align: center;
+}
 .table td .progress {
   margin-bottom: 0px;
 }
@@ -8201,4 +8204,10 @@ legend.fieldset-border {
     width:auto;
     padding:0 10px;
     border-bottom:none;
+}
+
+.href-heading_size{
+    color: white !important;
+    font-size: 25px;
+    font-weight: 900;
 }

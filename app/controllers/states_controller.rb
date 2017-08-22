@@ -1,27 +1,27 @@
 class StatesController < ApplicationController
+  load_and_authorize_resource
   before_action :set_state, only: [:show, :edit, :update, :destroy]
-
+  
   def index
-    authorize :state
-    @states = State.all.includes(:cities)
+    @states = @states.includes(:cities)
   end
-
+  
   def show
     authorize :state
   end
-
+  
   def new
     authorize :state
     @state = State.new
   end
-
+  
   def edit
     authorize :state
   end
-
+  
   def create
-    @state = State.new(state_params)
-
+    @state         = State.new(state_params)
+    @state.site_id = current_user.site_id
     respond_to do |format|
       if @state.save
         format.html { redirect_to @state, notice: 'State was successfully created.' }
@@ -32,7 +32,7 @@ class StatesController < ApplicationController
       end
     end
   end
-
+  
   def update
     respond_to do |format|
       if @state.update(state_params)
@@ -44,15 +44,15 @@ class StatesController < ApplicationController
       end
     end
   end
-
+  
   def destroy
     authorize :state
     if @state.is_deleted
       @state.is_deleted = false
-      notice = 'State was successfully undo.'
+      notice            = 'State was successfully undo.'
     else
       @state.is_deleted = true
-      notice = 'State was successfully destroyed.'
+      notice            = 'State was successfully destroyed.'
     end
     @state.save!
     respond_to do |format|
@@ -60,13 +60,13 @@ class StatesController < ApplicationController
       format.json { head :no_content }
     end
   end
-
+  
   private
-    def set_state
-      @state = State.find(params[:id])
-    end
-
-    def state_params
-      params.require(:state).permit(:name)
-    end
+  def set_state
+    @state = State.find(params[:id])
+  end
+  
+  def state_params
+    params.require(:state).permit(:name)
+  end
 end

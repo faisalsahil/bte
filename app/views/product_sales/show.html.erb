@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Sale date:</strong>
+  <%= @product_sale.sale_date %>
+</p>
+
+<p>
+  <strong>Country:</strong>
+  <%= @product_sale.country_name %>
+</p>
+
+<p>
+  <strong>Gd number:</strong>
+  <%= @product_sale.gd_number %>
+</p>
+
+<p>
+  <strong>Quantity:</strong>
+  <%= @product_sale.quantity %>
+</p>
+
+<p>
+  <strong>Attachment:</strong>
+  <%= @product_sale.attachment %>
+</p>
+
+<p>
+  <strong>Remarks:</strong>
+  <%= @product_sale.remarks %>
+</p>
+
+<p>
+  <strong>Stock in hand:</strong>
+  <%= @product_sale.stock_in_hand %>
+</p>
+
+<p>
+  <strong>Site:</strong>
+  <%= @product_sale.site_id %>
+</p>
+
+<%= link_to 'Edit', edit_product_sale_path(@product_sale) %> |
+<%= link_to 'Back', product_sales_path %>

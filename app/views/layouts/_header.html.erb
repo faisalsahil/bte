@@ -23,11 +23,11 @@
     <div class="header-quick-nav" >
       <!-- BEGIN TOP NAVIGATION MENU -->
       <div class="pull-left">
-        <ul class="nav quick-section">
-          <li class="quicklinks"> <a href="javascript:void(0)" class="" id="layout-condensed-toggle" >
-            <div class="glyphicon glyphicon-menu-hamburger"></div>
-          </a> </li>
-        </ul>
+          <!--<ul class="nav quick-section">-->
+            <!--<li class="quicklinks"> <a href="javascript:void(0)" class="" id="layout-condensed-toggle" >-->
+              <!--<div class="glyphicon glyphicon-menu-hamburger"></div>-->
+            <!--</a> </li>-->
+          <!--</ul>-->
       </div>
       <div class="pull-right">
         <div class="chat-toggler">
@@ -44,10 +44,12 @@
             <ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options">
               <li class="divider"></li>
               <li>
+                <%= link_to 'Sites', sites_path %>
+              </li>
+              <li>
                 <%= link_to 'Edit account', edit_user_registration_path %>
               </li>
               <li>
-
                 <%= link_to 'Sign out', destroy_user_session_path, :method=>'delete' %>
               </li>
             </ul>

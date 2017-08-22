@@ -1,0 +1,124 @@
+<%= simple_form_for(@branch) do |f| %>
+
+    <% if @branch.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@branch.errors.count, "error") %> prohibited this task from being saved:</h2>
+          <ul>
+            <% @branch.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="form-text_fields">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Branch Info
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <%= f.hidden_field :company_id, value: @companies.first.id %>
+            <%= f.hidden_field :branch_status, value: 'contracted' %>
+            <%= f.hidden_field :visits_per_month, value: 5 %>
+            <%= f.hidden_field :food_type_id, value: @food_types.first.id %>
+            <%= f.hidden_field :storage_type_id, value: @storage_types.first.id %>
+            <div class="col-md-3">
+              <%= f.label 'Branch name' %>
+              <%= f.text_field :branch_name, class: 'form-control', placeholder: 'branch name' %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Contact Info
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-3 form-group">
+              <%= f.label 'Contact name' %>
+              <%= f.text_field :contact_name, class: 'form-control', placeholder: 'cont. name' %>
+            </div>
+
+            <div class="col-md-3">
+              <%= f.label 'Contact email' %>
+              <%= f.text_field :contact_email, class: 'form-control', placeholder: 'cont. email' %>
+            </div>
+
+            <div class="col-md-3">
+              <%= f.label 'Contact phone' %>
+              <%= f.number_field :contact_phone, class: 'form-control', placeholder: 'cont. phone' %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Misc Info
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-3">
+              <%= f.label 'Monthly oil used (kg)' %>
+              <%= f.text_field :monthly_oil_used, class: 'form-control', placeholder: 'oil used (kg)' %>
+            </div>
+
+            <div class="col-md-3">
+              <%= f.label 'Rate/kg' %>
+              <%= f.number_field :rate_per_kg, class: 'form-control', placeholder: 'amount/kg' %>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Address Info
+        </div>
+        <div class="panel-body">
+
+          <div class="col-md-3">
+            <%= f.select :state_id, options_for_select(@states.collect { |p| [p[:name], p[:id]] }, selected: @branch.state_id), { include_blank: 'Select sate' }, class: 'form-control' %>
+          </div>
+
+          <div class="col-md-3">
+            <% if @branch.city_id.present? %>
+                <%= f.select :city_id, options_for_select(@branch.state.cities.collect { |p| [p[:name], p[:id]] }, selected: @branch.city_id), { include_blank: 'Select city' }, class: 'form-control' %>
+            <% else %>
+                <select name="branch[city_id]" id="branch_city_id" class="hidden"></select>
+            <% end %>
+          </div>
+
+          <div class="col-md-3">
+            <% if @branch.area_id.present? %>
+                <%= f.select :area_id, options_for_select(@areas.collect { |p| [p[:name], p[:id]] }, selected: @branch.area_id), { include_blank: 'Select area' }, class: 'form-control' %>
+            <% else %>
+                <select name="branch[area_id]" id="branch_area_id" class="hidden"></select>
+            <% end %>
+          </div>
+
+          <div class="col-md-3">
+            <% if @branch.area_id.present? %>
+                <%= f.text_field :street, placeholder: 'street' %>
+            <% else %>
+                <%= f.text_field :street, placeholder: 'street', class: 'hidden' %>
+            <% end %>
+          </div>
+
+          <div class="col-md-3">
+            <% if @branch.area_id.present? %>
+                <%= f.text_field :zip, placeholder: 'zip' %>
+            <% else %>
+                <%= f.text_field :zip, placeholder: 'zip', class: 'hidden' %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <%= link_to 'Back', branches_path, class: 'btn btn-mini btn-default' %>
+      <%= f.button :submit, class: 'btn btn-mini btn-primary' %>
+    </div>
+<% end %>

@@ -2,13 +2,13 @@
   <li><p>YOU ARE HERE</p></li>
   <li><a href="#" class="active">Notes</a></li>
   <% if @branch.present? %>
-    <li><%= link_to 'Add note', new_branch_note_path(@branch), class:'btn btn-mini btn-primary' %></li>
+    <%= link_to 'Add note', new_branch_note_path(@branch), class:'btn btn-mini btn-primary pull-right' %>
   <% end %>
 </ul>
+<br/>
 <div class="row">
   <div class="col-md-12">
-    <div class="grid simple ">
-      <div class="grid-body no-border">
+    <div class="grid-body no-border">
         <br/>
         <% if @notes.present? %>
           <% if @branch.present? %>
@@ -47,7 +47,6 @@
           No notes found.
         <% end %>
       </div>
-    </div>
   </div>
 </div>
 

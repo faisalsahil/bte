@@ -1,0 +1,115 @@
+= render_navigation(expand_all: true)
+-#%ul
+  %li.start
+    %a.active{:href => "/dashboards"}
+      %i.glyphicon.glyphicon-dashboard
+      %span.title Dashboard
+      %span.selected
+  - if AppConstants::SETTING_ARRAY.include? @current_user_role
+    %li
+      %a{:href => "/users"}
+        %i.glyphicon.glyphicon-user
+        %span.title Users
+  - if AppConstants::SETTING_ARRAY.include? @current_user_role
+    %li
+      %a{:href => "javascript:;"}
+        %i.glyphicon.glyphicon-cog
+        %span.title Settings
+      %ul.sub-menu
+        %li
+          %a{:href => "/storage_types"}
+            %span.title Storage types
+        %li
+          %a{:href => "/food_types"}
+            %span.title Food types
+        %li
+          %a{:href => "/companies"}
+            %span.title Companies
+        %li
+          %a{:href => "/states"}
+            %span.title States
+        %li
+          %a{:href => "/cities"}
+            %span.title Cities
+        %li
+          %a{:href => "/areas"}
+            %span.title Areas
+        %li
+          %a{:href => "/vehicles"}
+            %span.title Vehicles
+        %li
+          %a{:href => "/roles"}
+            %span.title Roles
+        %li
+          %a{:href => "/billings"}
+            %span.title Billings
+  - if AppConstants::BRANCH_ARRAY.include? @current_user_role
+    %li
+      %a{:href => "javascript:void(0);"}
+        %i.glyphicon.glyphicon-cutlery
+        %span.title Branches
+      %ul.sub-menu
+        %li
+          %a{:href => "/branches/new"}
+            %span.title New branch
+        %li
+          %a{:href => "/branches?type=visit"}
+            %span.title Visits
+        %li
+          %a{:href => "/branches?type=lead"}
+            %span.title Leads
+        %li
+          %a{:href => "/branches?type=contracted"}
+            %span.title Contracts
+    %li
+      %a{:href => "javascript:;"}
+        %i.glyphicon.glyphicon-road
+        %span.title Routes
+      %ul.sub-menu
+        %li
+          %a{:href => "/routes/new"}
+            %span.title New route
+        %li
+          %a{:href => "/routes?type=active"}
+            %span.title Active routes
+        %li
+          %a{:href => "/routes?type=completed"}
+            %span.title Completed routes
+  - if @current_user_role != AppConstants::PFA
+    %li
+      %a{:href => "javascript:;"}
+        %i.glyphicon.glyphicon-tasks
+        %span.title Assignments
+      %ul.sub-menu
+        - if AppConstants::ASSIGNMENT_ARRAY.include? @current_user_role
+          %li
+            %a{:href => "/assignments/new"}
+              %span.title New assignment
+          %li
+            %a{:href => "/assignments?type=active"}
+              %span.title Active assignments
+          %li
+            %a{:href => "/assignments/factory_assignments"}
+              %span.title Factory assignments
+          %li
+            %a{:href => "/assignments?type=completed"}
+              %span.title Completed assignments
+        - elsif AppConstants::FACTORY_ARRAY.include? @current_user_role
+          %li
+            %a{:href => "/assignments/factory_assignments"}
+              %span.title Factory assignments
+  - if AppConstants::REPORT_ARRAY.include? @current_user_role
+    %li
+      %a{:href => "/reports"}
+        %i.glyphicon.glyphicon-file
+        %span.title Reports
+  - if AppConstants::FACTORY_ARRAY.include? @current_user_role
+    %li
+      %a{:href => "/factory_collections"}
+        %i.glyphicon.glyphicon-stats
+        %span.title Factory Collection
+  - if AppConstants::SETTING_ARRAY.include? @current_user_role
+    %li
+      %a{:href => "/notes"}
+        %i.glyphicon.glyphicon-flag
+        %span.title Urgent Actions

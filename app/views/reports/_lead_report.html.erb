@@ -28,6 +28,7 @@
       </th>
     </tr>
     <tr>
+      <th>Company</th>
       <th>Area</th>
       <th>Sale rep</th>
       <th>Branch</th>
@@ -43,6 +44,7 @@
   <tbody>
     <% @branches&.each do |branch| %>
         <tr>
+          <td><%= "#{branch.try(:company).try(:company_name)}" %></td>
           <td><%= branch.try(:area).try(:name) %></td>
           <td><%= branch.try(:representator).try(:name) || branch.try(:representator).try(:email) || 'N/A' %></td>
           <td><%= branch.branch_name  %></td>

@@ -1,0 +1,36 @@
+<ul class="breadcrumb">
+  <li><p>YOU ARE HERE</p></li>
+  <li><a href="#" class="active">Routes</a></li>
+  <%= link_to 'New Site', new_site_path, class:'btn btn-mini btn-primary pull-right' %>
+</ul>
+<br/>
+<div class="row">
+  <div class="col-md-12">
+    <div class="grid-body no-border">
+      <table class="table table-striped list-data-table">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Is automate process</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @sites.each do |site| %>
+            <tr>
+              <td><%= site.name %></td>
+              <td><%= site.is_automate_process %></td>
+              <td>
+                <%= link_to 'Show', site %>
+                <%= link_to 'Edit', edit_site_path(site) %>
+                <% if @current_user_role == AppConstants::SUPER_ADMIN %>
+                  <%= link_to 'Destroy', site, method: :delete, data: { confirm: 'Are you sure?' } %>
+                <% end %>
+              </td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

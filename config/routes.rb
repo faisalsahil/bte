@@ -1,8 +1,14 @@
 Rails.application.routes.draw do
   
+  resources :product_sales
+  resources :sites do
+    member do
+      put :site_product_sale
+    end
+  end
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'
-  resources :factory_collections, only:[:index, :show]
+  resources :factory_collections, only:[:index, :show, :new, :create]
   
   resources :reports, only:[:index] do
     collection do
@@ -43,6 +49,7 @@ Rails.application.routes.draw do
     end
     collection do
       get :schedules
+      post :add_collection
     end
   end
   resources :route_branches, only:[:show] do

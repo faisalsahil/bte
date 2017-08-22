@@ -3,7 +3,7 @@ class Area < ApplicationRecord
   belongs_to :state
   belongs_to :city
 
-  validates_uniqueness_of :name, :scope => :city_id
+  validates_uniqueness_of :name, :scope => :site_id
   validates_presence_of   :name
 
 
@@ -38,3 +38,16 @@ class Area < ApplicationRecord
     # ]
   end
 end
+
+# == Schema Information
+#
+# Table name: areas
+#
+#  id         :integer          not null, primary key
+#  name       :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  state_id   :integer
+#  city_id    :integer
+#  is_deleted :boolean          default(FALSE)
+#

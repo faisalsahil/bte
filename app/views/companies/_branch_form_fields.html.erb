@@ -56,7 +56,7 @@
     <div class="row">
       <div class="col-md-3">
         <%= branch.label 'Type of establishment' %>
-        <%= branch.select :food_type_id, options_for_select(FoodType.where(is_deleted: false).collect {|p| [ p[:name], p[:id] ] }), class: 'form-control' %>
+        <%= branch.select :food_type_id, options_for_select(@food_types.collect {|p| [ p[:name], p[:id] ] }), class: 'form-control' %>
       </div>
 
       <div class="col-md-3">
@@ -71,7 +71,7 @@
 
       <div class="col-md-3 form-group">
         <%= branch.label 'Storage type' %>
-        <%= branch.select :storage_type_id, options_for_select(StorageType.where(is_deleted: false).collect {|p| [ p[:name], p[:id] ] }), class: 'form-control' %>
+        <%= branch.select :storage_type_id, options_for_select(@storage_types.collect {|p| [ p[:name], p[:id] ] }), class: 'form-control' %>
       </div>
     </div>
   </div>
@@ -83,19 +83,24 @@
   <div class="panel-body">
     <div class="row">
       <div class="col-md-3">
-        <%= branch.select :state_id, options_for_select(State.where(is_deleted: false).collect {|p| [ p[:name], p[:id] ] }), {include_blank: 'Select sate'}, class: 'form-control', id: 'branch_state_id' %>
+        <%= branch.select :state_id, options_for_select(@states.collect { |p| [p[:name], p[:id]] }), { include_blank: 'Select sate' }, class: 'form-control', id: 'branch_state_id' %>
       </div>
       <div class="col-md-3">
-        <select name="company[branches_attributes][0][city_id]" id="branch_city_id" class="hidden"></select>
+        <%= branch.select :city_id, options_for_select(@cities.collect { |p| [p[:name], p[:id], {parent_id: p.state_id}]}), { include_blank: 'Select city' }, class: 'form-control', id: 'branch_city_id' %>
       </div>
       <div class="col-md-3">
-        <select name="company[branches_attributes][0][area_id]" id="branch_area_id" class="hidden"></select>
+        <%= branch.select :area_id, options_for_select(@areas.collect { |p| [p[:name], p[:id], {parent_id: p.city_id}] }), { include_blank: 'Select area' }, class: 'form-control', id: 'branch_area_id' %>
       </div>
       <div class="col-md-3">
-        <%= branch.text_field :street, placeholder: 'street', class: 'hidden', id: 'branch_street' %>
+        <%= branch.text_field :area_name, placeholder: 'Other Area' %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <%= branch.text_field :street, placeholder: 'street' %>
       </div>
       <div class="col-md-3">
-        <%= branch.text_field :zip, placeholder: 'zip', class: 'hidden', id: 'branch_zip' %>
+        <%= branch.text_field :zip, placeholder: 'zip' %>
       </div>
     </div>
   </div>

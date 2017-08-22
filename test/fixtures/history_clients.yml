@@ -9,3 +9,15 @@ two:
   email_history_id: 1
   client_id: 1
   count: 1
+
+# == Schema Information
+#
+# Table name: history_clients
+#
+#  id               :integer          not null, primary key
+#  email_history_id :integer
+#  branch_id        :integer
+#  count            :integer
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#

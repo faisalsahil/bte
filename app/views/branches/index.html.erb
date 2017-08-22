@@ -1,54 +1,68 @@
 <ul class="breadcrumb">
   <li><p>YOU ARE HERE</p></li>
   <li><a href="#" class="active">Branches</a></li>
-  <li><%= link_to 'New Branch', new_branch_path, class:'btn btn-mini btn-primary' %></li>
+  <% if can? :new, Branch %>
+
+      <li><%= link_to 'New Branch', new_branch_path, class: 'btn btn-mini btn-primary' %></li>
+
+  <% end %>
 </ul>
 <div class="row">
   <div class="col-md-12">
-    <div class="grid simple ">
-      <div class="grid-body no-border">
-        <table class="table table-striped" id="branches_index_table">
-          <thead>
-          <tr>
-            <th>Company</th>
-            <th>Area</th>
-            <% if @type.present? && @type == 'contracted' %>
+    <div class="grid-body no-border">
+      <table class="table table-striped" id="branches_index_table">
+        <thead>
+        <tr>
+          <th>Company</th>
+          <th>Area</th>
+          <% if @type.present? && @type == AppConstants::CONTRACTED %>
               <th>Code (C/B)</th>
-            <% end %>
-            <th>Branch</th>
-            <th>Sale Person</th>
-            <th>Cont. phone</th>
-            <th>Rate/KG</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-          </thead>
-
-          <tbody>
-          <% @branches.each do |branch| %>
-              <tr id='<%= "#{branch.id}"%>'>
-                <td><%= "#{branch.company.company_name}" %></td>
-                <td style="width: 20%;"><%= branch.try(:area).try(:name) || 'N/A' %></td>
-                <% if @type.present? && @type == 'contracted' %>
-                  <td><%= "#{branch.company.company_code}/#{branch.branch_code}" %></td>
-                <% end %>
-                <td><%= branch.branch_name %></td>
-                <td><%= branch.representator.try(:name) || branch.representator.try(:email) %></td>
-                <td><%= branch.contact_phone %></td>
-                <td><%= branch.rate_per_kg %></td>
-                <td>
-                  <%= select_tag 'status', options_for_select(@statuses, selected: branch.branch_status), class: 'form-control branch_change_status' %>
-                </td>
-                <td style="width: 17%;">
-                  <%= link_to 'show', branch, class: 'btn btn-mini btn-success' %>
-                  <%= link_to 'edit', edit_branch_path(branch), class: 'btn btn-mini btn-primary' %>
-                  <%= link_to 'notes', branch_notes_path(branch), class: 'btn btn-mini btn-warning'%>
-                </td>
-              </tr>
           <% end %>
-          </tbody>
-        </table>
-      </div>
+          <th>Branch</th>
+          <th>Sale Person</th>
+          <th>Cont. phone</th>
+          <% if @type.present? && @type == AppConstants::CONTRACTED %>
+              <th>Rate/KG</th>
+          <% end %>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <% @branches.each do |branch| %>
+            <tr id='<%= "#{branch.id}" %>'>
+              <td><%= "#{branch.company.company_name}" %></td>
+              <td style="width: 20%;"><%= branch.try(:area).try(:name) || 'N/A' %></td>
+              <% if @type.present? && @type == AppConstants::CONTRACTED %>
+                  <td><%= "#{branch.company.company_code}/#{branch.branch_code}" %></td>
+              <% end %>
+              <td><%= branch.branch_name %></td>
+              <td><%= branch.representator.try(:name) || branch.representator.try(:email) %></td>
+              <td><%= branch.contact_phone %></td>
+              <% if @type.present? && @type == AppConstants::CONTRACTED %>
+                  <td><%= branch.rate_per_kg %></td>
+              <% end %>
+              <td>
+                <%= select_tag 'status', options_for_select(@statuses, selected: branch.branch_status), class: 'form-control branch_change_status' %>
+              </td>
+              <td style="width: 17%;">
+                <% if can? :show, branch %>
+                    <%= link_to 'show', branch, class: 'btn btn-mini btn-success' %>
+                <% end %>
+
+                <% if can? :update, branch %>
+                    <%= link_to 'edit', edit_branch_path(branch), class: 'btn btn-mini btn-primary' %>
+                <% end %>
+
+                <% if can? :index, Note %>
+                    <%= link_to 'notes', branch_notes_path(branch), class: 'btn btn-mini btn-warning' %>
+                <% end %>
+              </td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

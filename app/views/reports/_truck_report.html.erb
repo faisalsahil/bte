@@ -1,0 +1,71 @@
+<% if @truck_report_data.present? %>
+  <%= link_to 'Export excel', 'javascript:void(0)', class: 'pull-right btn btn-mini btn-primary', id:'excel_truck', style:'margin-left: 2px;' %>
+  <%= link_to 'download pdf', 'javascript:void(0)', class: 'pull-right btn btn-mini btn-success', id:'pdf_truck' %>
+
+  <% hidden_field_tag :from_date, @from_date %>
+  <% hidden_field_tag :to_date, @from_date %>
+  <% hidden_field_tag :report_type, @type %>
+
+    <table class="table table-striped route_list_data">
+      <thead>
+        <tr>
+          <th>Vehicle</th>
+          <th>Vehicle#</th>
+          <th>Tot Oil Collected</th>
+          <th>Tot Restaurant visit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @truck_report_data&.each do |truck_data| %>
+            <tr>
+              <td><%= truck_data[:vehicle].vehicle_type %></td>
+              <td><%= truck_data[:vehicle].vehicle_number %></td>
+              <td><%= truck_data[:total_oil_collected] %></td>
+              <td><%= truck_data[:total_branches_visited] %></td>
+            </tr>
+        <% end %>
+      </tbody>
+    </table>
+<% else %>
+    <h3>No record found..</h3>
+<% end %>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.route_list_data').DataTable({
+            "pageLength": 50,
+            "aaSorting": [[ 0, "asc" ]]
+        });
+
+        $('#active_route_report_columns').multiselect({
+            includeSelectAllOption: true,
+            enableFiltering: true,
+            enableClickableOptGroups: true,
+            maxHeight: 200,
+            buttonWidth: '250px'
+        });
+
+        $('#pdf_truck').click(function(){
+            var from_date       = $('#from_date').val();
+            var to_date         = $('#to_date').val();
+            var report_type     = $('#report_type').val();
+
+            var origin = window.location.origin
+            window.location.href = origin + '/reports/generate_report.pdf?from_date='+ from_date +
+                '&to_date='+ to_date +
+                '&report_type='+ report_type
+        });
+        $('#excel_truck').click(function(){
+            var from_date       = $('#from_date').val();
+            var to_date         = $('#to_date').val();
+            var report_type     = $('#report_type').val();
+
+            var origin = window.location.origin;
+            window.location.href = origin + '/reports/generate_report.xls?from_date='+ from_date +
+                '&to_date='+ to_date +
+                '&report_type='+ report_type
+        });
+    });
+</script>
+
+

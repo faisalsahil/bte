@@ -4,39 +4,37 @@
 </ul>
 <div class="row">
   <div class="col-md-12">
-    <div class="grid simple ">
-      <div class="grid-body no-border">
-        <table class="table table-striped list-data-table">
-          <thead>
-          <tr>
-            <th>ID</th>
-            <th>Date</th>
-            <th>collection</th>
-            <th>Voucher#</th>
-            <th>Actions</th>
-          </tr>
-          </thead>
+    <div class="grid-body no-border">
+      <table class="table table-striped list-data-table">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Date</th>
+          <th>collection</th>
+          <th>Voucher#</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
 
-          <tbody>
-          <% @factory_collections&.each do |factory_collection| %>
-              <tr>
-                <td><%= factory_collection.id %></td>
-                <td><%= factory_collection.date.to_date.strftime('%d/%m/%Y') %></td>
-                <td><%= factory_collection.quantity %></td>
-                <td>
-                  <% factory_collection.route_branches.pluck(:route_id).uniq&.each do |id| %>
+        <tbody>
+        <% @factory_collections&.each do |factory_collection| %>
+            <tr>
+              <td><%= factory_collection.id %></td>
+              <td><%= factory_collection.date.to_date.strftime('%d/%m/%Y') %></td>
+              <td><%= factory_collection.quantity %></td>
+              <td>
+                <% factory_collection.route_branches.pluck(:route_id).uniq&.each do |id| %>
                     <span class="badge"><%= "Route-#{id}" %></span>
-                  <% end %>
-                </td>
-                <td>
-                  <%= link_to 'show', factory_collection_path(factory_collection) %> |
-                  <%= link_to 'pdf', factory_collection_path(factory_collection, {format: :pdf}) %>
-                </td>
-              </tr>
-          <% end %>
-          </tbody>
-        </table>
-      </div>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to 'show', factory_collection_path(factory_collection) %> |
+                <%= link_to 'pdf', factory_collection_path(factory_collection, { format: :pdf }) %>
+              </td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

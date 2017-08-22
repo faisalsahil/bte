@@ -10,7 +10,7 @@ class BillingPolicy
     AppConstants::BILLING_ARRAY.include? @current_user.role.name
   end
 
-  def invoice
+  def invoice?
     AppConstants::BILLING_ARRAY.include? @current_user.role.name
   end
   

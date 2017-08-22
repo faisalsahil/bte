@@ -1,0 +1,31 @@
+<%= form_for(@route, url: add_collection_routes_path,:html=> {:method => 'post', :multipart=>true,:class => 'form-horizontal', id: 'manual_completion_form'}) do |f| %>
+    <div>
+      <table class="table table-striped">
+        <thead>
+        <th>BranchName</th>
+        <th>Actions</th>
+        <th>Comment</th>
+        </thead>
+        <tbody>
+          <%= f.fields_for :route_branches do |form_route_branch| %>
+              <tr class="add_collection_assignment_tr">
+                <td>
+                  <%= form_route_branch.select :branch_id, options_for_select(@branches.collect { |p| [p[:branch_name], p[:id]] }), { include_blank: 'Select branch' }, class: 'form-control branch'  %>
+                </td>
+                <td>
+                  <%= form_route_branch.text_field :quantity, placeholder: 'qnty (kg)', style: 'width:17%;', class: 'route_quantity' %>
+                  <%= form_route_branch.file_field :image, style: 'width:30%;', class: 'route_image' %>
+                </td>
+                <td><%= form_route_branch.text_field :comment, placeholder: 'add comment' %></td>
+              </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <%= f.submit 'submit', class: 'btn btn-mini btn-primary' %>
+      <div id="error_explanation" class="hidden route_assignment_error_notification" style="margin-top:5px;">
+        <span>You should fill one complete record.</span>
+      </div>
+    </div>
+<% end %>

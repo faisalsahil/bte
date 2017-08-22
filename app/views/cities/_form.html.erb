@@ -2,7 +2,7 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.select :state_id, options_for_select(State.all.collect {|p| [ p[:name], p[:id] ] }, @city.state_id), class: 'form-control' %>
+    <%= f.select :state_id, options_for_select(@states.collect {|p| [ p[:name], p[:id] ] }, @city.state_id), class: 'form-control' %>
     <%= f.input :name %>
   </div>
 

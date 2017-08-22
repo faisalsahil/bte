@@ -4,8 +4,7 @@
 </ul>
 <div class="row">
   <div class="col-md-12">
-    <div class="grid simple ">
-      <div class="grid-body no-border">
+    <div class="grid-body no-border">
         <div class="well-sm">
           <strong>Total Collection:   </strong><%= @route_branches.sum(:quantity) %><br/>
           <strong>Factory Collection: </strong><%= @factory_collection.quantity %>
@@ -45,6 +44,5 @@
           </tbody>
         </table>
       </div>
-    </div>
   </div>
 </div>
