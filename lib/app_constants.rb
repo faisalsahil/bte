@@ -29,7 +29,7 @@ module AppConstants
   CONTRACTED_REPORT                 = 'contracted_report'
   ACTIVE_ROUTES_REPORT              = 'active_routes_report'
   NO_WASTE_OIL_REPORT               = 'no_waste_oil_report'
-  COLLECTED_OIL_TO_DATE_REPORT      = 'collected_oil_to_date_report'
+  COLLECTED_OIL_REPORT              = 'collected_oil_report'
   MONTH_WISE_COLLECTION_REPORT      = 'month_wise_collection_report'
   RESTAURANT_WISE_COLLECTION_REPORT = 'restaurant_wise_collection_report'
   NOT_VISITED_REPORT                = 'not_visited_report'
@@ -45,7 +45,7 @@ module AppConstants
       { name: 'Contracted report', id: CONTRACTED_REPORT },
       { name: 'Active routes report', id: ACTIVE_ROUTES_REPORT },
       { name: 'No Waste oil report', id: NO_WASTE_OIL_REPORT },
-      # {name: 'Collected oil to date report', id: COLLECTED_OIL_TO_DATE_REPORT},
+      {name: 'Collected oil report', id: COLLECTED_OIL_REPORT},
       { name: 'Month wise collection report', id: MONTH_WISE_COLLECTION_REPORT },
       { name: 'Restaurant wise collection report', id: RESTAURANT_WISE_COLLECTION_REPORT },
       { name: 'Not visited report', id: NOT_VISITED_REPORT },
@@ -57,7 +57,7 @@ module AppConstants
   ]
   PFA_REPORT_VISIBLE= [
       { name: 'Contracted report', id: CONTRACTED_REPORT },
-      {name: 'Collected oil to date report', id: COLLECTED_OIL_TO_DATE_REPORT},
+      {name: 'Collected oil to date report', id: COLLECTED_OIL_REPORT},
       { name: 'Proof of Sale report', id: PROOF_OF_SALE_REPORT }
   ]
   LEAD_REPORT_HEADER = [

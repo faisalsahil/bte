@@ -151,11 +151,11 @@ class AssignmentsController < ApplicationController
   end
   
   def set_data
-    @drivers           = User.where(site_id: current_user.site_id, role_id: Role.find_by_name(AppConstants::DRIVER).id, is_deleted: false)
-    @helpers           = User.where(site_id: current_user.site_id, role_id: Role.find_by_name(AppConstants::HELPER).id, is_deleted: false)
-    @vehicles          = Vehicle.where(site_id: current_user.site_id, is_deleted: false)
-    assigned_route_ids = Assignment.where(site_id: current_user.site_id, is_completed: false).pluck(:route_id)
-    @active_routes     = Route.active_routes.where.not(id: assigned_route_ids, is_deleted: true)
+    @drivers           = User.where(site_id: @current_user_site.id, role_id: Role.find_by_name(AppConstants::DRIVER).id, is_deleted: false)
+    @helpers           = User.where(site_id: @current_user_site.id, role_id: Role.find_by_name(AppConstants::HELPER).id, is_deleted: false)
+    @vehicles          = Vehicle.where(site_id: @current_user_site.id, is_deleted: false)
+    assigned_route_ids = Assignment.where(site_id: @current_user_site.id, is_completed: false).pluck(:route_id)
+    @active_routes     = Route.active_routes.where(site_id: @current_user_site.id).where.not(id: assigned_route_ids, is_deleted: true)
   end
   
   def assignment_params
