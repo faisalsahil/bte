@@ -75,6 +75,10 @@ class ReportsController < ApplicationController
       @truck_report_data = truck_report(params)
     end
     
+    if @type == AppConstants::COLLECTED_OIL_REPORT
+      
+    end
+    
     
     respond_to do |format|
       format.html { redirect_to reports_path }

@@ -97,7 +97,7 @@ class AssignmentsController < ApplicationController
   
   def factory_assignments
     authorize :assignment
-    @route_ids      = Assignment.where(assignment_status: AppConstants::FACTORY).pluck(:route_id)
+    @route_ids      = Assignment.where(assignment_status: AppConstants::FACTORY, site_id: @current_user_site.id).pluck(:route_id)
     @route_branches = RouteBranch.where(route_id: @route_ids, transfer_to: nil, is_deleted: false, is_factory: false).includes(:route, :branch).order('route_id asc')
     
     respond_to do |format|
