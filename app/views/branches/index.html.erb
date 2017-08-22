@@ -1,10 +1,13 @@
 <ul class="breadcrumb">
   <li><p>YOU ARE HERE</p></li>
   <li><a href="#" class="active">Branches</a></li>
-  <% if can? :new, Branch %>
-
-      <li><%= link_to 'New Branch', new_branch_path, class: 'btn btn-mini btn-primary' %></li>
-
+  <%# if can? :new, Branch %>
+  <% if @current_user_role == AppConstants::PFA  %>
+      <% if not @current_user_site.is_automate_process %>
+          <li><%= link_to 'New Branch', new_branch_path, class: 'btn btn-mini btn-primary' %></li>
+      <% end %>
+  <% else %>
+          <li><%= link_to 'New Branch', new_branch_path, class: 'btn btn-mini btn-primary' %></li>
   <% end %>
 </ul>
 <div class="row">
@@ -47,17 +50,35 @@
                 <%= select_tag 'status', options_for_select(@statuses, selected: branch.branch_status), class: 'form-control branch_change_status' %>
               </td>
               <td style="width: 17%;">
-                <% if can? :show, branch %>
+                <%# if can? :show, branch %>
+                    <%#= link_to 'show', branch, class: 'btn btn-mini btn-success' %>
+                <%# end %>
+
+                <%# if can? :update, branch %>
+                    <%#= link_to 'edit', edit_branch_path(branch), class: 'btn btn-mini btn-primary' %>
+                <%# end %>
+
+                <%# if can? :index, Note %>
+                    <%#= link_to 'notes', branch_notes_path(branch), class: 'btn btn-mini btn-warning' %>
+                <%# end %>
+
+                <% if @current_user_role == AppConstants::PFA %>
+                    <% if not @current_user_site.is_automate_process %>
+                      <%= link_to 'show', branch, class: 'btn btn-mini btn-success' %>
+                      <%= link_to 'edit', edit_branch_path(branch), class: 'btn btn-mini btn-primary' %>
+                      <%= link_to 'notes', branch_notes_path(branch), class: 'btn btn-mini btn-warning' %>
+                    <% end %>
+                <% else %>
                     <%= link_to 'show', branch, class: 'btn btn-mini btn-success' %>
-                <% end %>
-
-                <% if can? :update, branch %>
                     <%= link_to 'edit', edit_branch_path(branch), class: 'btn btn-mini btn-primary' %>
-                <% end %>
-
-                <% if can? :index, Note %>
                     <%= link_to 'notes', branch_notes_path(branch), class: 'btn btn-mini btn-warning' %>
                 <% end %>
+
+
+
+
+
+
               </td>
             </tr>
         <% end %>

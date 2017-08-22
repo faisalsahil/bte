@@ -85,7 +85,7 @@ SimpleNavigation::Configuration.run do |navigation|
           end
           
           # secondary.item :visits, content_tag(:i, "", :class => "fa fa-users") + "Visits", branches_path({type: 'visit'}), :highlights_on => /\/branches/
-          secondary.item :leads, content_tag(:i, "", :class => "fa fa-users") + "Leads", branches_path({type: 'lead'}), :highlights_on => /\/branches/
+          # secondary.item :leads, content_tag(:i, "", :class => "fa fa-users") + "Leads", branches_path({type: 'lead'}), :highlights_on => /\/branches/
           secondary.item :contracts, content_tag(:i, "", :class => "fa fa-users") + "Contracts", branches_path({type: 'contracted'}), :highlights_on => /\/branches/
         end
         

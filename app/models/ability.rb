@@ -104,7 +104,8 @@ class Ability
     
     # can [:indeex, :new, :show, :edit], Branch, user: { id: user.id }
     
-      can [:index, :show], Branch
+    can [:index, :show], Branch
+    can [:new, :show, :create, :edit, :update, :destroy, :update_branch_status], Branch
     
     can :manage, FactoryCollection
     can [:add_collection], Route
