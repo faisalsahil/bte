@@ -139,7 +139,6 @@ module AppConstants
       { name: 'Area', id: 'area_id' },
       { name: 'Company', id: 'company_name' },
       { name: 'Branch name', id: 'branch_name' },
-      { name: 'Code', id: 'branch_code' },
       { name: 'Contact name', id: 'contact_name' },
       { name: 'Contact #', id: 'contact_phone' },
       { name: 'Collection', id: 'total_collection' },

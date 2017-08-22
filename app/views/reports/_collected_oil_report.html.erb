@@ -34,7 +34,6 @@
         <th>Area</th>
         <th>Company</th>
         <th>Branch</th>
-        <th>Code</th>
         <th>Cont.name</th>
         <th>Cont#</th>
         <th>Collection</th>
@@ -48,7 +47,6 @@
             <td><%= branch.try(:area).try(:name) %></td>
             <td><%= "#{branch.try(:company).try(:company_name)}" %></td>
             <td><%= branch.branch_name  %></td>
-            <td><%= "#{branch.try(:company).try(:company_code) || nil}/#{branch.branch_code}" %></td>
             <td><%= branch.contact_name %></td>
             <td><%= branch.contact_phone %></td>
             <td><%= Branch.total_restaurant_collection(branch, @from_date, @to_date) %></td>
