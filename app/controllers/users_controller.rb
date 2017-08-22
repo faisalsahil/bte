@@ -14,7 +14,7 @@ class UsersController < ApplicationController
   end
   
   def add_user
-    authorize :user
+    # authorize :user
     if params[:user][:email].present? && params[:user][:password].present? && params[:user][:password_confirmation].present?
       user = User.new(user_params)
       user.role_id = Role.find_by_name(AppConstants::ADMIN).id if @current_user_role == AppConstants::SUPER_ADMIN
