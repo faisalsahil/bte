@@ -1,7 +1,7 @@
 <br/>
 <div class="well-sm">
   <span class="pull-right"><strong>Date:</strong>  <%= Date.today.strftime('%d/%m/%Y') %></span>
-  <h3>Not Visit Report</h3>
+  <h3>Not Visited Report</h3>
   <% if @from_date.present? && @to_date.present? %>
       <strong>Date:</strong>  <%= @from_date.to_date.strftime('%d/%m/%Y')%><strong> - </strong><%= @to_date.to_date.strftime('%d/%m/%Y') %>
   <% elsif @from_date.present? %>
@@ -11,7 +11,6 @@
   <% end %>
 </div>
 <br/>
-
 <table class="table table-striped">
   <thead>
   <% @columns = @data[:columns].split(',') %>
@@ -20,41 +19,38 @@
   <% end %>
   </thead>
   <tbody>
-  <% @route_branches&.each do |route_branch| %>
-      <%
-        assignment = route_branch.route.assignment
-      %>
+  <% @branches&.each do |branch| %>
       <tr>
-        <% if @columns.include? 'voucher' %>
-            <td><%= "Route-#{route_branch.route_id}/#{route_branch.id} "%></td>
+        <% if @columns.include? 'date' %>
+            <td><%= branch.created_at.to_date.strftime('%d/%m/%Y') %></td>
+        <% end %>
+
+        <% if @columns.include? 'city' %>
+            <td><%= branch.try(:city).try(:name) %></td>
+        <% end %>
+
+        <% if @columns.include? 'area_id' %>
+            <td><%= branch.try(:area).try(:name) %></td>
+        <% end %>
+
+        <% if @columns.include? 'company' %>
+            <td><%= "#{branch.company.company_name}" %></td>
         <% end %>
 
         <% if @columns.include? 'branch_name' %>
-            <td><%= route_branch.branch.branch_name %></td>
+            <td><%= branch.branch_name  %></td>
         <% end %>
 
-        <% if @columns.include? 'branch_code' %>
-            <td><%= "#{route_branch.branch.try(:company).try(:company_code)}/#{route_branch.branch.branch_code}" %></td>
+        <% if @columns.include? 'contact_name' %>
+            <td style="width:20%;"><%= branch.contact_name %></td>
         <% end %>
 
-        <% if @columns.include? 'quantity' %>
-            <td><%= route_branch.quantity %></td>
+        <% if @columns.include? 'contact_phone' %>
+            <td><%= branch.contact_phone %></td>
         <% end %>
 
-        <% if @columns.include? 'driver' %>
-            <td><%= assignment.try(:driver).try(:name) || 'N/A' %></td>
-        <% end %>
-
-        <% if @columns.include? 'helper' %>
-            <td><%= assignment.try(:helper).try(:name)  || 'N/A' %></td>
-        <% end %>
-
-        <% if @columns.include? 'vehicle' %>
-            <td><%= assignment.try(:vehicle).try(:vehicle_number) || 'N/A' %></td>
-        <% end %>
-
-        <% if @columns.include? 'comment' %>
-            <td><%= route_branch.comment%></td>
+        <% if @columns.include? 'address' %>
+            <td><%= branch.address %></td>
         <% end %>
       </tr>
   <% end %>

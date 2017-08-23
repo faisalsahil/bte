@@ -70,6 +70,7 @@ SimpleNavigation::Configuration.run do |navigation|
       end
     elsif @current_user_role == AppConstants::PFA
       primary.item :users, content_tag(:i, "", :class => "fa fa-users") + "Add User", new_user_path, :highlights_on => /\/users/
+      primary.item :reports, content_tag(:i, "", :class => "fa fa-users") + "Summary Report", generate_report_reports_path({format: 'pdf', report_type: AppConstants::SUMMARY_REPORT}), :highlights_on => /\/reports/
       if session[:current_user_site].present?
         if not session[:current_user_site]['is_automate_process']
           primary.item :new_branch, content_tag(:i, "", :class => "fa fa-users") + "Add Client", new_branch_path, :highlights_on => /\/branches/

@@ -1,0 +1,24 @@
+<br/>
+<div class="well-sm">
+  <span class="pull-right"><strong>Date:</strong>  <%= Date.today.strftime('%d/%m/%Y') %></span>
+  <h3>Summary Report</h3>
+</div>
+<br/>
+<table class="table table-striped">
+  <thead>
+    <th>Company</th>
+    <th>Tot. Contracts</th>
+    <th>Tot. Collection</th>
+    <th>Tot. Sales</th>
+  </thead>
+  <tbody>
+  <% @sites_data&.each do |site_data| %>
+      <tr>
+        <td><%= site_data[:site].name %></td>
+        <td><%= site_data[:contract_branches_count] %></td>
+        <td><%= site_data[:total_collection] %></td>
+        <td><%= site_data[:total_sales] %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

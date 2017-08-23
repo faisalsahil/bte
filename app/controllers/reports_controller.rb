@@ -42,7 +42,7 @@ class ReportsController < ApplicationController
     end
     
     if @type == AppConstants::NOT_VISITED_REPORT
-      @route_branches = not_visited_report(params)
+      @branches = not_visited_report(params)
     end
     
     if @type == AppConstants::FACTORY_COLLECTION_REPORT
@@ -77,6 +77,10 @@ class ReportsController < ApplicationController
     
     if @type == AppConstants::COLLECTED_OIL_REPORT
       @branches = collected_oil_report(params)
+    end
+    
+    if @type == AppConstants::SUMMARY_REPORT
+      @sites_data = summary_report(params)
     end
     
     
@@ -142,48 +146,51 @@ class ReportsController < ApplicationController
         if @type == AppConstants::URGENT_ACTION_REPORT
           send_data Branch.to_urgent_action_csv(@notes, @data[:columns])
         end
-
+        
         if @type == AppConstants::PROFILING_OF_LEADS_REPORT
           send_data Branch.to_branch_status_csv(@branches, @data[:columns])
         end
-
+        
         if @type == AppConstants::PROOF_OF_SALE_REPORT
           send_data ProductSale.to_csv(@product_sales, @data[:columns])
         end
-
+        
         if @type == AppConstants::TRUCK_REPORT
           send_data Vehicle.to_csv(@truck_report_data)
         end
-
+        
         if @type == AppConstants::COLLECTED_OIL_REPORT
           send_data Branch.collected_oil_to_csv(@branches, @data[:columns], @from_date, @to_date)
         end
-
-        
       }
     end
   end
   
   def lead_report(params)
-    company_ids = Company.where(site_id: @current_user_site.id).pluck(:id)
-    @branches   = Branch.where(branch_status: AppConstants::LEAD, company_id: company_ids).includes(:area, :city, :state, :company)
+    if params[:company_wise].present?
+      company_ids = Company.where(id: params[:company_wise]).pluck(:id)
+    else
+      company_ids = Company.where(site_id: @current_user_site.id).pluck(:id)
+    end
+    
+    branches = Branch.where(branch_status: AppConstants::LEAD, company_id: company_ids).includes(:area, :city, :state, :company)
     
     if params[:from_date].present?
-      @branches = @branches.where('DATE(created_at) >= DATE(?)', params[:from_date].to_date)
+      branches = branches.where('DATE(created_at) >= DATE(?)', params[:from_date].to_date)
     end
     
     if params[:to_date].present?
-      @branches = @branches.where('DATE(created_at) <= DATE(?)', params[:to_date].to_date)
+      branches = branches.where('DATE(created_at) <= DATE(?)', params[:to_date].to_date)
     end
     
     if params[:area_wise].present?
-      @branches = @branches.where(area_id: params[:area_wise])
+      branches = branches.where(area_id: params[:area_wise])
     end
     
-    if params[:sale_rep_wise].present?
-      @branches = @branches.where(representative: params[:sale_rep_wise])
+    if params[:city_wise].present?
+      branches = branches.where(city_id: params[:city_wise])
     end
-    @branches
+    branches
   end
   
   def visit_report(params)
@@ -212,10 +219,10 @@ class ReportsController < ApplicationController
     if params[:company_wise].present?
       company_ids = Company.where(id: params[:company_wise]).pluck(:id)
     else
-      company_ids   = Company.where(site_id: @current_user_site.id).pluck(:id)
+      company_ids = Company.where(site_id: @current_user_site.id).pluck(:id)
     end
     
-    branches    = Branch.where(branch_status: AppConstants::CONTRACTED, company_id: company_ids).order('branch_code ASC').includes(:area, :city, :state)
+    branches = Branch.where(branch_status: AppConstants::CONTRACTED, company_id: company_ids).order('branch_code ASC').includes(:area, :city, :state)
     
     if params[:from_date].present?
       branches = branches.where('DATE(created_at) >= DATE(?)', params[:from_date].to_date)
@@ -295,16 +302,35 @@ class ReportsController < ApplicationController
   end
   
   def not_visited_report(params)
-    route_ids       = Route.where(is_deleted: false, site_id: @current_user_site.id)
-    @route_branches = RouteBranch.where(is_deleted: true, route_id: route_ids).order('route_id DESC')
-    if params[:from_date].present?
-      @route_branches = @route_branches.where('DATE(created_at) >= DATE(?)', params[:from_date].to_date)
+    assignments = Assignment.where(is_deleted: false, site_id: @current_user_site.id, is_completed: true)
+    if params[:from_date].present? && params[:to_date].present?
+      route_ids = assignments.where('DATE(created_at) >= DATE(?) AND DATE(created_at) <= DATE(?)', params[:from_date].to_date, params[:to_date].to_date).pluck(:route_id)
+    elsif params[:from_date].present?
+      route_ids = assignments.where('DATE(created_at) >= DATE(?)', params[:from_date].to_date).pluck(:route_id)
+    elsif params[:to_date].present?
+      route_ids = assignments.where('DATE(created_at) <= DATE(?)', params[:from_date].to_date).pluck(:route_id)
+    else
+      route_ids = assignments.pluck(:route_id)
     end
     
-    if params[:to_date].present?
-      @route_branches = @route_branches.where('DATE(created_at) <= DATE(?)', params[:to_date].to_date)
+    branch_ids = RouteBranch.where(route_id: route_ids).pluck(:branch_id)
+    if params[:company_wise].present?
+      company_ids = Company.where(id: params[:company_wise]).pluck(:id)
+    else
+      company_ids = Company.where(site_id: @current_user_site.id).pluck(:id)
     end
-    @route_branches
+    
+    branches = Branch.where('branch_status = ? AND company_id IN (?) AND id NOT IN (?)', AppConstants::CONTRACTED, company_ids, branch_ids)
+    
+    if params[:area_wise].present?
+      branches = branches.where(area_id: params[:area_wise])
+    end
+    
+    if params[:city_wise].present?
+      branches = branches.where(city_id: params[:city_wise])
+    end
+    
+    branches
   end
   
   def profiling_of_leads_report(params)
@@ -313,14 +339,14 @@ class ReportsController < ApplicationController
     if params[:company_wise].present?
       company_ids = Company.where(id: params[:company_wise]).pluck(:id)
     else
-      company_ids   = Company.where(site_id: @current_user_site.id).pluck(:id)
+      company_ids = Company.where(site_id: @current_user_site.id).pluck(:id)
     end
-    branches      = Branch.where(contract_type: contract_type, company_id: company_ids).order('branch_code ASC').includes(:area, :city, :state)
+    branches = Branch.where(contract_type: contract_type, company_id: company_ids).order('branch_code ASC').includes(:area, :city, :state)
     
     if params[:area_wise].present?
       branches = branches.where(area_id: params[:area_wise])
     end
-
+    
     if params[:city_wise].present?
       branches = branches.where(city_id: params[:city_wise])
     end
@@ -372,14 +398,37 @@ class ReportsController < ApplicationController
   def collected_oil_report(params)
     company_ids = Company.where(site_id: @current_user_site.id).pluck(:id)
     @branches   = Branch.where(branch_status: AppConstants::CONTRACTED, company_id: company_ids)
-
+    
     if params[:area_wise].present?
       @branches = @branches.where(area_id: params[:area_wise])
     end
-
+    
     if params[:company_wise].present?
       @branches = @branches.where(company_id: params[:company_wise])
     end
     @branches
+  end
+  
+  def summary_report(params)
+    sites_data = []
+    sites     = Site.all
+    sites.each do |site|
+      company_ids             = Company.where(site_id: site.id).pluck(:id)
+      contract_branches_count = Branch.where(branch_status: AppConstants::CONTRACTED, company_id: company_ids).count
+      
+      route_ids               = Assignment.where(site_id: site.id, is_completed: true).pluck(:route_id)
+      total_collection        = RouteBranch.where(route_id: route_ids, is_deleted: false, transfer_to: nil).sum(:quantity)
+      
+      total_sales = ProductSale.where(site_id: site.id).sum(:quantity)
+      
+      sites_data << {
+          site: site,
+          contract_branches_count: contract_branches_count,
+          total_collection: total_collection,
+          total_sales: total_sales
+      }
+    end
+
+    sites_data
   end
 end

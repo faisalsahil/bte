@@ -94,6 +94,6 @@ class SitesController < ApplicationController
   end
   
   def site_params
-    params.require(:site).permit(:name, :is_automate_process, :ntn, product_sales_attributes: [:sale_date, :country, :country_name, :gd_number, :quantity, :attachment, :remarks, :stock_in_hand, :site_id])
+    params.require(:site).permit(:name, :is_automate_process, :ntn, product_sales_attributes: [:sale_date, :country, :country_name, :gd_number, :quantity, :attachment, :remarks, :stock_in_hand, :site_id, :income_tax_return_file])
   end
 end

@@ -9,6 +9,7 @@ module AppConstants
   ACCOUNTANT  = 'accountant'
   COMPLETED   = 'completed'
   ACTIVE      = 'active'
+  SUMMARY     = 'summary'
   
   LARGE = 'Large'
   MEDIUM= 'Medium'
@@ -21,7 +22,7 @@ module AppConstants
   COMPLETED       = 'completed'
   CONTRACT_STATUS = ['Large', 'Medium', 'Small']
   
-  ROLES  = [AppConstants::DRIVER, AppConstants::HELPER, AppConstants::FACTORY, AppConstants::SALER, AppConstants::ACCOUNTANT]
+  ROLES = [AppConstants::DRIVER, AppConstants::HELPER, AppConstants::FACTORY, AppConstants::SALER, AppConstants::ACCOUNTANT]
   
   
   Lead_REPORT                       = 'lead_report'
@@ -38,14 +39,14 @@ module AppConstants
   PROFILING_OF_LEADS_REPORT         = 'profiling_of_leads_report'
   PROOF_OF_SALE_REPORT              = 'proof_of_sale_report'
   TRUCK_REPORT                      = 'truck_report'
-  
-  REPORTS = [
+  SUMMARY_REPORT                    = 'summary_report'
+  REPORTS                           = [
       { name: 'Lead report', id: Lead_REPORT },
       { name: 'Visit report', id: VISIT_REPORT },
       { name: 'Contracted report', id: CONTRACTED_REPORT },
       { name: 'Active routes report', id: ACTIVE_ROUTES_REPORT },
       { name: 'No Waste oil report', id: NO_WASTE_OIL_REPORT },
-      {name: 'Collected oil report', id: COLLECTED_OIL_REPORT},
+      { name: 'Collected oil report', id: COLLECTED_OIL_REPORT },
       { name: 'Month wise collection report', id: MONTH_WISE_COLLECTION_REPORT },
       { name: 'Restaurant wise collection report', id: RESTAURANT_WISE_COLLECTION_REPORT },
       { name: 'Not visited report', id: NOT_VISITED_REPORT },
@@ -55,12 +56,12 @@ module AppConstants
       { name: 'Proof of Sale report', id: PROOF_OF_SALE_REPORT },
       { name: 'Truck report', id: TRUCK_REPORT }
   ]
-  PFA_REPORT_VISIBLE= [
+  PFA_REPORT_VISIBLE                = [
       { name: 'Contracted report', id: CONTRACTED_REPORT },
-      {name: 'Collected oil report', id: COLLECTED_OIL_REPORT},
+      { name: 'Collected oil report', id: COLLECTED_OIL_REPORT },
       { name: 'Proof of Sale report', id: PROOF_OF_SALE_REPORT }
   ]
-  LEAD_REPORT_HEADER = [
+  LEAD_REPORT_HEADER                = [
       { name: 'Date', id: 'date' },
       { name: 'City', id: 'city' },
       { name: 'Area', id: 'area_id' },
@@ -135,7 +136,7 @@ module AppConstants
       { name: 'Quantity', id: 'quantity' },
       { name: 'Remarks', id: 'remarks' }
   ]
-  COLLECTED_REPORT_HEADER = [
+  COLLECTED_REPORT_HEADER     = [
       { name: 'Area', id: 'area_id' },
       { name: 'Company', id: 'company_name' },
       { name: 'Branch name', id: 'branch_name' },
