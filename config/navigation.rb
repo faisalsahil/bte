@@ -64,6 +64,7 @@ SimpleNavigation::Configuration.run do |navigation|
         
         primary.item :product_sale, content_tag(:i, "", :class => "fa fa-users") + "Product Sale", product_sales_path, :highlights_on => /\/product_sales/
       else
+        primary.item :users, content_tag(:i, "", :class => "fa fa-users") + "Add User", new_user_path, :highlights_on => /\/users/
         primary.item :new_branch, content_tag(:i, "", :class => "fa fa-users") + "Add Client", new_branch_path, :highlights_on => /\/branches/
         primary.item :add_collection, content_tag(:i, "", :class => "fa fa-users") + "Add Collection", new_factory_collection_path, :highlights_on => /\/factory_collections/
         primary.item :product_sale, content_tag(:i, "", :class => "fa fa-users") + "Product Sale", new_product_sale_path, :highlights_on => /\/product_sales/

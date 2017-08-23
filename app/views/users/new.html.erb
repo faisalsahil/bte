@@ -28,15 +28,19 @@
 
               <% if @current_user_role == AppConstants::SUPER_ADMIN || @current_user_role == AppConstants::PFA %>
                   <div class="form-group">
-                    <%= f.label 'Enter Site Name' %>
-                    <%= f.select :site_id, options_for_select(Site.all.collect {|p| [ p[:name], p[:id] ] }), class: 'form-control', style: 'width: 30%;', class: 'form-control' %>
+                    <%= f.label 'Enter Company' %>
+                    <%= f.select :site_id, options_for_select(Site.where(is_automate_process: false).collect {|p| [ p[:name], p[:id] ] }), class: 'form-control', style: 'width: 30%;', class: 'form-control' %>
                   </div>
               <% else %>
-                  <%= f.hidden_field :site_id, value: @current_user_site.id %>
-                  <div class="form-group">
-                    <%= f.label 'Role' %>
-                    <%= f.select :role_id, options_for_select(Role.where(name: AppConstants::ROLES).collect {|p| [ p[:name], p[:id] ] }, 3), class: 'form-control', style: 'width: 30%;', class: 'form-control' %>
-                  </div>
+                    <%if @current_user_site.present? && @current_user_site.is_automate_process%>
+                        <%= f.hidden_field :site_id, value: @current_user_site.id %>
+                      <div class="form-group">
+                        <%= f.label 'Role' %>
+                        <%= f.select :role_id, options_for_select(Role.where(name: AppConstants::ROLES).collect {|p| [ p[:name], p[:id] ] }, 3), class: 'form-control', style: 'width: 30%;', class: 'form-control' %>
+                      </div>
+
+                    <%end%>
+                  
               <% end %>
 
               <%= f.submit 'Sign up', :class => 'btn btn-sm btn-primary right' %>
