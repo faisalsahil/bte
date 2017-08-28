@@ -10,7 +10,7 @@
       <!-- BEGIN LOGO -->
       <a>
         <!--<h3 style="margin-left: 20%;font-size: 65px;margin-top: 16px;font-weight: 900;">BTE</h3>-->
-        <% if @current_user_site.present? && @current_user_site.is_automate_process  %>
+        <% if @current_user_site.present? && @current_user_site.is_automate_process %>
           <%= image_tag("bte-logo.png", :alt => "Logo", style: "margin-top:12px;width:27%;") %>
         <%else%>
           <%= image_tag("userlogo.jpg", :alt => "Logo", style: "margin-top:2px;width:27%;") %>
